@@ -49,6 +49,7 @@ jobs:
         timeout-minutes: 35
         env:
           RO_SELFTEST: server
+          TERRAIN_VARIANTS: ""
         run: |
           mkdir -p run ci
           echo "eula=true" > run/eula.txt
@@ -69,11 +70,14 @@ jobs:
             cp run/logs/latest.log ci/server_$2.log || true
           }
           RO_NO_TERRAIN=1 run_server world_vanilla vanilla
-          # Variants: regenerate the data pack with other numbers, then put the shipped one back.
-          RT_HEIGHT_UP=1.5 RT_HEIGHT_DOWN=1.1 python3 tools/gen_terrain.py /tmp/mcmeta/data/minecraft/worldgen
-          run_server world_varA varA
-          RT_CONTINENT=0.17 RT_EROSION=0.17 RT_RIDGE=0.2 RT_HEIGHT_UP=1.45 RT_HEIGHT_DOWN=1.15 RT_JAGGED=1.35 python3 tools/gen_terrain.py /tmp/mcmeta/data/minecraft/worldgen
-          run_server world_varB varB
+          # Optional terrain experiments: set TERRAIN_VARIANTS="RT_HEIGHT_UP=1.8 RT_JAGGED=1.5;RT_CONTINENT=0.1"
+          IFS=';' read -ra VARIANTS <<< "${TERRAIN_VARIANTS:-}"
+          i=0
+          for v in "${VARIANTS[@]}"; do
+            i=$((i+1))
+            env $v python3 tools/gen_terrain.py /tmp/mcmeta/data/minecraft/worldgen
+            run_server world_var$i var$i
+          done
           git checkout -- src/main/resources/resourcepacks
           run_server world realistic
           cat run/selftest/server_results_*.txt || true
@@ -147,7 +151,9 @@ jobs:
         run: |
           V=$(grep '^mod_version=' gradle.properties | cut -d= -f2)
           TAG="realistic-overhaul-v$V"
-          gh release view "$TAG" >/dev/null 2>&1 || gh release create "$TAG" --target "$GITHUB_SHA" \
+          # Re-publish: the release always points at the latest [release] commit.
+          gh release delete "$TAG" --cleanup-tag -y >/dev/null 2>&1 || true
+          gh release create "$TAG" --target "$GITHUB_SHA" \
             --title "Realistic Overhaul $V (Fabric 1.20.1)" \
-            --notes-file RELEASE_NOTES.md
-          gh release upload "$TAG" dist/realistic-overhaul-$V.jar --clobber
+            --notes-file RELEASE_NOTES.md \
+            dist/realistic-overhaul-$V.jar

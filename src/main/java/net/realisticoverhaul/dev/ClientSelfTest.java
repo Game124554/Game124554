@@ -4,6 +4,7 @@ import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.DeathScreen;
 import net.minecraft.client.gui.screen.TitleScreen;
+import net.minecraft.client.gui.screen.option.OptionsScreen;
 import net.minecraft.client.option.Perspective;
 import net.minecraft.client.util.ScreenshotRecorder;
 import net.minecraft.server.MinecraftServer;
@@ -12,6 +13,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.Heightmap;
 import net.realisticoverhaul.RealisticOverhaul;
+import net.realisticoverhaul.client.ConfigScreen;
 import net.realisticoverhaul.client.smooth.SmoothTerrain;
 import net.realisticoverhaul.config.ROConfig;
 import net.realisticoverhaul.mixin.client.IntegratedServerLoaderInvoker;
@@ -146,13 +148,16 @@ public final class ClientSelfTest {
 						ROConfig.get().smoothTerrain = true;
 						SmoothTerrain.reload();
 						SmoothTerrain.rebuildChunks();
+						// Corpse test on a platform in the open air, so trees and water are out of the way.
 						double[] m = mobSpot;
+						int px = (int) Math.floor(m[0]), pz = (int) Math.floor(m[2]), py = (int) m[1] + 20;
+						cmd(client, String.format(java.util.Locale.ROOT, "fill %d %d %d %d %d %d minecraft:smooth_stone", px - 4, py, pz - 4, px + 4, py, pz + 5));
 						String[] mobs = {"zombie", "pig", "skeleton", "creeper", "villager", "cow"};
 						for (int i = 0; i < mobs.length; i++) {
-							double ox = (i % 3 - 1) * 2.2, oz = (i / 3) * 2.5;
-							cmd(client, String.format(java.util.Locale.ROOT, "summon %s %.1f %.1f %.1f {NoAI:1b}", mobs[i], m[0] + ox, m[1] + 0.2, m[2] + oz));
+							double ox = (i % 3 - 1) * 2.4, oz = (i / 3) * 2.8;
+							cmd(client, String.format(java.util.Locale.ROOT, "summon %s %.1f %d %.1f {NoAI:1b}", mobs[i], px + 0.5 + ox, py + 1, pz + 0.5 + oz));
 						}
-						tp(client, new double[]{m[0] - 3.5, m[1] + 2.6, m[2] - 3.0, -45, 30});
+						tp(client, new double[]{px - 4.0, py + 4.2, pz - 3.5, -45, 40});
 						next();
 					}
 				}
@@ -160,13 +165,26 @@ public final class ClientSelfTest {
 					if (phaseTicks == 40) {
 						cmd(client, "kill @e[type=!player]");
 					}
-					if (phaseTicks > 140 && ready(client, 140)) {
-						shot(client, "5_corpses");
-						cmd(client, "gamemode survival @a");
+					if (phaseTicks == 75) shot(client, "5a_corpses_falling");
+					if (phaseTicks > 160 && ready(client, 160)) {
+						shot(client, "5b_corpses");
+						client.setScreen(new ConfigScreen(null));
 						next();
 					}
 				}
 				case 8 -> {
+					if (phaseTicks == 30) {
+						shot(client, "7_settings_screen");
+						client.setScreen(new OptionsScreen(null, client.options));
+					}
+					if (phaseTicks == 60) {
+						shot(client, "8_options_button");
+						client.setScreen(null);
+						cmd(client, "gamemode survival @a");
+						next();
+					}
+				}
+				case 9 -> {
 					if (phaseTicks == 20) cmd(client, "kill @a");
 					if (phaseTicks > 40 && client.currentScreen instanceof DeathScreen) {
 						client.player.requestRespawn();
@@ -179,7 +197,7 @@ public final class ClientSelfTest {
 						next();
 					}
 				}
-				case 9 -> {
+				case 10 -> {
 					if (phaseTicks == 60) {
 						client.options.setPerspective(Perspective.THIRD_PERSON_BACK);
 						client.options.hudHidden = true;
@@ -191,7 +209,7 @@ public final class ClientSelfTest {
 						next();
 					}
 				}
-				case 10 -> {
+				case 11 -> {
 					MixinEnvironment.getCurrentEnvironment().audit();
 					log("PASS mixin audit (client side)");
 					finish(client);

@@ -6,8 +6,8 @@ Vanilla data: git clone --branch 1.20.1-data-json https://github.com/misode/mcme
 Usage: python3 tools/gen_terrain.py <mcmeta>/data/minecraft/worldgen
 
 Changes compared to vanilla:
-  * continents / erosion noise sampled 2x larger  -> wide continents, long coasts, big plains and highlands
-  * ridges sampled 1.4x larger                     -> longer mountain ranges and fewer, wider river valleys
+  * continents / erosion noise sampled 1.67x larger -> wide continents, long coasts, big plains and highlands
+  * ridges sampled 1.3x larger                       -> longer mountain ranges and fewer, wider river valleys
   * terrain height (offset) x HEIGHT_UP / HEIGHT_DOWN -> taller mountains, deeper oceans and valleys
   * peak jaggedness x JAGGED                        -> sharper alpine peaks
   * top slide moved from 240-256 up to 280-300      -> tall peaks are not cut flat
@@ -18,12 +18,12 @@ def env(name, default):
     return float(os.environ.get(name, default))
 
 
-CONTINENT_SCALE = env('RT_CONTINENT', 0.125)  # vanilla 0.25 (smaller = bigger continents)
-EROSION_SCALE = env('RT_EROSION', 0.125)      # vanilla 0.25
-RIDGE_SCALE = env('RT_RIDGE', 0.18)           # vanilla 0.25
-HEIGHT_UP = env('RT_HEIGHT_UP', 1.25)         # land above sea level x this
-HEIGHT_DOWN = env('RT_HEIGHT_DOWN', 1.25)     # sea floor below sea level x this
-JAGGED = env('RT_JAGGED', 1.2)                # peak sharpness
+CONTINENT_SCALE = env('RT_CONTINENT', 0.15)  # vanilla 0.25 (smaller = bigger continents)
+EROSION_SCALE = env('RT_EROSION', 0.15)      # vanilla 0.25
+RIDGE_SCALE = env('RT_RIDGE', 0.19)           # vanilla 0.25
+HEIGHT_UP = env('RT_HEIGHT_UP', 1.6)         # land above sea level x this
+HEIGHT_DOWN = env('RT_HEIGHT_DOWN', 1.15)     # sea floor below sea level x this
+JAGGED = env('RT_JAGGED', 1.4)                # peak sharpness
 TOP_SLIDE = (280, 300)                        # vanilla (240, 256)
 
 src = sys.argv[1]

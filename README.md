@@ -16,7 +16,7 @@ Settings are saved in `config/realisticoverhaul.json`.
 |---|---|
 | **Smooth terrain (NoCubes style)** | Stone, dirt, grass, sand, gravel, ores, netherrack and other natural blocks are drawn as smooth slopes instead of cubes. Flat ground stays flat. Lighting and grass color are smooth too. Edit the `smoothBlocks` list in the config to choose blocks (ids or `#tags`). |
 | **Walk up slopes** | You walk up 1-block steps without jumping, and the camera glides up instead of snapping. |
-| **Realistic terrain generation** | New worlds get continents and mountain ranges twice as big, mountains about 25% taller with sharper peaks (up to Y≈300), deeper oceans and wider river valleys. This is a built-in data pack called *Realistic Terrain*. It is on by default; turn it off under **Data Packs** when creating a world. Old chunks are not changed. |
+| **Realistic terrain generation** | New worlds get bigger continents and longer mountain ranges (about 1.7x the size), hills and mountains about 60% taller with sharper peaks (the height limit for terrain is raised from Y 256 to Y 300), deeper oceans and wider river valleys. This is a built-in data pack called *Realistic Terrain*. It is on by default; turn it off under **Data Packs** when creating a world. Old chunks are not changed. |
 | **Block collapse physics** | Break, burn or blow up a block, and the blocks it was holding up fall. A block stays up only if something is under it or at least 2 solid blocks touch its sides. Falling blocks hurt mobs. Trees fall when you cut the trunk. |
 | **Breakable glass** | Fast arrows, tridents and snowballs shatter glass. Landing on glass from 4+ blocks smashes through it, and so does sprinting into it. |
 | **Camera shake** | From explosions (stronger when closer), taking damage and blocks collapsing near you. |
@@ -30,7 +30,7 @@ Settings are saved in `config/realisticoverhaul.json`.
 | **Death → Nether → Piglin** | When you die you wake up in the Nether. Other players see you as a Piglin, and Piglins treat you as one of their own. Leave the Nether through a portal to become human again. |
 
 ## Good to know
-- **Smooth terrain is drawn by the normal Minecraft/Fabric renderer.** Mods that replace chunk rendering (Sodium, Embeddium, Iris shaders with Sodium) skip it, so terrain stays cubic with them. Physics, ragdolls and everything else still work.
+- **Smooth terrain uses the Fabric Rendering API.** It works with plain Fabric API. With **Sodium** you also need **Indium**, otherwise terrain stays cubic (everything else still works). The Sodium + Indium combination has not been tested yet.
 - Smooth terrain changes only how blocks **look**. You still collide with full blocks, so on a slope you may stand slightly above or below the surface.
 - **Realistic 3D mob models** need artwork, which this mod does not include. On 1.20.1 Fabric you can add the *Fresh Animations* resource pack with *Entity Model Features* and *Entity Texture Features*. The ragdolls work with those models too.
 - Ragdolls work on humanoids, animals with four legs, and most single-model mobs (creepers, spiders, villagers, illagers, golems). Other mobs just fall over.
