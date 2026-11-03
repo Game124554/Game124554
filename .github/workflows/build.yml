@@ -1,6 +1,9 @@
 name: build
 on: [push, pull_request, workflow_dispatch]
 
+permissions:
+  contents: write
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -39,3 +42,15 @@ jobs:
         with:
           name: server-log
           path: server.log
+      - name: Publish the jar as a GitHub Release (easy download from a phone)
+        if: github.event_name == 'push'
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: scp-foundation-latest
+          name: SCP Foundation mod (Minecraft 1.20.1 Fabric) - latest build
+          target_commitish: ${{ github.sha }}
+          make_latest: false
+          body: |
+            Download **scp-foundation-1.0.0.jar** below and put it in `.minecraft/mods` together with Fabric Loader and Fabric API 0.92.x for Minecraft 1.20.1.
+            Built automatically from commit ${{ github.sha }}. This build passed a dedicated-server boot test.
+          files: build/libs/scp-foundation-1.0.0.jar
