@@ -61,7 +61,7 @@ public final class PiglinCurse {
 
 	public static void onChangeWorld(ServerPlayerEntity player, ServerWorld origin, ServerWorld destination) {
 		if (destination.getRegistryKey() != World.NETHER && player.getCommandTags().contains(TAG)) {
-			player.removeCommandTag(TAG);
+			player.removeScoreboardTag(TAG);
 			player.sendMessage(Text.literal("You escaped Hell and are human again.").formatted(Formatting.GOLD), false);
 		}
 	}
