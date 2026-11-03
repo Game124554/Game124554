@@ -28,6 +28,11 @@
 | **529** | Josie the half-cat. Feed her fish. |
 | **1048** | Builder Bear. Hurt it and it builds hostile little copies of itself. |
 | **018** | A super ball you can throw. It speeds up with every bounce and breaks glass. |
+| **066** | Eric's Toy: a ball of yarn that keeps asking for "Eric" and sometimes lets out a deafening blast of sound. |
+| **1471** | The "MalO ver1.0.0" phone. Use it to install the app, and from then on a skull-faced figure (SCP-1471-A) keeps appearing behind you. Use the phone to take photos. Uninstalling always fails; only SCP-500 removes it. |
+| **012** | A Bad Composition: an unfinished score that pulls nearby players in and hurts them. Wear a carved pumpkin as a blindfold to resist it. |
+| **2521** | Type "2521" in chat and something takes an item stack from your inventory. |
+| **1025 / 006** | An encyclopedia that gives you the disease you read about, and bottled water that heals. |
 
 ### SCP items and blocks
 - **SCP-914**: sneak + use to change the setting (Rough / Coarse / 1:1 / Fine / Very Fine). Use it while holding an item to refine the whole stack. It upgrades keycards, ores, tools, armour and more.
@@ -65,6 +70,10 @@ Find them with `/locate structure scpfoundation:<name>`, `/locate structure #scp
 Chests use 18 custom loot tables: keycards, documents, SCP items, weapons and medical supplies.
 
 ---
+
+## Download
+A ready-built jar is published as a GitHub Release on every push. Each build is first boot-tested on a real dedicated server.
+https://github.com/Game124554/Game124554/releases/tag/scp-foundation-latest
 
 ## Building the mod (.jar)
 
