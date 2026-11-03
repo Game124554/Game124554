@@ -112,7 +112,7 @@ public class EvilScientistEntity extends HostileEntity implements RangedAttackMo
     }
 
     @Override
-    public void shootAt(LivingEntity target, float pullProgress) {
+    public void attack(LivingEntity target, float pullProgress) {
         SyringeDartEntity dart = new SyringeDartEntity(this.getWorld(), this);
         double dx = target.getX() - this.getX();
         double dy = target.getBodyY(0.3333) - dart.getY();
