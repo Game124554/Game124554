@@ -1,5 +1,7 @@
 name: build
 on: [push, pull_request, workflow_dispatch]
+permissions:
+  contents: write
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -15,3 +17,12 @@ jobs:
         with:
           name: latexdrone-mod-jar
           path: build/libs/latexdrone-1.0.0.jar
+      - name: Publish release
+        if: github.event_name != 'pull_request'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release view v1.0.0 >/dev/null 2>&1 || gh release create v1.0.0 --target "$GITHUB_SHA" \
+            --title "Latex Drone Infection 1.0.0 (Fabric 1.20.1)" \
+            --notes "Put latexdrone-1.0.0.jar in .minecraft/mods together with Fabric API for 1.20.1."
+          gh release upload v1.0.0 build/libs/latexdrone-1.0.0.jar --clobber
