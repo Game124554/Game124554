@@ -1,0 +1,8 @@
+Enabled data packs: [vanilla, fabric, realisticoverhaul:realistic_terrain]
+terrain_realistic: 25600 columns in 99229 ms | min -12 p10 46 p50 67 p90 112 p99 164 max 260 | mean 72.2 | ocean 36.1% | >150 1.86% | >200 0.24% | >250 0.01%
+PASS collapse: column fell (falling=3, landedOnGround=false)
+PASS corpse stays after death (deathTime=50)
+PASS wounded cow moves slower (0.13000000193715097)
+PASS explosion ran
+Nether loaded: true
+PASS mixin audit (server side)

@@ -1,0 +1,33 @@
+Opening world 'selftest'
+phase 1 at tick 104
+phase 2 at tick 125
+views: far [42.5, 96.0, -81.5, -45.00000762939453, 20.52352523803711] near [62.5, 70.6, -61.5, -45.00000762939453, -10.0]
+phase 3 at tick 136
+screenshot 1_smooth_far (chunks: C: 263/6936 (s) D: 8, pC: 000, pU: 00, aB: 04, fps 7)
+phase 4 at tick 425
+screenshot 2_smooth_near (chunks: C: 229/6936 (s) D: 8, pC: 000, pU: 00, aB: 04, fps 12)
+phase 5 at tick 565
+screenshot 3_cubes_near (chunks: C: 234/6936 (s) D: 8, pC: 000, pU: 00, aB: 04, fps 11)
+phase 6 at tick 705
+screenshot 4_cubes_far (chunks: C: 263/6936 (s) D: 8, pC: 000, pU: 00, aB: 04, fps 11)
+phase 7 at tick 845
+screenshot 5a_corpses_falling (chunks: C: 208/6936 (s) D: 8, pC: 036, pU: 11, aB: 00, fps 12)
+screenshot 5b_corpses (chunks: C: 311/6936 (s) D: 8, pC: 000, pU: 00, aB: 04, fps 11)
+phase 20 at tick 1006
+screenshot 9_puddles_rain (chunks: C: 314/6936 (s) D: 8, pC: 000, pU: 00, aB: 04, fps 9)
+phase 21 at tick 1167
+screenshot 10a_smooth_snow (chunks: C: 354/6936 (s) D: 8, pC: 000, pU: 00, aB: 04, fps 10)
+screenshot 10b_snow_layers_vanilla (chunks: C: 343/6936 (s) D: 8, pC: 000, pU: 00, aB: 04, fps 13)
+phase 22 at tick 1468
+screenshot 11_night_mobs (chunks: C: 260/6936 (s) D: 8, pC: 000, pU: 00, aB: 04, fps 13)
+screenshot 12_dusk_mobs (chunks: C: 260/6936 (s) D: 8, pC: 000, pU: 00, aB: 04, fps 13)
+phase 8 at tick 1669
+screenshot 7_settings_screen (chunks: C: 260/6936 (s) D: 8, pC: 000, pU: 00, aB: 04, fps 11)
+screenshot 8_options_button (chunks: C: 260/6936 (s) D: 8, pC: 000, pU: 00, aB: 04, fps 13)
+phase 9 at tick 1729
+respawn requested
+phase 10 at tick 1770
+PASS respawned in minecraft:the_nether
+screenshot 6_nether_piglin (chunks: C: 154/4624 (s) D: 8, pC: 000, pU: 00, aB: 04, fps 16)
+phase 11 at tick 2090
+PASS mixin audit (client side)

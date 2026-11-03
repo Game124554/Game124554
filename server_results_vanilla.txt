@@ -1,0 +1,8 @@
+Enabled data packs: [vanilla, fabric]
+terrain_vanilla: 25600 columns in 68406 ms | min -3 p10 47 p50 65 p90 96 p99 129 max 198 | mean 67.6 | ocean 38.6% | >150 0.25% | >200 0.00% | >250 0.00%
+PASS collapse: column fell (falling=3, landedOnGround=false)
+PASS corpse stays after death (deathTime=50)
+PASS wounded cow moves slower (0.13000000193715097)
+PASS explosion ran
+Nether loaded: true
+PASS mixin audit (server side)
