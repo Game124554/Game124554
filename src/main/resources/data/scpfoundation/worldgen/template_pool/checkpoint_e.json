@@ -1,0 +1,15 @@
+{
+  "name": "scpfoundation:checkpoint_e",
+  "fallback": "minecraft:empty",
+  "elements": [
+    {
+      "weight": 1,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "scpfoundation:checkpoint_e",
+        "projection": "rigid",
+        "processors": "minecraft:empty"
+      }
+    }
+  ]
+}

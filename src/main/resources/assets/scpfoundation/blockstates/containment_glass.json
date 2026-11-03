@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "scpfoundation:block/containment_glass"
+    }
+  }
+}

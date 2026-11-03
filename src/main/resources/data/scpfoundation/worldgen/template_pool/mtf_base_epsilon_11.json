@@ -1,0 +1,15 @@
+{
+  "name": "scpfoundation:mtf_base_epsilon_11",
+  "fallback": "minecraft:empty",
+  "elements": [
+    {
+      "weight": 1,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "scpfoundation:mtf_base_epsilon_11",
+        "projection": "rigid",
+        "processors": "minecraft:empty"
+      }
+    }
+  ]
+}

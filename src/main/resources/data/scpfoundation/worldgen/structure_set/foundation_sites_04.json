@@ -1,0 +1,46 @@
+{
+  "structures": [
+    {
+      "structure": "scpfoundation:site_43_research_lab",
+      "weight": 1
+    },
+    {
+      "structure": "scpfoundation:site_62_research_lab",
+      "weight": 1
+    },
+    {
+      "structure": "scpfoundation:site_77_research_lab",
+      "weight": 1
+    },
+    {
+      "structure": "scpfoundation:site_19_archive",
+      "weight": 1
+    },
+    {
+      "structure": "scpfoundation:site_13_archive",
+      "weight": 1
+    },
+    {
+      "structure": "scpfoundation:site_81_archive",
+      "weight": 1
+    },
+    {
+      "structure": "scpfoundation:site_120_archive",
+      "weight": 1
+    },
+    {
+      "structure": "scpfoundation:site_11_armory",
+      "weight": 1
+    },
+    {
+      "structure": "scpfoundation:site_28_armory",
+      "weight": 1
+    }
+  ],
+  "placement": {
+    "type": "minecraft:random_spread",
+    "spacing": 44,
+    "separation": 14,
+    "salt": 945313
+  }
+}

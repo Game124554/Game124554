@@ -1,0 +1,15 @@
+{
+  "name": "scpfoundation:site_99_heavy_containment",
+  "fallback": "minecraft:empty",
+  "elements": [
+    {
+      "weight": 1,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "scpfoundation:site_99_heavy_containment",
+        "projection": "rigid",
+        "processors": "minecraft:empty"
+      }
+    }
+  ]
+}

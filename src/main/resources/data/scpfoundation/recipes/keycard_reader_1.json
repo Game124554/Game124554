@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "pattern": [
+    "III",
+    "IRI",
+    "IKI"
+  ],
+  "key": {
+    "I": {
+      "item": "minecraft:iron_ingot"
+    },
+    "R": {
+      "item": "minecraft:redstone"
+    },
+    "K": {
+      "item": "scpfoundation:keycard_level_1"
+    }
+  },
+  "result": {
+    "item": "scpfoundation:keycard_reader_1",
+    "count": 1
+  }
+}

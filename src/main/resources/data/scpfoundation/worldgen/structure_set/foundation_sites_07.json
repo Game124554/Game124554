@@ -1,0 +1,46 @@
+{
+  "structures": [
+    {
+      "structure": "scpfoundation:site_25_light_containment",
+      "weight": 1
+    },
+    {
+      "structure": "scpfoundation:site_40_light_containment",
+      "weight": 1
+    },
+    {
+      "structure": "scpfoundation:checkpoint_a",
+      "weight": 1
+    },
+    {
+      "structure": "scpfoundation:checkpoint_b",
+      "weight": 1
+    },
+    {
+      "structure": "scpfoundation:checkpoint_c",
+      "weight": 1
+    },
+    {
+      "structure": "scpfoundation:checkpoint_d",
+      "weight": 1
+    },
+    {
+      "structure": "scpfoundation:checkpoint_e",
+      "weight": 1
+    },
+    {
+      "structure": "scpfoundation:gate_a",
+      "weight": 1
+    },
+    {
+      "structure": "scpfoundation:gate_b",
+      "weight": 1
+    }
+  ],
+  "placement": {
+    "type": "minecraft:random_spread",
+    "spacing": 44,
+    "separation": 14,
+    "salt": 1159126
+  }
+}

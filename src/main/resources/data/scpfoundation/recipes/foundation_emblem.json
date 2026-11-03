@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "pattern": [
+    " D ",
+    "D#D",
+    " D "
+  ],
+  "key": {
+    "D": {
+      "item": "minecraft:black_dye"
+    },
+    "#": {
+      "item": "minecraft:white_concrete"
+    }
+  },
+  "result": {
+    "item": "scpfoundation:foundation_emblem",
+    "count": 1
+  }
+}

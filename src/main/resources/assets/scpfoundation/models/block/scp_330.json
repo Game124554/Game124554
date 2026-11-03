@@ -1,0 +1,75 @@
+{
+  "parent": "minecraft:block/block",
+  "textures": {
+    "particle": "scpfoundation:block/scp_330_bowl_side",
+    "stand": "scpfoundation:block/scp_330_stand",
+    "bowl": "scpfoundation:block/scp_330_bowl_side",
+    "candy": "scpfoundation:block/scp_330_bowl_top"
+  },
+  "elements": [
+    {
+      "from": [
+        6,
+        0,
+        6
+      ],
+      "to": [
+        10,
+        9,
+        10
+      ],
+      "faces": {
+        "north": {
+          "texture": "#stand"
+        },
+        "south": {
+          "texture": "#stand"
+        },
+        "east": {
+          "texture": "#stand"
+        },
+        "west": {
+          "texture": "#stand"
+        },
+        "up": {
+          "texture": "#stand"
+        },
+        "down": {
+          "texture": "#stand"
+        }
+      }
+    },
+    {
+      "from": [
+        3,
+        9,
+        3
+      ],
+      "to": [
+        13,
+        13,
+        13
+      ],
+      "faces": {
+        "north": {
+          "texture": "#bowl"
+        },
+        "south": {
+          "texture": "#bowl"
+        },
+        "east": {
+          "texture": "#bowl"
+        },
+        "west": {
+          "texture": "#bowl"
+        },
+        "down": {
+          "texture": "#bowl"
+        },
+        "up": {
+          "texture": "#candy"
+        }
+      }
+    }
+  ]
+}

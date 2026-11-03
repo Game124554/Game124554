@@ -1,0 +1,46 @@
+{
+  "structures": [
+    {
+      "structure": "scpfoundation:site_54_dclass_barracks",
+      "weight": 1
+    },
+    {
+      "structure": "scpfoundation:site_19_heavy_containment",
+      "weight": 1
+    },
+    {
+      "structure": "scpfoundation:site_17_heavy_containment",
+      "weight": 1
+    },
+    {
+      "structure": "scpfoundation:site_13_heavy_containment",
+      "weight": 1
+    },
+    {
+      "structure": "scpfoundation:site_66_heavy_containment",
+      "weight": 1
+    },
+    {
+      "structure": "scpfoundation:site_99_heavy_containment",
+      "weight": 1
+    },
+    {
+      "structure": "scpfoundation:site_19_light_containment",
+      "weight": 1
+    },
+    {
+      "structure": "scpfoundation:site_17_light_containment",
+      "weight": 1
+    },
+    {
+      "structure": "scpfoundation:site_11_light_containment",
+      "weight": 1
+    }
+  ],
+  "placement": {
+    "type": "minecraft:random_spread",
+    "spacing": 44,
+    "separation": 14,
+    "salt": 1087855
+  }
+}

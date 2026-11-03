@@ -1,0 +1,15 @@
+{
+  "name": "scpfoundation:breakroom_scp_294",
+  "fallback": "minecraft:empty",
+  "elements": [
+    {
+      "weight": 1,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "scpfoundation:breakroom_scp_294",
+        "projection": "rigid",
+        "processors": "minecraft:empty"
+      }
+    }
+  ]
+}

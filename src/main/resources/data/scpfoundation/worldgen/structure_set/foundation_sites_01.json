@@ -1,0 +1,46 @@
+{
+  "structures": [
+    {
+      "structure": "scpfoundation:cell_scp_173",
+      "weight": 1
+    },
+    {
+      "structure": "scpfoundation:cell_scp_096",
+      "weight": 1
+    },
+    {
+      "structure": "scpfoundation:cell_scp_049",
+      "weight": 1
+    },
+    {
+      "structure": "scpfoundation:cell_scp_106",
+      "weight": 1
+    },
+    {
+      "structure": "scpfoundation:cell_scp_682",
+      "weight": 1
+    },
+    {
+      "structure": "scpfoundation:cell_scp_939",
+      "weight": 1
+    },
+    {
+      "structure": "scpfoundation:cell_scp_999",
+      "weight": 1
+    },
+    {
+      "structure": "scpfoundation:cell_scp_131",
+      "weight": 1
+    },
+    {
+      "structure": "scpfoundation:cell_scp_529",
+      "weight": 1
+    }
+  ],
+  "placement": {
+    "type": "minecraft:random_spread",
+    "spacing": 44,
+    "separation": 14,
+    "salt": 731500
+  }
+}

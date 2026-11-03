@@ -1,0 +1,30 @@
+{
+  "replace": false,
+  "values": [
+    "scpfoundation:cell_scp_173",
+    "scpfoundation:cell_scp_096",
+    "scpfoundation:cell_scp_049",
+    "scpfoundation:cell_scp_106",
+    "scpfoundation:cell_scp_682",
+    "scpfoundation:cell_scp_939",
+    "scpfoundation:cell_scp_999",
+    "scpfoundation:cell_scp_131",
+    "scpfoundation:cell_scp_529",
+    "scpfoundation:cell_scp_1048",
+    "scpfoundation:chamber_scp_914",
+    "scpfoundation:breakroom_scp_294",
+    "scpfoundation:room_scp_330",
+    "scpfoundation:room_scp_458",
+    "scpfoundation:room_scp_1162",
+    "scpfoundation:vault_scp_500",
+    "scpfoundation:vault_scp_207",
+    "scpfoundation:vault_scp_018",
+    "scpfoundation:vault_scp_005",
+    "scpfoundation:vault_scp_427",
+    "scpfoundation:vault_scp_714",
+    "scpfoundation:vault_scp_268",
+    "scpfoundation:vault_scp_063",
+    "scpfoundation:scp_087_stairwell",
+    "scpfoundation:scp_3008_store"
+  ]
+}

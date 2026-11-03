@@ -1,0 +1,15 @@
+{
+  "name": "scpfoundation:scp_087_stairwell",
+  "fallback": "minecraft:empty",
+  "elements": [
+    {
+      "weight": 1,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "scpfoundation:scp_087_stairwell",
+        "projection": "rigid",
+        "processors": "minecraft:empty"
+      }
+    }
+  ]
+}

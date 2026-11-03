@@ -1,0 +1,46 @@
+{
+  "structures": [
+    {
+      "structure": "scpfoundation:vault_scp_005",
+      "weight": 1
+    },
+    {
+      "structure": "scpfoundation:vault_scp_427",
+      "weight": 1
+    },
+    {
+      "structure": "scpfoundation:vault_scp_714",
+      "weight": 1
+    },
+    {
+      "structure": "scpfoundation:vault_scp_268",
+      "weight": 1
+    },
+    {
+      "structure": "scpfoundation:vault_scp_063",
+      "weight": 1
+    },
+    {
+      "structure": "scpfoundation:scp_087_stairwell",
+      "weight": 1
+    },
+    {
+      "structure": "scpfoundation:scp_3008_store",
+      "weight": 1
+    },
+    {
+      "structure": "scpfoundation:site_19_research_lab",
+      "weight": 1
+    },
+    {
+      "structure": "scpfoundation:site_17_research_lab",
+      "weight": 1
+    }
+  ],
+  "placement": {
+    "type": "minecraft:random_spread",
+    "spacing": 44,
+    "separation": 14,
+    "salt": 874042
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "replace": false,
+  "values": [
+    "scpfoundation:reinforced_concrete",
+    "scpfoundation:facility_wall",
+    "scpfoundation:facility_floor",
+    "scpfoundation:hazard_block",
+    "scpfoundation:containment_glass",
+    "scpfoundation:foundation_emblem",
+    "scpfoundation:corroded_block",
+    "scpfoundation:keycard_reader_1",
+    "scpfoundation:keycard_reader_2",
+    "scpfoundation:keycard_reader_3",
+    "scpfoundation:keycard_reader_4",
+    "scpfoundation:keycard_reader_5",
+    "scpfoundation:scp_914",
+    "scpfoundation:scp_294",
+    "scpfoundation:scp_1162",
+    "scpfoundation:scp_330"
+  ]
+}

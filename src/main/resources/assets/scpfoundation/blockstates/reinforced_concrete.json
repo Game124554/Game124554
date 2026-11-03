@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "scpfoundation:block/reinforced_concrete"
+    }
+  }
+}

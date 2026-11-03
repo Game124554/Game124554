@@ -1,0 +1,99 @@
+{
+  "type": "minecraft:chest",
+  "pools": [
+    {
+      "rolls": {
+        "type": "minecraft:uniform",
+        "min": 3,
+        "max": 5
+      },
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "scpfoundation:keycard_o5",
+          "weight": 4
+        },
+        {
+          "type": "minecraft:item",
+          "name": "scpfoundation:keycard_level_5",
+          "weight": 6
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:diamond",
+          "weight": 10,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "type": "minecraft:uniform",
+                "min": 1,
+                "max": 4
+              }
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:emerald",
+          "weight": 10,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "type": "minecraft:uniform",
+                "min": 2,
+                "max": 6
+              }
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:netherite_scrap",
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
+          "name": "scpfoundation:scp_500",
+          "weight": 4
+        },
+        {
+          "type": "minecraft:item",
+          "name": "scpfoundation:scp_005",
+          "weight": 2
+        },
+        {
+          "type": "minecraft:item",
+          "name": "scpfoundation:scp_714",
+          "weight": 2
+        },
+        {
+          "type": "minecraft:item",
+          "name": "scpfoundation:scp_427",
+          "weight": 2
+        },
+        {
+          "type": "minecraft:item",
+          "name": "scpfoundation:scp_268",
+          "weight": 2
+        },
+        {
+          "type": "minecraft:item",
+          "name": "scpfoundation:scp_document",
+          "weight": 10,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "type": "minecraft:uniform",
+                "min": 2,
+                "max": 6
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

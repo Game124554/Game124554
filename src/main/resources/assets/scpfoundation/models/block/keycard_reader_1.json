@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/orientable",
+  "textures": {
+    "front": "scpfoundation:block/keycard_reader_1_front",
+    "side": "scpfoundation:block/keycard_reader_side",
+    "top": "scpfoundation:block/keycard_reader_side"
+  }
+}

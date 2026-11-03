@@ -1,0 +1,46 @@
+{
+  "structures": [
+    {
+      "structure": "scpfoundation:helipad_alpha",
+      "weight": 1
+    },
+    {
+      "structure": "scpfoundation:helipad_omega",
+      "weight": 1
+    },
+    {
+      "structure": "scpfoundation:watchtower_1",
+      "weight": 1
+    },
+    {
+      "structure": "scpfoundation:watchtower_2",
+      "weight": 1
+    },
+    {
+      "structure": "scpfoundation:watchtower_3",
+      "weight": 1
+    },
+    {
+      "structure": "scpfoundation:outpost_14",
+      "weight": 1
+    },
+    {
+      "structure": "scpfoundation:outpost_33",
+      "weight": 1
+    },
+    {
+      "structure": "scpfoundation:outpost_51",
+      "weight": 1
+    },
+    {
+      "structure": "scpfoundation:outpost_72",
+      "weight": 1
+    }
+  ],
+  "placement": {
+    "type": "minecraft:random_spread",
+    "spacing": 44,
+    "separation": 14,
+    "salt": 1230397
+  }
+}

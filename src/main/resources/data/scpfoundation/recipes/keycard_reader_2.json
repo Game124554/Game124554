@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "redstone",
+  "ingredients": [
+    {
+      "item": "scpfoundation:keycard_reader_1"
+    },
+    {
+      "item": "scpfoundation:keycard_level_2"
+    }
+  ],
+  "result": {
+    "item": "scpfoundation:keycard_reader_2",
+    "count": 1
+  }
+}

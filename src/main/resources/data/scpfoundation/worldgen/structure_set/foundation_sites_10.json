@@ -1,0 +1,46 @@
+{
+  "structures": [
+    {
+      "structure": "scpfoundation:ruined_site_59",
+      "weight": 1
+    },
+    {
+      "structure": "scpfoundation:chaos_insurgency_camp_1",
+      "weight": 1
+    },
+    {
+      "structure": "scpfoundation:chaos_insurgency_camp_2",
+      "weight": 1
+    },
+    {
+      "structure": "scpfoundation:chaos_insurgency_camp_3",
+      "weight": 1
+    },
+    {
+      "structure": "scpfoundation:chaos_insurgency_camp_4",
+      "weight": 1
+    },
+    {
+      "structure": "scpfoundation:goc_outpost_1",
+      "weight": 1
+    },
+    {
+      "structure": "scpfoundation:goc_outpost_2",
+      "weight": 1
+    },
+    {
+      "structure": "scpfoundation:goc_outpost_3",
+      "weight": 1
+    },
+    {
+      "structure": "scpfoundation:serpents_hand_hideout_1",
+      "weight": 1
+    }
+  ],
+  "placement": {
+    "type": "minecraft:random_spread",
+    "spacing": 44,
+    "separation": 14,
+    "salt": 1372939
+  }
+}

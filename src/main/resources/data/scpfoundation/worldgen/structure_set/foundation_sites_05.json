@@ -1,0 +1,46 @@
+{
+  "structures": [
+    {
+      "structure": "scpfoundation:site_36_armory",
+      "weight": 1
+    },
+    {
+      "structure": "scpfoundation:site_64_armory",
+      "weight": 1
+    },
+    {
+      "structure": "scpfoundation:site_17_medical_bay",
+      "weight": 1
+    },
+    {
+      "structure": "scpfoundation:site_23_medical_bay",
+      "weight": 1
+    },
+    {
+      "structure": "scpfoundation:site_88_medical_bay",
+      "weight": 1
+    },
+    {
+      "structure": "scpfoundation:site_91_medical_bay",
+      "weight": 1
+    },
+    {
+      "structure": "scpfoundation:site_19_dclass_barracks",
+      "weight": 1
+    },
+    {
+      "structure": "scpfoundation:site_6_dclass_barracks",
+      "weight": 1
+    },
+    {
+      "structure": "scpfoundation:site_103_dclass_barracks",
+      "weight": 1
+    }
+  ],
+  "placement": {
+    "type": "minecraft:random_spread",
+    "spacing": 44,
+    "separation": 14,
+    "salt": 1016584
+  }
+}

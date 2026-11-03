@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/orientable",
+  "textures": {
+    "front": "scpfoundation:block/scp_914_front",
+    "side": "scpfoundation:block/scp_914_side",
+    "top": "scpfoundation:block/scp_914_top"
+  }
+}

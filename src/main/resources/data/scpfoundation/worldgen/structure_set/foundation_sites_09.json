@@ -1,0 +1,46 @@
+{
+  "structures": [
+    {
+      "structure": "scpfoundation:area_12_bunker",
+      "weight": 1
+    },
+    {
+      "structure": "scpfoundation:area_31_bunker",
+      "weight": 1
+    },
+    {
+      "structure": "scpfoundation:area_47_bunker",
+      "weight": 1
+    },
+    {
+      "structure": "scpfoundation:area_68_bunker",
+      "weight": 1
+    },
+    {
+      "structure": "scpfoundation:area_85_bunker",
+      "weight": 1
+    },
+    {
+      "structure": "scpfoundation:o5_council_bunker",
+      "weight": 1
+    },
+    {
+      "structure": "scpfoundation:ruined_site_4",
+      "weight": 1
+    },
+    {
+      "structure": "scpfoundation:ruined_site_8",
+      "weight": 1
+    },
+    {
+      "structure": "scpfoundation:ruined_site_26",
+      "weight": 1
+    }
+  ],
+  "placement": {
+    "type": "minecraft:random_spread",
+    "spacing": 44,
+    "separation": 14,
+    "salt": 1301668
+  }
+}
