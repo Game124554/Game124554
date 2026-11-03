@@ -1,8 +1,8 @@
-# Realistic Overhaul 2.0 (Fabric 1.20.1)
+# Realistic Overhaul 2.1 (Fabric 1.20.1)
 
 One mod that makes Minecraft Java 1.20.1 look and behave more like real life.
 
-**Download:** the `.jar` is on the [Releases page](https://github.com/Game124554/Game124554/releases) (tag `realistic-overhaul-v2.0.0`).
+**Download:** the `.jar` is on the [Releases page](https://github.com/Game124554/Game124554/releases) (tag `realistic-overhaul-v2.1.0`).
 Put it in `.minecraft/mods` together with **Fabric API** for 1.20.1 (Fabric Loader 0.14.21 or newer).
 Install it on the server too when you play multiplayer.
 
@@ -22,8 +22,9 @@ Settings are saved in `config/realisticoverhaul.json`.
 | **Camera shake** | From explosions (stronger when closer), taking damage and blocks collapsing near you. |
 | **Corpses + ragdoll** | Dead mobs are thrown back by the hit and stay on the ground (60 s by default, up to 10 minutes). Their head, arms and legs flop separately, and swing again when a corpse is kicked, pushed or lands. Walk into a corpse to push it, hit it to kick it. |
 | **Realistic mobs** | Hits splatter (red for most mobs, bone for skeletons, slime for slimes...). Mobs under 30% health limp and move 35% slower. |
-| **Rain puddles** | Puddles form while it rains, mostly in low spots, and dry up afterwards. |
-| **Snow** | Snow builds up in layers while it snows (up to 4 by default, 8 max). |
+| **Creepy mobs** | Zombies hunch forward, drag one leg and twitch their heads. Skeletons rattle and jerk, endermen are taller and thinner with a crooked twitching head, creepers breathe and lean forward, spider legs fidget. Zombies and skeletons have glowing eyes in the dark (yellow and red). Only the look changes, not how mobs fight. |
+| **Rain puddles** | Puddles form while it rains, mostly in low spots, and dry up afterwards. They have irregular shapes, join into bigger puddles, look wet and shiny, and raindrops make ripples on them. |
+| **Snow** | Snow builds up in layers while it snows (up to 6 by default, 8 max). It forms dunes and piles up against walls. Snow layers are drawn as one smooth, wavy surface, and wind blows snow around in snowy places. |
 | **Water and lava** | Lava flows fast and far everywhere. Steam rises where water touches lava. |
 | **Bedrock removed** | Bedrock is replaced in new chunks (deepslate in the Overworld, netherrack in the Nether) and existing bedrock can be mined. Blocks at the very bottom never drop into the void. |
 | **Hell** | The Nether and deep Overworld caves (below Y=0) get thick red smoky fog, falling ash and rising embers. |
@@ -32,7 +33,8 @@ Settings are saved in `config/realisticoverhaul.json`.
 ## Good to know
 - **Smooth terrain uses the Fabric Rendering API.** It works with plain Fabric API. With **Sodium** you also need **Indium**, otherwise terrain stays cubic (everything else still works). The Sodium + Indium combination has not been tested yet.
 - Smooth terrain changes only how blocks **look**. You still collide with full blocks, so on a slope you may stand slightly above or below the surface.
-- **Realistic 3D mob models** need artwork, which this mod does not include. On 1.20.1 Fabric you can add the *Fresh Animations* resource pack with *Entity Model Features* and *Entity Texture Features*. The ragdolls work with those models too.
+- **Puddles look shiny, but they are not real mirrors.** True reflections need a shader pack (Iris).
+- **Painted, realistic 3D mob models** need artwork, which this mod does not include (it changes poses, movement and eyes instead). On 1.20.1 Fabric you can add the *Fresh Animations* resource pack with *Entity Model Features* and *Entity Texture Features*. The ragdolls work with those models too.
 - Ragdolls work on humanoids, animals with four legs, and most single-model mobs (creepers, spiders, villagers, illagers, golems). Other mobs just fall over.
 
 ## Build it yourself

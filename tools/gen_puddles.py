@@ -35,10 +35,10 @@ def inside(shape, n, e, s, w, x, y):
     if e and dx >= 0 and abs(dy) < EDGE_HALF + wob(dx) * min(1, dx / 8) * (1 if dx < 15 else 0):
         return True
     # fill the corner between two joined sides
-    if n and e and dx >= 0 and dy <= 0 and dx * -dy < 40: return True
-    if n and w and dx <= 0 and dy <= 0 and dx * dy < 40: return True
-    if s and e and dx >= 0 and dy >= 0 and dx * dy < 40: return True
-    if s and w and dx <= 0 and dy >= 0 and -dx * dy < 40: return True
+    if n and e and dx >= 0 and dy <= 0: return True
+    if n and w and dx <= 0 and dy <= 0: return True
+    if s and e and dx >= 0 and dy >= 0: return True
+    if s and w and dx <= 0 and dy >= 0: return True
     return False
 
 

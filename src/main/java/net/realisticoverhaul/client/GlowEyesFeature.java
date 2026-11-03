@@ -1,6 +1,10 @@
 package net.realisticoverhaul.client;
 
 import net.minecraft.client.render.OverlayTexture;
+import net.minecraft.client.world.ClientWorld;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.LightType;
+import net.minecraft.world.World;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.VertexConsumerProvider;
@@ -32,7 +36,10 @@ public class GlowEyesFeature<T extends LivingEntity, M extends EntityModel<T>> e
 		if (!ROConfig.get().glowingEyes || entity.isDead() || entity.isInvisible()) return;
 		if (!(getContextModel() instanceof BipedEntityModel<?> biped) || !biped.head.visible) return;
 		// Brighter the darker it is around the mob.
-		int level = entity.getWorld().getLightLevel(entity.getBlockPos().up());
+		BlockPos at = entity.getBlockPos().up();
+		World world = entity.getWorld();
+		float daylight = world instanceof ClientWorld cw ? MathHelper.clamp((cw.getSkyBrightness(tickDelta) - 0.2f) / 0.8f, 0f, 1f) : 1f;
+		float level = Math.max(world.getLightLevel(LightType.BLOCK, at), world.getLightLevel(LightType.SKY, at) * daylight);
 		float glow = MathHelper.clamp((11f - level) / 7f, 0f, 1f);
 		if (glow <= 0.02f) return;
 
