@@ -1,25 +1,25 @@
 package net.realisticoverhaul.client.smooth;
 
+import net.fabricmc.fabric.api.renderer.v1.Renderer;
+import net.fabricmc.fabric.api.renderer.v1.RendererAccess;
+import net.fabricmc.fabric.api.renderer.v1.material.RenderMaterial;
+import net.fabricmc.fabric.api.renderer.v1.mesh.MutableQuadView;
+import net.fabricmc.fabric.api.renderer.v1.mesh.QuadEmitter;
+import net.fabricmc.fabric.api.util.TriState;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.render.OverlayTexture;
-import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.WorldRenderer;
-import net.minecraft.client.render.block.BlockRenderManager;
 import net.minecraft.client.render.model.BakedModel;
 import net.minecraft.client.render.model.BakedQuad;
-import net.minecraft.client.texture.Sprite;
-import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.world.BlockRenderView;
-import org.joml.Matrix4f;
-import org.joml.Vector4f;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.Supplier;
 
 /**
  * Smooth terrain mesher (Surface Nets on the block grid, the technique NoCubes uses).
@@ -60,7 +60,19 @@ public final class SmoothMesher {
 		final int[] quadCells = new int[4];
 		final int[] cell = new int[3];
 		final BlockPos.Mutable m = new BlockPos.Mutable();
-		final Vector4f tmp = new Vector4f();
+	}
+
+	/** Lighting is done here (smooth light + corner shading), so the renderer's own AO and shading are off. */
+	private static volatile RenderMaterial material;
+
+	private static RenderMaterial material() {
+		RenderMaterial m = material;
+		if (m == null) {
+			Renderer r = RendererAccess.INSTANCE.getRenderer();
+			m = r.materialFinder().ambientOcclusion(TriState.FALSE).disableDiffuse(true).find();
+			material = m;
+		}
+		return m;
 	}
 
 	private SmoothMesher() {}
@@ -78,9 +90,9 @@ public final class SmoothMesher {
 		return SmoothTerrain.isSmoothable(s) || s.isOpaqueFullCube(world, pos);
 	}
 
-	/** Draws the smooth surface of one smoothable block. */
-	public static void render(BlockRenderManager brm, BlockState state, BlockPos pos, BlockRenderView world,
-							  MatrixStack matrices, VertexConsumer out, Random random) {
+	/** Emits the smooth surface of one smoothable block through the Fabric renderer. */
+	public static void emit(BakedModel model, BlockState state, BlockPos pos, BlockRenderView world,
+							Supplier<Random> randomSupplier, QuadEmitter emitter) {
 		Work w = WORK.get();
 		BlockPos.Mutable m = w.m;
 
@@ -110,11 +122,8 @@ public final class SmoothMesher {
 		}
 		Arrays.fill(w.vDone, false);
 
-		MinecraftClient client = MinecraftClient.getInstance();
-		boolean ao = client.options.getAo().getValue();
-		BakedModel model = brm.getModel(state);
-		Matrix4f mat = matrices.peek().getPositionMatrix();
-		long seed = state.getRenderingSeed(pos);
+		boolean ao = MinecraftClient.getInstance().options.getAo().getValue();
+		RenderMaterial mat = material();
 
 		for (Direction d : DIRS) {
 			if (w.solid[sIdx(d.getOffsetX(), d.getOffsetY(), d.getOffsetZ())]) continue;
@@ -134,7 +143,7 @@ public final class SmoothMesher {
 				computeVertex(w, ci, w.cell[0], w.cell[1], w.cell[2], world, pos, ao);
 				w.quadCells[k] = ci;
 			}
-			emitFace(w, d, state, pos, world, model, random, seed, mat, out, client);
+			emitFace(w, d, state, world, model, randomSupplier, mat, emitter);
 		}
 	}
 
@@ -198,8 +207,8 @@ public final class SmoothMesher {
 		w.vDone[ci] = true;
 	}
 
-	private static void emitFace(Work w, Direction d, BlockState state, BlockPos pos, BlockRenderView world, BakedModel model,
-								 Random random, long seed, Matrix4f mat, VertexConsumer out, MinecraftClient client) {
+	private static void emitFace(Work w, Direction d, BlockState state, BlockRenderView world, BakedModel model,
+								 Supplier<Random> randomSupplier, RenderMaterial mat, QuadEmitter emitter) {
 		int[] q = w.quadCells;
 		float ax = w.vx[q[2]] - w.vx[q[0]], ay = w.vy[q[2]] - w.vy[q[0]], az = w.vz[q[2]] - w.vz[q[0]];
 		float bx = w.vx[q[3]] - w.vx[q[1]], by = w.vy[q[3]] - w.vy[q[1]], bz = w.vz[q[3]] - w.vz[q[1]];
@@ -225,16 +234,15 @@ public final class SmoothMesher {
 		else if (Math.abs(nx) + Math.abs(nz) < 1.0e-4f) tex = Direction.NORTH;
 		else tex = Direction.getFacing(nx, 0f, nz);
 
-		random.setSeed(seed);
-		List<BakedQuad> quads = model.getQuads(state, tex, random);
+		List<BakedQuad> quads = model.getQuads(state, tex, randomSupplier.get());
 		boolean filter = false;
 		if (quads.isEmpty()) {
-			random.setSeed(seed);
-			quads = model.getQuads(state, null, random);
+			quads = model.getQuads(state, null, randomSupplier.get());
 			filter = true;
 			if (quads.isEmpty()) return;
 		}
 
+		// Directional shading like vanilla, blended by the slope's normal.
 		float shade = nx * nx * world.getBrightness(nx > 0 ? Direction.EAST : Direction.WEST, true)
 				+ ny * ny * world.getBrightness(ny > 0 ? Direction.UP : Direction.DOWN, true)
 				+ nz * nz * world.getBrightness(nz > 0 ? Direction.SOUTH : Direction.NORTH, true);
@@ -243,26 +251,17 @@ public final class SmoothMesher {
 		for (int i = 0; i < quads.size(); i++) {
 			BakedQuad quad = quads.get(i);
 			if (filter && quad.getFace() != tex) continue;
-			drawQuad(w, quad, tex, state, pos, world, mat, out, client, shade, nx, ny, nz);
+			emitQuad(w, quad, d, tex, mat, emitter, shade, nx, ny, nz);
 			drewAny = true;
 		}
 		if (!drewAny && filter) {
-			drawQuad(w, quads.get(0), tex, state, pos, world, mat, out, client, shade, nx, ny, nz);
+			emitQuad(w, quads.get(0), d, tex, mat, emitter, shade, nx, ny, nz);
 		}
 	}
 
-	private static void drawQuad(Work w, BakedQuad quad, Direction tex, BlockState state, BlockPos pos, BlockRenderView world,
-								 Matrix4f mat, VertexConsumer out, MinecraftClient client, float shade,
-								 float nx, float ny, float nz) {
-		float r = 1f, g = 1f, b = 1f;
-		if (quad.hasColor()) {
-			int color = client.getBlockColors().getColor(state, world, pos, quad.getColorIndex());
-			r = ((color >> 16) & 0xFF) / 255f;
-			g = ((color >> 8) & 0xFF) / 255f;
-			b = (color & 0xFF) / 255f;
-		}
+	private static void emitQuad(Work w, BakedQuad quad, Direction face, Direction tex, RenderMaterial mat, QuadEmitter e,
+								 float shade, float nx, float ny, float nz) {
 		float s = quad.hasShade() ? shade : 1f;
-		Sprite sprite = quad.getSprite();
 		int[] q = w.quadCells;
 		for (int k = 0; k < 4; k++) {
 			int ci = q[k];
@@ -276,13 +275,18 @@ public final class SmoothMesher {
 				case WEST -> { u = z; v = 1f - y; }
 				default -> { u = 1f - z; v = 1f - y; }
 			}
-			u = MathHelper.clamp(u, 0f, 1f);
-			v = MathHelper.clamp(v, 0f, 1f);
-			float bright = s * w.vAo[ci];
-			mat.transform(w.tmp.set(x, y, z, 1f));
-			out.vertex(w.tmp.x(), w.tmp.y(), w.tmp.z(), r * bright, g * bright, b * bright, 1f,
-					sprite.getFrameU(u * 16.0), sprite.getFrameV(v * 16.0),
-					OverlayTexture.DEFAULT_UV, w.vLight[ci], nx, ny, nz);
+			int g = MathHelper.clamp((int) (s * w.vAo[ci] * 255f + 0.5f), 0, 255);
+			e.pos(k, x, y, z);
+			e.uv(k, MathHelper.clamp(u, 0f, 1f), MathHelper.clamp(v, 0f, 1f));
+			e.color(k, 0xFF000000 | (g << 16) | (g << 8) | g);
+			e.lightmap(k, w.vLight[ci]);
+			e.normal(k, nx, ny, nz);
 		}
+		e.spriteBake(quad.getSprite(), MutableQuadView.BAKE_NORMALIZED);
+		e.colorIndex(quad.getColorIndex());
+		e.material(mat);
+		e.cullFace(null);
+		e.nominalFace(face);
+		e.emit();
 	}
 }

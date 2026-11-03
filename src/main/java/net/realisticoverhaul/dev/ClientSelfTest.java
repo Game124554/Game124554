@@ -8,6 +8,7 @@ import net.minecraft.client.option.Perspective;
 import net.minecraft.client.util.ScreenshotRecorder;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.Heightmap;
 import net.realisticoverhaul.RealisticOverhaul;
@@ -91,7 +92,7 @@ public final class ClientSelfTest {
 			}
 			switch (phase) {
 				case 0 -> {
-					if (client.currentScreen instanceof TitleScreen && phaseTicks > 40) {
+					if (client.currentScreen instanceof TitleScreen && client.getOverlay() == null && phaseTicks > 40) {
 						log("Opening world 'selftest'");
 						((IntegratedServerLoaderInvoker) client.createIntegratedServerLoader())
 								.realisticoverhaul$start(client.currentScreen, "selftest", false, false);
@@ -149,9 +150,9 @@ public final class ClientSelfTest {
 						String[] mobs = {"zombie", "pig", "skeleton", "creeper", "villager", "cow"};
 						for (int i = 0; i < mobs.length; i++) {
 							double ox = (i % 3 - 1) * 2.2, oz = (i / 3) * 2.5;
-							cmd(client, String.format(java.util.Locale.ROOT, "summon %s %.1f %.1f %.1f {NoAI:1b}", mobs[i], m[0] + ox, m[1] + 1, m[2] + oz));
+							cmd(client, String.format(java.util.Locale.ROOT, "summon %s %.1f %.1f %.1f {NoAI:1b}", mobs[i], m[0] + ox, m[1] + 0.2, m[2] + oz));
 						}
-						tp(client, new double[]{m[0] - 5.5, m[1] + 3.2, m[2] - 5.5, -45, 22});
+						tp(client, new double[]{m[0] - 3.5, m[1] + 2.6, m[2] - 3.0, -45, 30});
 						next();
 					}
 				}
@@ -227,7 +228,28 @@ public final class ClientSelfTest {
 		int nx = bestX - 14, nz = bestZ - 14;
 		double ny = w.getTopY(Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, nx, nz) + 2.6;
 		nearView = view(nx, ny, nz, bestX, Math.min(bestY, ny + 6), bestZ);
-		int mx = bestX - 18, mz = bestZ - 18;
+		// Mob spot: dry, fairly flat ground near the near view.
+		int mx = nx, mz = nz;
+		search:
+		for (int r = 0; r <= 24; r += 2) {
+			for (int dx = -r; dx <= r; dx += 2) {
+				for (int dz = -r; dz <= r; dz += 2) {
+					int x = nx + dx, z = nz + dz;
+					int top = w.getTopY(Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, x, z);
+					BlockPos ground = new BlockPos(x, top - 1, z);
+					if (!w.getFluidState(ground).isEmpty() || !w.getFluidState(ground.up()).isEmpty()) continue;
+					int flat = 0;
+					for (int ox = -2; ox <= 2; ox += 2)
+						for (int oz = -2; oz <= 2; oz += 2)
+							if (Math.abs(w.getTopY(Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, x + ox, z + oz) - top) <= 1) flat++;
+					if (flat >= 8) {
+						mx = x;
+						mz = z;
+						break search;
+					}
+				}
+			}
+		}
 		mobSpot = new double[]{mx + 0.5, w.getTopY(Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, mx, mz), mz + 0.5};
 	}
 

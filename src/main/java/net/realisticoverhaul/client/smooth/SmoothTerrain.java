@@ -2,7 +2,12 @@ package net.realisticoverhaul.client.smooth;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.fabricmc.fabric.api.client.model.loading.v1.ModelLoadingPlugin;
+import net.minecraft.block.Blocks;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.util.ModelIdentifier;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.EmptyBlockView;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.tag.TagKey;
@@ -63,6 +68,27 @@ public final class SmoothTerrain {
 		blocks = Set.copyOf(b);
 		tags = List.copyOf(tg);
 		enabled = cfg.smoothTerrain;
+	}
+
+	/**
+	 * Wraps block models so they can be drawn smooth. Every opaque full-cube block is wrapped,
+	 * because the smooth list can use tags that are only known after joining a world.
+	 */
+	public static void registerModels() {
+		ModelLoadingPlugin.register(ctx -> ctx.modifyModelAfterBake().register((model, context) -> {
+			if (model == null) return null;
+			if (context.id() instanceof ModelIdentifier mid && !"inventory".equals(mid.getVariant())) {
+				Identifier blockId = new Identifier(mid.getNamespace(), mid.getPath());
+				if (Registries.BLOCK.containsId(blockId)) {
+					Block block = Registries.BLOCK.get(blockId);
+					if (block != Blocks.AIR && (blocks.contains(block)
+							|| block.getDefaultState().isOpaqueFullCube(EmptyBlockView.INSTANCE, BlockPos.ORIGIN))) {
+						return new SmoothBakedModel(model);
+					}
+				}
+			}
+			return model;
+		}));
 	}
 
 	/** Rebuild all chunk meshes (after toggling the feature or changing the list). */

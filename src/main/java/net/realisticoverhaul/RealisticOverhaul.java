@@ -41,7 +41,7 @@ public class RealisticOverhaul implements ModInitializer {
 
 		// Realistic terrain shape: a built-in data pack, on by default for new worlds.
 		// It can be switched off in "Data Packs" when creating a world.
-		FabricLoader.getInstance().getModContainer(MOD_ID).ifPresent(container ->
+		if (!"1".equals(System.getenv("RO_NO_TERRAIN"))) FabricLoader.getInstance().getModContainer(MOD_ID).ifPresent(container ->
 				ResourceManagerHelper.registerBuiltinResourcePack(new Identifier(MOD_ID, "realistic_terrain"), container,
 						Text.literal("Realistic Terrain"), ResourcePackActivationType.DEFAULT_ENABLED));
 

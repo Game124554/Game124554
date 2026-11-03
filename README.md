@@ -1,38 +1,44 @@
-# Realistic Overhaul (Fabric 1.20.1)
+# Realistic Overhaul 2.0 (Fabric 1.20.1)
 
-Needs **Fabric Loader 0.14.21+** and **Fabric API** for 1.20.1.
-In game, press **O** to open the settings. Settings are saved in `config/realisticoverhaul.json`.
+One mod that makes Minecraft Java 1.20.1 look and behave more like real life.
+
+**Download:** the `.jar` is on the [Releases page](https://github.com/Game124554/Game124554/releases) (tag `realistic-overhaul-v2.0.0`).
+Put it in `.minecraft/mods` together with **Fabric API** for 1.20.1 (Fabric Loader 0.14.21 or newer).
+Install it on the server too when you play multiplayer.
+
+**Settings:** press **O** in game, or open **Options → Realistic Overhaul...**. Everything can be switched off, and the
+**Performance** preset (LOW / MEDIUM / HIGH / ULTRA) limits how much work the physics, corpses, particles and weather do.
+Settings are saved in `config/realisticoverhaul.json`.
 
 ## Features
+
 | Feature | What it does |
 |---|---|
-| Block collapse physics | Break, burn or blow up a block, and any block it was holding up falls. A block stays up only if something is under it or at least 2 solid blocks touch its sides. Falling blocks hurt mobs. Trees fall when you cut the trunk. |
-| Breakable glass | Fast arrows, tridents and snowballs shatter glass. Landing on glass from 4+ blocks smashes through it, and so does sprinting into it. |
-| Camera shake | From explosions (stronger when you are closer), from taking damage and from blocks collapsing near you. |
-| Corpses / ragdoll | Dead mobs are thrown back from the hit, then lie on the ground as corpses (60 s by default). Walk into a corpse to push it, or hit it to kick it. |
-| Rain puddles | Puddles of water form during rain, mostly in low spots. They dry up when the rain stops, splash when you walk through them, and put out fire on you. |
-| Snow | Snow builds up in layers while it snows (up to 4 layers by default, 8 max). |
-| Water and lava | Lava flows fast and far everywhere, the way it does in the Nether. Steam rises where water touches lava. |
-| Bedrock | Bedrock can be broken (it is as hard as obsidian). Bedrock is also replaced in newly generated chunks: deepslate in the Overworld, netherrack in the Nether. Mining blocks at the very bottom never drops them into the void. |
-| Hell visuals | The Nether and deep Overworld caves (below Y=0) get red, thick, smoky fog, plus falling ash and rising embers. |
-| Death → Nether → Piglin | When you die you respawn in the Nether, and other players see you with the Piglin model. Piglins treat you as one of their own. Leave the Nether through a portal to become human again. |
-| Performance limits | The LOW / MEDIUM / HIGH / ULTRA preset sets how many physics checks run per tick, the maximum number of corpses, the particle amount and how often weather updates. |
+| **Smooth terrain (NoCubes style)** | Stone, dirt, grass, sand, gravel, ores, netherrack and other natural blocks are drawn as smooth slopes instead of cubes. Flat ground stays flat. Lighting and grass color are smooth too. Edit the `smoothBlocks` list in the config to choose blocks (ids or `#tags`). |
+| **Walk up slopes** | You walk up 1-block steps without jumping, and the camera glides up instead of snapping. |
+| **Realistic terrain generation** | New worlds get continents and mountain ranges twice as big, mountains about 25% taller with sharper peaks (up to Y≈300), deeper oceans and wider river valleys. This is a built-in data pack called *Realistic Terrain*. It is on by default; turn it off under **Data Packs** when creating a world. Old chunks are not changed. |
+| **Block collapse physics** | Break, burn or blow up a block, and the blocks it was holding up fall. A block stays up only if something is under it or at least 2 solid blocks touch its sides. Falling blocks hurt mobs. Trees fall when you cut the trunk. |
+| **Breakable glass** | Fast arrows, tridents and snowballs shatter glass. Landing on glass from 4+ blocks smashes through it, and so does sprinting into it. |
+| **Camera shake** | From explosions (stronger when closer), taking damage and blocks collapsing near you. |
+| **Corpses + ragdoll** | Dead mobs are thrown back by the hit and stay on the ground (60 s by default, up to 10 minutes). Their head, arms and legs flop separately, and swing again when a corpse is kicked, pushed or lands. Walk into a corpse to push it, hit it to kick it. |
+| **Realistic mobs** | Hits splatter (red for most mobs, bone for skeletons, slime for slimes...). Mobs under 30% health limp and move 35% slower. |
+| **Rain puddles** | Puddles form while it rains, mostly in low spots, and dry up afterwards. |
+| **Snow** | Snow builds up in layers while it snows (up to 4 by default, 8 max). |
+| **Water and lava** | Lava flows fast and far everywhere. Steam rises where water touches lava. |
+| **Bedrock removed** | Bedrock is replaced in new chunks (deepslate in the Overworld, netherrack in the Nether) and existing bedrock can be mined. Blocks at the very bottom never drop into the void. |
+| **Hell** | The Nether and deep Overworld caves (below Y=0) get thick red smoky fog, falling ash and rising embers. |
+| **Death → Nether → Piglin** | When you die you wake up in the Nether. Other players see you as a Piglin, and Piglins treat you as one of their own. Leave the Nether through a portal to become human again. |
 
-## Not included (needs other mods or real 3D artwork)
-- **NoCubes-style smooth terrain** needs a complete replacement of the terrain mesh renderer, which is a large project of its own.
-- **Realistic 3D mob models** need models drawn by an artist. On 1.20.1 Fabric you can use *Fresh Animations* (a resource pack) with *Entity Model Features* and *Entity Texture Features*.
-- **True bone ragdolls**: corpses here are thrown and fall over as one piece. The individual limbs do not move separately.
+## Good to know
+- **Smooth terrain is drawn by the normal Minecraft/Fabric renderer.** Mods that replace chunk rendering (Sodium, Embeddium, Iris shaders with Sodium) skip it, so terrain stays cubic with them. Physics, ragdolls and everything else still work.
+- Smooth terrain changes only how blocks **look**. You still collide with full blocks, so on a slope you may stand slightly above or below the surface.
+- **Realistic 3D mob models** need artwork, which this mod does not include. On 1.20.1 Fabric you can add the *Fresh Animations* resource pack with *Entity Model Features* and *Entity Texture Features*. The ragdolls work with those models too.
+- Ragdolls work on humanoids, animals with four legs, and most single-model mobs (creepers, spiders, villagers, illagers, golems). Other mobs just fall over.
 
-## How to get the .jar
-**Option A, GitHub (no setup needed):** upload this folder to a new GitHub repository. The included workflow (`.github/workflows/build.yml`) builds the mod automatically. Open the **Actions** tab, select the finished run, and download `realistic-overhaul-jar`.
+## Build it yourself
+Install Java 17 or 21, open a terminal in this folder and run `./gradlew build` (or `gradlew build` on Windows).
+The jar appears in `build/libs/`. Every push to this branch is also built by GitHub Actions (`.github/workflows/build.yml`),
+which boots a test server and a test client and saves screenshots to the `ci-results` branch.
 
-**Option B, your PC:** install Java 17 or 21, open a terminal in this folder and run:
-```
-gradlew build        (Windows)
-./gradlew build      (Mac/Linux)
-```
-The jar appears in `build/libs/realistic-overhaul-1.0.0.jar`. Put it in `.minecraft/mods` together with Fabric API.
-
-## Notes
-- The mod must be installed on the server and on every client. Physics, corpses, puddles and the Piglin curse run on the server. Fog, particles, camera shake and the Piglin model run on the client.
-- If a feature is too heavy, set Performance to LOW or switch the feature off with the O key.
+`tools/gen_terrain.py` regenerates the realistic terrain data pack from the vanilla 1.20.1 world-gen files; change the
+numbers at the top of the script to tune it.

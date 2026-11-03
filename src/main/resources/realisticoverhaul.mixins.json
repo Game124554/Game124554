@@ -16,7 +16,6 @@
   ],
   "client": [
     "client.BackgroundRendererMixin",
-    "client.BlockRenderManagerMixin",
     "client.CameraMixin",
     "client.IntegratedServerLoaderInvoker",
     "client.LimbAnimatorAccessor",

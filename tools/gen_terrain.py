@@ -8,18 +8,23 @@ Usage: python3 tools/gen_terrain.py <mcmeta>/data/minecraft/worldgen
 Changes compared to vanilla:
   * continents / erosion noise sampled 2x larger  -> wide continents, long coasts, big plains and highlands
   * ridges sampled 1.4x larger                     -> longer mountain ranges and fewer, wider river valleys
-  * terrain height (offset) x HEIGHT                -> taller mountains, deeper oceans and valleys
+  * terrain height (offset) x HEIGHT_UP / HEIGHT_DOWN -> taller mountains, deeper oceans and valleys
   * peak jaggedness x JAGGED                        -> sharper alpine peaks
   * top slide moved from 240-256 up to 280-300      -> tall peaks are not cut flat
 """
 import copy, json, os, sys
 
-CONTINENT_SCALE = 0.125   # vanilla 0.25
-EROSION_SCALE = 0.125     # vanilla 0.25
-RIDGE_SCALE = 0.18        # vanilla 0.25
-HEIGHT = 1.25
-JAGGED = 1.2
-TOP_SLIDE = (280, 300)    # vanilla (240, 256)
+def env(name, default):
+    return float(os.environ.get(name, default))
+
+
+CONTINENT_SCALE = env('RT_CONTINENT', 0.125)  # vanilla 0.25 (smaller = bigger continents)
+EROSION_SCALE = env('RT_EROSION', 0.125)      # vanilla 0.25
+RIDGE_SCALE = env('RT_RIDGE', 0.18)           # vanilla 0.25
+HEIGHT_UP = env('RT_HEIGHT_UP', 1.25)         # land above sea level x this
+HEIGHT_DOWN = env('RT_HEIGHT_DOWN', 1.25)     # sea floor below sea level x this
+JAGGED = env('RT_JAGGED', 1.2)                # peak sharpness
+TOP_SLIDE = (280, 300)                        # vanilla (240, 256)
 
 src = sys.argv[1]
 out = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'src', 'main', 'resources',
@@ -39,19 +44,26 @@ def save(rel, data):
     print('wrote', rel)
 
 
-def scale_spline(node, k):
-    """Wrap every spline found under 'node' in mul(k, spline)."""
+def scale_spline(node, up, down=None):
+    """Wrap every spline under 'node': positive values x up, negative values x down."""
     count = 0
     if isinstance(node, dict):
         for key, val in list(node.items()):
             if isinstance(val, dict) and val.get('type') == 'minecraft:spline':
-                node[key] = {'type': 'minecraft:mul', 'argument1': k, 'argument2': val}
+                if down is None or down == up:
+                    node[key] = {'type': 'minecraft:mul', 'argument1': up, 'argument2': val}
+                else:
+                    node[key] = {'type': 'minecraft:add',
+                                 'argument1': {'type': 'minecraft:mul', 'argument1': up,
+                                               'argument2': {'type': 'minecraft:max', 'argument1': 0.0, 'argument2': val}},
+                                 'argument2': {'type': 'minecraft:mul', 'argument1': down,
+                                               'argument2': {'type': 'minecraft:min', 'argument1': 0.0, 'argument2': copy.deepcopy(val)}}}
                 count += 1
             else:
-                count += scale_spline(val, k)
+                count += scale_spline(val, up, down)
     elif isinstance(node, list):
         for v in node:
-            count += scale_spline(v, k)
+            count += scale_spline(v, up, down)
     return count
 
 
@@ -75,7 +87,7 @@ for name, scale in (('continents', CONTINENT_SCALE), ('erosion', EROSION_SCALE),
     save(f'density_function/overworld/{name}.json', d)
 
 d = load('density_function/overworld/offset.json')
-assert scale_spline(d, HEIGHT) == 1
+assert scale_spline(d, HEIGHT_UP, HEIGHT_DOWN) == 1
 save('density_function/overworld/offset.json', d)
 
 d = load('density_function/overworld/jaggedness.json')
@@ -87,3 +99,5 @@ n = move_top_slide(d)
 assert n >= 2, n
 save('noise_settings/overworld.json', d)
 print('top slide moved in', n, 'places')
+print('settings:', dict(continent=CONTINENT_SCALE, erosion=EROSION_SCALE, ridge=RIDGE_SCALE,
+                        height_up=HEIGHT_UP, height_down=HEIGHT_DOWN, jagged=JAGGED))

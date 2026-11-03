@@ -36,6 +36,7 @@ public class RealisticOverhaulClient implements ClientModInitializer {
 				"key.realisticoverhaul.config", InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_O, "category.realisticoverhaul"));
 
 		SmoothTerrain.reload();
+		SmoothTerrain.registerModels();
 
 		BlockRenderLayerMap.INSTANCE.putBlock(ModBlocks.PUDDLE, RenderLayer.getTranslucent());
 		ColorProviderRegistry.BLOCK.register((state, world, pos, tintIndex) ->

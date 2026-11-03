@@ -55,6 +55,12 @@ public final class ServerSelfTest {
 		RESULTS.add(s);
 	}
 
+	private static String tag(MinecraftServer server) {
+		String t = System.getenv("RO_TAG");
+		if (t != null && !t.isBlank()) return t;
+		return server.getDataPackManager().getEnabledNames().contains("realisticoverhaul:realistic_terrain") ? "realistic" : "vanilla";
+	}
+
 	private static File dir(MinecraftServer server) {
 		File d = new File(server.getRunDirectory(), "selftest");
 		d.mkdirs();
@@ -79,7 +85,8 @@ public final class ServerSelfTest {
 		try {
 			if (tick == 5) {
 				BlockPos spawn = w.getSpawnPos();
-				base = new BlockPos(spawn.getX(), 240, spawn.getZ());
+				// Far enough from spawn to stay out of the client screenshots, close enough to keep ticking.
+				base = new BlockPos(spawn.getX() + 100, 240, spawn.getZ() + 100);
 				// A floating stone column on one support block.
 				w.setBlockState(base, Blocks.STONE.getDefaultState());
 				for (int i = 1; i <= 3; i++) w.setBlockState(base.up(i), Blocks.COBBLESTONE.getDefaultState());
@@ -133,7 +140,7 @@ public final class ServerSelfTest {
 	private static void finish(MinecraftServer server) {
 		tick = -1;
 		try {
-			Files.write(new File(dir(server), "server_results.txt").toPath(), RESULTS, StandardCharsets.UTF_8);
+			Files.write(new File(dir(server), "server_results_" + tag(server) + ".txt").toPath(), RESULTS, StandardCharsets.UTF_8);
 		} catch (Exception e) {
 			RealisticOverhaul.LOGGER.error("write results", e);
 		}
@@ -141,12 +148,12 @@ public final class ServerSelfTest {
 		server.stop(false);
 	}
 
-	/** Height map of a 4096 x 4096 block area around spawn, as a shaded PNG. */
+	/** Height map of a 3840 x 3840 block area around spawn, as a shaded PNG. */
 	private static void terrainMap(MinecraftServer server) throws Exception {
 		ServerWorld w = server.getOverworld();
 		ChunkGenerator gen = w.getChunkManager().getChunkGenerator();
 		NoiseConfig noise = w.getChunkManager().getNoiseConfig();
-		int n = 256, step = 16;
+		int n = 160, step = 24;
 		int cx = w.getSpawnPos().getX(), cz = w.getSpawnPos().getZ();
 		int[] h = new int[n * n];
 		long t0 = System.currentTimeMillis();
@@ -174,8 +181,7 @@ public final class ServerSelfTest {
 				img.setRGB(i, j, (c[0] << 16) | (c[1] << 8) | c[2]);
 			}
 		}
-		boolean realistic = server.getDataPackManager().getEnabledNames().contains("realisticoverhaul:realistic_terrain");
-		String name = realistic ? "terrain_realistic" : "terrain_vanilla";
+		String name = "terrain_" + tag(server);
 		ImageIO.write(img, "png", new File(dir(server), name + ".png"));
 
 		int[] sorted = h.clone();

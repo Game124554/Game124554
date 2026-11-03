@@ -43,20 +43,21 @@ jobs:
           msg=$(grep -E "error:|What went wrong|FAILURE" -A3 build.log | head -150 | sed ':a;N;$!ba;s/%/%25/g;s/\r/%0D/g;s/\n/%0A/g')
           echo "::error title=Build failed::$msg"
 
-      - name: Server self-test (vanilla terrain, then realistic terrain)
+      - name: Server self-test (vanilla terrain, terrain variants, then the shipped settings)
         id: server
         if: steps.build.outcome == 'success'
-        timeout-minutes: 20
+        timeout-minutes: 35
         env:
           RO_SELFTEST: server
         run: |
           mkdir -p run ci
           echo "eula=true" > run/eula.txt
-          write_props() {
+          git clone -q --depth 1 --branch 1.20.1-data-json --filter=blob:none --sparse https://github.com/misode/mcmeta /tmp/mcmeta
+          (cd /tmp/mcmeta && git sparse-checkout set data/minecraft/worldgen/density_function data/minecraft/worldgen/noise_settings)
+          run_server() {
             cat > run/server.properties <<PROPS
           level-name=$1
           level-seed=20261103
-          initial-disabled-packs=$2
           online-mode=false
           max-tick-time=-1
           view-distance=8
@@ -64,14 +65,18 @@ jobs:
           spawn-protection=0
           sync-chunk-writes=false
           PROPS
+            RO_TAG=$2 timeout 600 ./gradlew runServer -PmixinRequire=1 --no-daemon 2>&1 | tail -300 > ci/gradle_server_$2.txt || true
+            cp run/logs/latest.log ci/server_$2.log || true
           }
-          write_props world_vanilla realisticoverhaul:realistic_terrain
-          timeout 900 ./gradlew runServer -PmixinRequire=1 --no-daemon 2>&1 | tail -400 > ci/gradle_server_vanilla.txt || true
-          cp run/logs/latest.log ci/server_vanilla.log || true
-          write_props world ""
-          timeout 900 ./gradlew runServer -PmixinRequire=1 --no-daemon 2>&1 | tail -400 > ci/gradle_server_realistic.txt || true
-          cp run/logs/latest.log ci/server_realistic.log || true
-          cat run/selftest/server_results.txt || true
+          RO_NO_TERRAIN=1 run_server world_vanilla vanilla
+          # Variants: regenerate the data pack with other numbers, then put the shipped one back.
+          RT_HEIGHT_UP=1.5 RT_HEIGHT_DOWN=1.1 python3 tools/gen_terrain.py /tmp/mcmeta/data/minecraft/worldgen
+          run_server world_varA varA
+          RT_CONTINENT=0.17 RT_EROSION=0.17 RT_RIDGE=0.2 RT_HEIGHT_UP=1.45 RT_HEIGHT_DOWN=1.15 RT_JAGGED=1.35 python3 tools/gen_terrain.py /tmp/mcmeta/data/minecraft/worldgen
+          run_server world_varB varB
+          git checkout -- src/main/resources/resourcepacks
+          run_server world realistic
+          cat run/selftest/server_results_*.txt || true
           grep -q "SERVER DONE" ci/server_realistic.log
 
       - name: Client self-test (virtual screen, screenshots)
