@@ -22,7 +22,7 @@ public class Scp063Item extends Item {
         return state.isIn(BlockTags.LOGS) || state.isIn(BlockTags.LEAVES) || state.isIn(BlockTags.WOOL)
                 || state.isIn(BlockTags.PLANKS) || state.isIn(BlockTags.WART_BLOCKS) || state.isIn(BlockTags.FLOWERS)
                 || state.isIn(BlockTags.CROPS) || state.isIn(BlockTags.SAPLINGS) || state.isIn(BlockTags.WOOL_CARPETS)
-                || state.isIn(BlockTags.BEDS) || state.isIn(BlockTags.CORAL_BLOCKS) || state.isIn(BlockTags.MINEABLE_WITH_HOE);
+                || state.isIn(BlockTags.BEDS) || state.isIn(BlockTags.CORAL_BLOCKS) || state.isIn(BlockTags.HOE_MINEABLE);
     }
 
     @Override
