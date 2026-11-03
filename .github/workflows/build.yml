@@ -18,3 +18,24 @@ jobs:
         with:
           name: scp-foundation-jar
           path: build/libs/*.jar
+      - name: Dedicated server boot test (loads every block, entity, structure and the pocket dimension)
+        run: |
+          mkdir -p run
+          echo "eula=true" > run/eula.txt
+          printf "online-mode=false\nspawn-protection=0\nview-distance=6\n" > run/server.properties
+          ./gradlew runServer --no-daemon > server.log 2>&1 &
+          for i in $(seq 1 120); do
+            if grep -q "Done (" server.log; then break; fi
+            if grep -qE "Failed to start the minecraft server|Exception in server tick loop|Encountered an unexpected exception" server.log; then break; fi
+            sleep 5
+          done
+          sleep 20
+          pkill -f "net.fabricmc" || true
+          grep -nE "scpfoundation|ERROR|Exception|Done \(" server.log | head -200
+          grep -q "Done (" server.log
+          if grep -nE "ERROR.*(scpfoundation|Couldn't load|Failed to (load|parse))" server.log; then exit 1; fi
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: server-log
+          path: server.log
