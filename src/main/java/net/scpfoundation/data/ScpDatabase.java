@@ -55,16 +55,21 @@ public final class ScpDatabase {
         game(87, "The Stairwell", "Euclid", "A dark stairwell that seems to descend forever. Found in the world as a structure.");
         game(3008, "Infinite Furniture Store", "Euclid", "An enormous furniture store with no exits. Found in the world as a structure.");
 
+        game(6, "Fountain of Youth", "Safe", "A spring whose water heals and reverses aging. In-game: bottled SCP-006 water heals and cures fatigue and poison.");
+        game(12, "A Bad Composition", "Euclid", "An unfinished musical score. Anyone nearby feels compelled to complete it, using their own blood. A blindfold (carved pumpkin) protects you.");
+        game(66, "Eric's Toy", "Euclid", "A small mass of braided yarn that asks for 'Eric' and sometimes emits deafening bursts of sound.");
+        game(1025, "Encyclopedia of Diseases", "Safe", "Reading an entry gives the reader that disease's symptoms.");
+        game(1471, "MalO ver1.0.0", "Euclid", "A phone app. Once installed, a dark figure with a canine skull starts appearing in the owner's photos - and behind them.");
+        game(2521, "\u25CF\u25CF|\u25CF\u25CF\u25CF\u25CF\u25CF|\u25CF\u25CF|\u25CF", "Keter", "An entity that takes from anyone who writes about it in words. In-game: type its number in chat and it takes something from you.");
+
         // --- catalogued files (not physically present) ---
         file(1, "[ACCESS RESTRICTED]", "[REDACTED]", "Level 5 clearance required.");
         file(2, "The 'Living' Room", "Euclid", "A fleshy pod that contains a furnished room which absorbs anyone who enters.");
         file(3, "Biological Motherboard", "Euclid", "A computer motherboard made of living tissue.");
         file(4, "The 12 Rusty Keys and the Door", "Euclid", "A door that leads to different, often deadly places depending on the key used.");
-        file(6, "Fountain of Youth", "Safe", "A spring whose water reverses aging.");
         file(7, "Abdominal Planet", "Safe", "A man with a tiny, living planet in his abdomen.");
         file(8, "Zombie Plague", "Euclid", "A prion that turns its hosts into aggressive undead.");
         file(9, "Red Ice", "Euclid", "A red liquid that freezes when heated and melts when cooled.");
-        file(12, "A Bad Composition", "Euclid", "An unfinished musical score that compels people to finish it in their own blood.");
         file(13, "Blue Lady Cigarettes", "Safe", "Cigarettes that change the smoker's self-image.");
         file(14, "The Concrete Man", "Safe", "A man made of concrete who is still alive.");
         file(15, "Pipe Nightmare", "Keter", "A network of pipes that keeps growing on its own.");
@@ -76,7 +81,6 @@ public final class ScpDatabase {
         file(53, "Young Girl", "Euclid", "A small child; anyone who becomes hostile toward her suffers severe consequences.");
         file(55, "[unknown]", "Keter", "An object that cannot be remembered, only what it is not.");
         file(58, "Heart of Darkness", "Keter", "A cow-heart-like creature with tentacles and a malevolent intellect.");
-        file(66, "Eric's Toy", "Euclid", "A ball of yarn that plays extremely loud music.");
         file(73, "Cain", "Euclid", "A man whose presence withers plant life and who cannot be harmed directly.");
         file(76, "Able", "Keter", "A hostile humanoid kept in a stone coffin who repeatedly returns.");
         file(79, "Old AI", "Euclid", "A sentient artificial intelligence on outdated hardware.");
@@ -101,14 +105,11 @@ public final class ScpDatabase {
         file(966, "Sleep Killer", "Euclid", "Creatures that prevent their victims from sleeping.");
         file(990, "Dream Man", "Keter", "A man who appears in people's dreams to warn of disasters.");
         file(1000, "Bigfoot", "Keter", "A species that has hidden from humanity for a very long time.");
-        file(1025, "Encyclopedia of Diseases", "Safe", "A book that gives readers the diseases they read about.");
         file(1123, "Atrocity Skull", "Safe", "A skull that makes those who touch it relive a historical atrocity.");
-        file(1471, "MalO ver1.0.0", "Euclid", "A phone app that makes a creature appear in the user's photos.");
         file(1499, "Gas Mask", "[REDACTED]", "A gas mask that transports the wearer to another dimension.");
         file(2000, "Deus Ex Machina", "Thaumiel", "A facility built to rebuild humanity after a catastrophe.");
         file(2316, "Field Trip", "Keter", "A group of bodies in a lake that people believe they know.");
         file(2317, "A Door to Another World", "Keter", "A door that leads to a world where something is chained.");
-        file(2521, "●●|●●●●●|●●|●", "Keter", "Information about this entity must be stored without words.");
         file(3000, "Anantashesha", "Thaumiel", "An enormous sea serpent whose secretions affect memory.");
         file(4000, "Taboo", "Keter", "A forest where names and naming have power.");
         file(5000, "Why?", "Keter", "A file on a world where the Foundation turned against humanity.");

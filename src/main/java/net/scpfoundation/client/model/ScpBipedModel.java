@@ -13,7 +13,7 @@ import net.scpfoundation.entity.Scp096Entity;
 
 /** Humanoid model shared by SCP-173, 096, 049, 049-2 and 106, with a pose per creature. */
 public class ScpBipedModel<T extends MobEntity> extends BipedEntityModel<T> {
-    public enum Pose { STATUE, SHY, REACH, SHAMBLE, NORMAL }
+    public enum Pose { STATUE, SHY, REACH, SHAMBLE, STALKER, NORMAL }
 
     private final Pose pose;
 
@@ -31,6 +31,14 @@ public class ScpBipedModel<T extends MobEntity> extends BipedEntityModel<T> {
         ModelData data = BipedEntityModel.getModelData(Dilation.NONE, 0.0f);
         data.getRoot().getChild("head").addChild("beak",
                 ModelPartBuilder.create().uv(0, 32).cuboid(-1.0f, -4.0f, -8.0f, 2.0f, 2.0f, 4.0f), ModelTransform.NONE);
+        return TexturedModelData.of(data, 64, 64);
+    }
+
+    /** SCP-1471-A: a long canine skull in place of a face. */
+    public static TexturedModelData withSnout() {
+        ModelData data = BipedEntityModel.getModelData(Dilation.NONE, 0.0f);
+        data.getRoot().getChild("head").addChild("snout",
+                ModelPartBuilder.create().uv(0, 32).cuboid(-2.0f, -4.0f, -9.0f, 4.0f, 3.0f, 5.0f), ModelTransform.NONE);
         return TexturedModelData.of(data, 64, 64);
     }
 
@@ -78,6 +86,15 @@ public class ScpBipedModel<T extends MobEntity> extends BipedEntityModel<T> {
                 if (entity.isAttacking()) {
                     rightArm.pitch = -1.4f + MathHelper.sin(animationProgress * 0.3f) * 0.1f;
                 }
+            }
+            case STALKER -> {
+                // hunched, arms hanging long and still, head tilted
+                head.roll = 0.25f;
+                head.pitch += 0.2f;
+                rightArm.pitch *= 0.2f;
+                leftArm.pitch *= 0.2f;
+                rightArm.roll = 0.08f;
+                leftArm.roll = -0.08f;
             }
             case SHAMBLE -> {
                 float sway = MathHelper.sin(animationProgress * 0.067f) * 0.05f;

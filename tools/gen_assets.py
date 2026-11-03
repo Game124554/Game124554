@@ -250,6 +250,18 @@ def block_textures():
         px(img, i, 7, (150, 118, 75))
     save_png(img, BT, "scp_458_side.png")
 
+    # SCP-012 stand + score
+    save_png(new16((70, 45, 25), 6, 80), BT, "scp_012_stand.png")
+    img = new16((228, 220, 196), 4, 81)
+    for y in (3, 6, 9, 12):
+        for x in range(1, 15):
+            px(img, x, y, (60, 55, 50))
+    r5 = random.Random(82)
+    for _ in range(14):
+        x, y = r5.randrange(2, 14), r5.choice([2, 4, 5, 7, 8, 10, 11])
+        px(img, x, y, (140, 15, 15)); px(img, x + 1, y, (120, 10, 10))
+    save_png(img, BT, "scp_012_score.png")
+
     # SCP-1162 hole in wall
     img = new16((128, 128, 130), 9, 70)
     for x in range(16):
@@ -416,6 +428,35 @@ def item_textures():
     px(img, 6, 6, (255, 200, 220))
     save_png(img, IT, "scp_330_candy.png")
 
+    # SCP-1471 phone (MalO app open: a skull-faced figure on screen)
+    img = new16()
+    fill_rect(img, 4, 1, 8, 14, (25, 25, 30))
+    fill_rect(img, 5, 2, 6, 11, (60, 70, 80))
+    fill_rect(img, 7, 5, 2, 2, (226, 221, 205)); px(img, 7, 7, (226, 221, 205)); px(img, 8, 7, (226, 221, 205))
+    fill_rect(img, 6, 8, 4, 5, (10, 10, 12))
+    px(img, 7, 14, (90, 90, 95)); px(img, 8, 14, (90, 90, 95))
+    save_png(img, IT, "scp_1471.png")
+
+    # SCP-1025 encyclopedia
+    img = new16()
+    fill_rect(img, 3, 2, 10, 12, (40, 90, 50))
+    fill_rect(img, 11, 3, 2, 11, (230, 225, 205))
+    fill_rect(img, 3, 2, 1, 12, (25, 60, 30))
+    fill_rect(img, 5, 5, 5, 1, (220, 200, 90)); fill_rect(img, 5, 7, 4, 1, (220, 200, 90))
+    px(img, 7, 10, (200, 40, 40)); px(img, 6, 11, (200, 40, 40)); px(img, 8, 11, (200, 40, 40)); px(img, 7, 12, (200, 40, 40))
+    save_png(img, IT, "scp_1025.png")
+
+    # SCP-006 water bottle
+    img = new16()
+    fill_rect(img, 7, 2, 2, 3, (200, 220, 230, 200))
+    fill_rect(img, 7, 1, 2, 1, (120, 90, 60))
+    for x in range(16):
+        for y in range(16):
+            if math.hypot(x - 7.5, y - 10) <= 4.3:
+                px(img, x, y, (110, 200, 235) if y > 8 else (190, 230, 245))
+    px(img, 6, 9, (255, 255, 255)); px(img, 5, 10, (255, 255, 255)); px(img, 10, 11, (230, 250, 255))
+    save_png(img, IT, "scp_006.png")
+
     # SCP-458 pizza slice
     img = new16()
     for y in range(2, 14):
@@ -500,6 +541,15 @@ BEASTS = {
             dict(name="body", pivot=(0, 16, -2), cubes=[(-2, -3, -4, 4, 5, 6, "halfbody")]),
             dict(name="leg_a1", pivot=(1, 18, -5), cubes=[(-1, 0, -1, 2, 6, 2, "leg")]),
             dict(name="leg_b1", pivot=(-1, 18, -5), cubes=[(-1, 0, -1, 2, 6, 2, "leg")]),
+        ],
+    },
+    "scp_066": {
+        "color": (130, 30, 40), "noise": 14,
+        "parts": [
+            dict(name="bob_body", pivot=(0, 24, 0), cubes=[(-4, -7, -4, 8, 6, 8, "yarn"), (-3, -9, -3, 6, 2, 6, "yarn")]),
+            dict(name="tail1", pivot=(0, 21, 4), cubes=[(-1, -1, 0, 2, 2, 7, "yarn")]),
+            dict(name="tail2", pivot=(3, 22, -2), rot=(0, 1.2, 0), cubes=[(-1, -1, 0, 2, 2, 6, "yarn")]),
+            dict(name="tail3", pivot=(-3, 22, -2), rot=(0, -1.9, 0), cubes=[(-1, -1, 0, 2, 2, 6, "yarn")]),
         ],
     },
     "scp_1048": {
@@ -629,6 +679,14 @@ def paint_features(img, key, uv, size, base, rng, variant=None):
         for i in range(0, th_, 2):
             for j in range(tw_):
                 px(img, tx + j, ty + i, shade(base, 0.7))
+    if key == "yarn":  # braided strands
+        for name, (x, y, ww, hh) in F.items():
+            for i in range(ww):
+                for j in range(hh):
+                    if (i + j) % 3 == 0:
+                        px(img, x + i, y + j, shade(base, 1.35))
+                    elif (i - j) % 4 == 0:
+                        px(img, x + i, y + j, shade(base, 0.7))
     if key == "bearhead":
         px(img, fx + 1, fy + 2, (15, 15, 15)); px(img, fx + fw - 2, fy + 2, (15, 15, 15))
     if key == "bearbody":
@@ -820,6 +878,33 @@ def entity_textures():
                 px(img, x, y, (70, 80, 40) if rng.random() < 0.3 else (15, 10, 8))
     biped("scp_106", tar, (22, 20, 20), tar, (22, 20, 20), f106, x106, noise=7)
 
+    # SCP-1471-A: original design - gaunt black-furred figure with a pale canine skull for a head
+    fur = (18, 18, 22)
+    bone = (226, 221, 205)
+
+    def f1471(img, rng):
+        fill_rect(img, 8, 8, 8, 8, bone, 6, rng)
+        for (x, y) in [(1, 2), (2, 2), (1, 3), (2, 3), (5, 2), (6, 2), (5, 3), (6, 3)]:
+            px(img, 8 + x, 8 + y, (8, 8, 8))
+        px(img, 11, 15, (150, 140, 120)); px(img, 12, 15, (150, 140, 120))
+
+    def x1471(img, rng):
+        paint_box(img, (0, 32), (4, 3, 5), bone, 6, rng)
+        F = faces(0, 32, 4, 3, 5)
+        x, y, w, h = F["front"]
+        px(img, x + 1, y, (20, 20, 20)); px(img, x + 2, y, (20, 20, 20))
+        for i in range(w):
+            px(img, x + i, y + h - 1, (240, 240, 230) if i % 2 == 0 else (40, 30, 30))
+        F = faces(0, 0, 8, 8, 8)
+        for k in ("top", "back", "left", "right"):
+            x, y, w, h = F[k]
+            fill_rect(img, x, y, w, h, bone if k == "top" else shade(bone, 0.9), 6, rng)
+        for _ in range(40):
+            x, y = rng.randrange(16, 56), rng.randrange(16, 32)
+            if img.getpixel((x, y))[3] > 0:
+                px(img, x, y, (34, 34, 40))
+    biped("scp_1471_a", bone, fur, fur, fur, f1471, x1471, noise=5)
+
     save_png(Image.new("RGBA", (16, 16), (0, 0, 0, 0)), ET, "empty.png")
 
 
@@ -834,15 +919,15 @@ FACING_BLOCKS = {  # name -> (front, side, top)
     "scp_294": ("scp_294_front", "scp_294_side", "scp_294_side"),
     "scp_1162": ("scp_1162_front", "reinforced_concrete", "reinforced_concrete"),
 }
-SHAPED_BLOCKS = ["scp_330", "scp_458"]
+SHAPED_BLOCKS = ["scp_330", "scp_458", "scp_012"]
 ALL_BLOCKS = SIMPLE_BLOCKS + list(FACING_BLOCKS) + SHAPED_BLOCKS
 
 GENERATED_ITEMS = ["scp_document", "keycard_level_1", "keycard_level_2", "keycard_level_3", "keycard_level_4",
                    "keycard_level_5", "keycard_o5", "scp_500", "scp_207", "scp_018", "scp_005", "scp_427",
-                   "scp_714", "scp_268", "scp_294_cup", "scp_330_candy", "scp_458_pizza"]
+                   "scp_714", "scp_268", "scp_294_cup", "scp_1471", "scp_1025", "scp_006", "scp_330_candy", "scp_458_pizza"]
 HANDHELD_ITEMS = ["scp_063"]
 SPAWN_EGGS = ["scp_173", "scp_096", "scp_049", "scp_049_2", "scp_106", "scp_682", "scp_939", "scp_999",
-              "scp_131", "scp_529", "scp_1048"]
+              "scp_131", "scp_529", "scp_1048", "scp_066", "scp_1471_a"]
 
 FACING_Y = {"north": 0, "east": 90, "south": 180, "west": 270}
 
@@ -877,6 +962,19 @@ def models_and_states():
             **{d: {"texture": "#side", "uv": [0, 6, 16, 9]} for d in ["north", "south", "east", "west"]}}}]})
     write_json(os.path.join(bs, "scp_458.json"), {"variants": {
         f"facing={f}": ({"model": f"{MODID}:block/scp_458", "y": y} if y else {"model": f"{MODID}:block/scp_458"}) for f, y in FACING_Y.items()}})
+    write_json(os.path.join(bm, "scp_012.json"), {
+        "parent": "minecraft:block/block",
+        "textures": {"particle": f"{MODID}:block/scp_012_score", "stand": f"{MODID}:block/scp_012_stand", "score": f"{MODID}:block/scp_012_score"},
+        "elements": [
+            {"from": [7, 0, 7], "to": [9, 11, 9], "faces": {d: {"texture": "#stand"} for d in ["north", "south", "east", "west", "up", "down"]}},
+            {"from": [4, 0, 4], "to": [12, 1, 12], "faces": {d: {"texture": "#stand"} for d in ["north", "south", "east", "west", "up", "down"]}},
+            {"from": [2, 10, 7], "to": [14, 13, 8], "faces": {d: {"texture": "#stand"} for d in ["south", "east", "west", "up", "down"]}},
+            {"from": [2, 11, 6], "to": [14, 21, 7], "rotation": {"origin": [8, 11, 7], "axis": "x", "angle": -22.5},
+             "faces": {"north": {"texture": "#score"}, "south": {"texture": "#stand"}, "east": {"texture": "#stand"},
+                       "west": {"texture": "#stand"}, "up": {"texture": "#stand"}, "down": {"texture": "#stand"}}},
+        ]})
+    write_json(os.path.join(bs, "scp_012.json"), {"variants": {
+        f"facing={f}": ({"model": f"{MODID}:block/scp_012", "y": y} if y else {"model": f"{MODID}:block/scp_012"}) for f, y in FACING_Y.items()}})
     for b in ALL_BLOCKS:
         write_json(os.path.join(im, f"{b}.json"), {"parent": f"{MODID}:block/{b}"})
     for it in GENERATED_ITEMS:
@@ -893,9 +991,9 @@ def models_and_states():
                        "conditions": [{"condition": "minecraft:survives_explosion"}]}]})
     # mining tags
     write_json(os.path.join(RES, "data", "minecraft", "tags", "blocks", "mineable", "pickaxe.json"),
-               {"replace": False, "values": [f"{MODID}:{b}" for b in ALL_BLOCKS if b not in ("scp_458",)]})
+               {"replace": False, "values": [f"{MODID}:{b}" for b in ALL_BLOCKS if b not in ("scp_458", "scp_012")]})
     write_json(os.path.join(RES, "data", "minecraft", "tags", "blocks", "mineable", "axe.json"),
-               {"replace": False, "values": [f"{MODID}:scp_458"]})
+               {"replace": False, "values": [f"{MODID}:scp_458", f"{MODID}:scp_012"]})
 
 
 def recipes():
@@ -959,6 +1057,33 @@ LANG = {
     "item.scpfoundation.scp_714": "SCP-714 \"The Jaded Ring\"",
     "item.scpfoundation.scp_268": "SCP-268 \"Cap of Neglect\"",
     "item.scpfoundation.scp_063": "SCP-063 \"World's Best Toothbrush\"",
+    "block.scpfoundation.scp_012": "SCP-012 \"A Bad Composition\"",
+    "item.scpfoundation.scp_1471": "Phone with SCP-1471 \"MalO ver1.0.0\"",
+    "item.scpfoundation.scp_1025": "SCP-1025 \"Encyclopedia of Diseases\"",
+    "item.scpfoundation.scp_006": "Bottle of SCP-006 Water",
+    "entity.scpfoundation.scp_066": "SCP-066",
+    "entity.scpfoundation.scp_1471_a": "SCP-1471-A",
+    "tooltip.scpfoundation.scp_1471": "Use to install MalO. Use again to take a photo. Sneak + use to uninstall.",
+    "tooltip.scpfoundation.scp_1025": "Reading it is not recommended.",
+    "tooltip.scpfoundation.scp_006": "Heals and washes away poison and fatigue.",
+    "message.scpfoundation.1471_installed": "[MalO ver1.0.0] Installed successfully. You will never be alone again.",
+    "message.scpfoundation.1471_uninstall": "[MalO ver1.0.0] Uninstall failed. MalO ver1.0.0 has been reinstalled.",
+    "message.scpfoundation.1471_image": "[MalO ver1.0.0] 1 new image received.",
+    "message.scpfoundation.1471_photo_figure": "*click* There is something standing behind you in the photo.",
+    "message.scpfoundation.1471_photo_clear": "*click* Nothing unusual in the photo... this time.",
+    "message.scpfoundation.066_eric": "Eric?",
+    "message.scpfoundation.012_compelled": "You feel compelled to finish the composition...",
+    "message.scpfoundation.012_writing": "You are writing the score with your own blood.",
+    "message.scpfoundation.1025_read": "You read the entry on %s. You start to feel the symptoms.",
+    "message.scpfoundation.2521_taken": "Something with too many arms took your %s.",
+    "disease.scpfoundation.cold": "the common cold",
+    "disease.scpfoundation.flu": "influenza",
+    "disease.scpfoundation.food_poisoning": "food poisoning",
+    "disease.scpfoundation.malaria": "malaria",
+    "disease.scpfoundation.vertigo": "vertigo",
+    "disease.scpfoundation.night_blindness": "night blindness",
+    "disease.scpfoundation.necrosis": "necrosis",
+    "disease.scpfoundation.insomnia": "insomnia",
     "item.scpfoundation.scp_294_cup": "Cup",
     "item.scpfoundation.scp_294_cup.named": "Cup of %s",
     "item.scpfoundation.scp_330_candy": "SCP-330 Candy",

@@ -77,6 +77,21 @@
         },
         {
           "type": "minecraft:item",
+          "name": "scpfoundation:scp_006",
+          "weight": 3,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "type": "minecraft:uniform",
+                "min": 1,
+                "max": 2
+              }
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
           "name": "scpfoundation:keycard_level_2",
           "weight": 5
         }

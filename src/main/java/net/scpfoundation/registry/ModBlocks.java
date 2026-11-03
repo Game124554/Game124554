@@ -13,6 +13,7 @@ import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.util.Rarity;
 import net.scpfoundation.ScpFoundation;
 import net.scpfoundation.block.KeycardReaderBlock;
+import net.scpfoundation.block.Scp012Block;
 import net.scpfoundation.block.Scp1162Block;
 import net.scpfoundation.block.Scp294Block;
 import net.scpfoundation.block.Scp330Block;
@@ -56,6 +57,9 @@ public final class ModBlocks {
             new Scp458Block(AbstractBlock.Settings.create().mapColor(MapColor.BROWN).strength(0.8f).nonOpaque().sounds(BlockSoundGroup.WOOD)), Rarity.EPIC);
     public static final Block SCP_1162 = register("scp_1162",
             new Scp1162Block(AbstractBlock.Settings.create().mapColor(MapColor.GRAY).strength(-1.0f, 3600000.0f).sounds(BlockSoundGroup.STONE)), Rarity.EPIC);
+
+    public static final Block SCP_012 = register("scp_012",
+            new Scp012Block(AbstractBlock.Settings.create().mapColor(MapColor.BROWN).strength(-1.0f, 3600000.0f).nonOpaque().sounds(BlockSoundGroup.WOOD)), Rarity.EPIC);
 
     private ModBlocks() {}
 

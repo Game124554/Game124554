@@ -1,6 +1,7 @@
 {
   "replace": false,
   "values": [
-    "scpfoundation:scp_458"
+    "scpfoundation:scp_458",
+    "scpfoundation:scp_012"
   ]
 }

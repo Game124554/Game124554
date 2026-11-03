@@ -18,6 +18,8 @@ import net.scpfoundation.client.render.BeastRenderer;
 import net.scpfoundation.client.render.ScpBipedRenderer;
 import net.scpfoundation.entity.Scp0492Entity;
 import net.scpfoundation.entity.Scp049Entity;
+import net.scpfoundation.entity.Scp066Entity;
+import net.scpfoundation.entity.Scp1471Entity;
 import net.scpfoundation.entity.Scp096Entity;
 import net.scpfoundation.entity.Scp1048Entity;
 import net.scpfoundation.entity.Scp106Entity;
@@ -43,6 +45,8 @@ public class ScpFoundationClient implements ClientModInitializer {
     public static final EntityModelLayer SCP_131 = layer("scp_131");
     public static final EntityModelLayer SCP_529 = layer("scp_529");
     public static final EntityModelLayer SCP_1048 = layer("scp_1048");
+    public static final EntityModelLayer SCP_066 = layer("scp_066");
+    public static final EntityModelLayer SCP_1471_A = layer("scp_1471_a");
 
     private static EntityModelLayer layer(String name) {
         return new EntityModelLayer(ScpFoundation.id(name), "main");
@@ -65,6 +69,8 @@ public class ScpFoundationClient implements ClientModInitializer {
         EntityModelLayerRegistry.registerModelLayer(SCP_131, ScpModelData::scp131);
         EntityModelLayerRegistry.registerModelLayer(SCP_529, ScpModelData::scp529);
         EntityModelLayerRegistry.registerModelLayer(SCP_1048, ScpModelData::scp1048);
+        EntityModelLayerRegistry.registerModelLayer(SCP_066, ScpModelData::scp066);
+        EntityModelLayerRegistry.registerModelLayer(SCP_1471_A, ScpBipedModel::withSnout);
 
         EntityRendererRegistry.register(ModEntities.SCP_173, ctx -> new ScpBipedRenderer<Scp173Entity>(ctx,
                 new ScpBipedModel<Scp173Entity>(ctx.getPart(SCP_173), ScpBipedModel.Pose.STATUE), tex("scp_173"), 0.5f, 1.05f, 1.15f));
@@ -90,10 +96,15 @@ public class ScpFoundationClient implements ClientModInitializer {
                 new ScpBeastModel<Scp529Entity>(ctx.getPart(SCP_529), ScpModelData.SCP_529_PARTS), 0.3f, 1.0f, e -> tex("scp_529")));
         EntityRendererRegistry.register(ModEntities.SCP_1048, ctx -> new BeastRenderer<Scp1048Entity>(ctx,
                 new ScpBeastModel<Scp1048Entity>(ctx.getPart(SCP_1048), ScpModelData.SCP_1048_PARTS), 0.3f, 1.0f, e -> tex("scp_1048")));
+        EntityRendererRegistry.register(ModEntities.SCP_066, ctx -> new BeastRenderer<Scp066Entity>(ctx,
+                new ScpBeastModel<Scp066Entity>(ctx.getPart(SCP_066), ScpModelData.SCP_066_PARTS), 0.4f, 1.0f, e -> tex("scp_066")));
+        EntityRendererRegistry.register(ModEntities.SCP_1471_A, ctx -> new ScpBipedRenderer<Scp1471Entity>(ctx,
+                new ScpBipedModel<Scp1471Entity>(ctx.getPart(SCP_1471_A), ScpBipedModel.Pose.STALKER), tex("scp_1471_a"), 0.5f, 0.95f, 1.28f));
         EntityRendererRegistry.register(ModEntities.SCP_018, FlyingItemEntityRenderer::new);
 
         BlockRenderLayerMap.INSTANCE.putBlock(ModBlocks.CONTAINMENT_GLASS, RenderLayer.getTranslucent());
         BlockRenderLayerMap.INSTANCE.putBlock(ModBlocks.SCP_330, RenderLayer.getCutout());
         BlockRenderLayerMap.INSTANCE.putBlock(ModBlocks.SCP_458, RenderLayer.getCutout());
+        BlockRenderLayerMap.INSTANCE.putBlock(ModBlocks.SCP_012, RenderLayer.getCutout());
     }
 }
