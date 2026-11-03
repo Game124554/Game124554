@@ -1,0 +1,19 @@
+{
+  "replace": false,
+  "values": [
+    "latexdrone:dark_latex_block",
+    "latexdrone:white_latex_block",
+    "latexdrone:purple_latex_block",
+    "latexdrone:blue_latex_block",
+    "latexdrone:red_latex_block",
+    "latexdrone:green_latex_block",
+    "latexdrone:pink_latex_block",
+    "latexdrone:orange_latex_block",
+    "latexdrone:cyan_latex_block",
+    "latexdrone:gold_latex_block",
+    "latexdrone:dark_latex_puddle",
+    "latexdrone:white_latex_puddle",
+    "latexdrone:infected_dirt",
+    "latexdrone:latex_glow_lamp"
+  ]
+}

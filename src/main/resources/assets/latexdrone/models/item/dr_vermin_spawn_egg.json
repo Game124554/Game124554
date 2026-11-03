@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "latexdrone:item/dr_vermin_spawn_egg"
+  }
+}

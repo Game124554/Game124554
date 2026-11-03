@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "axis=y": {
+      "model": "latexdrone:block/infected_log"
+    },
+    "axis=z": {
+      "model": "latexdrone:block/infected_log",
+      "x": 90
+    },
+    "axis=x": {
+      "model": "latexdrone:block/infected_log",
+      "x": 90,
+      "y": 90
+    }
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "latexdrone:white_latex_block"
+    }
+  ],
+  "result": {
+    "item": "latexdrone:white_latex_goo",
+    "count": 9
+  }
+}

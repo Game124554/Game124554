@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "all": "latexdrone:block/rusted_steel_panel"
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "latexdrone:block/warning_light"
+    }
+  }
+}

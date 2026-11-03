@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cross",
+  "textures": {
+    "cross": "latexdrone:block/white_latex_crystal"
+  }
+}

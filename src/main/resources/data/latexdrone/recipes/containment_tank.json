@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "GGG",
+    "GLG",
+    "GGG"
+  ],
+  "key": {
+    "G": {
+      "item": "latexdrone:reinforced_lab_glass"
+    },
+    "L": {
+      "item": "latexdrone:latex_goo"
+    }
+  },
+  "result": {
+    "item": "latexdrone:containment_tank",
+    "count": 8
+  }
+}

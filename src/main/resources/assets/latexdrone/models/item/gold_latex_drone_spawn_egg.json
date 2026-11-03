@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "latexdrone:item/gold_latex_drone_spawn_egg"
+  }
+}

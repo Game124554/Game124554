@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "SG",
+    "GS"
+  ],
+  "key": {
+    "S": {
+      "item": "minecraft:stone_bricks"
+    },
+    "G": {
+      "item": "latexdrone:latex_goo"
+    }
+  },
+  "result": {
+    "item": "latexdrone:latex_bricks",
+    "count": 4
+  }
+}

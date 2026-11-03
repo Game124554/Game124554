@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "QI",
+    "IQ"
+  ],
+  "key": {
+    "Q": {
+      "item": "minecraft:white_concrete"
+    },
+    "I": {
+      "item": "minecraft:iron_nugget"
+    }
+  },
+  "result": {
+    "item": "latexdrone:lab_wall",
+    "count": 4
+  }
+}

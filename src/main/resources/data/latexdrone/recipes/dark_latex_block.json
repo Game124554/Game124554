@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "GGG",
+    "GGG",
+    "GGG"
+  ],
+  "key": {
+    "G": {
+      "item": "latexdrone:latex_goo"
+    }
+  },
+  "result": {
+    "item": "latexdrone:dark_latex_block",
+    "count": 1
+  }
+}

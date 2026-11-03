@@ -1,0 +1,116 @@
+{
+  "latex_ambient": {
+    "subtitle": "subtitles.latexdrone.latex_ambient",
+    "sounds": [
+      "latexdrone:latex_ambient",
+      "latexdrone:latex_ambient2",
+      "latexdrone:latex_ambient3"
+    ]
+  },
+  "latex_hurt": {
+    "subtitle": "subtitles.latexdrone.latex_hurt",
+    "sounds": [
+      "latexdrone:latex_hurt",
+      "latexdrone:latex_hurt2"
+    ]
+  },
+  "latex_death": {
+    "subtitle": "subtitles.latexdrone.latex_death",
+    "sounds": [
+      "latexdrone:latex_death"
+    ]
+  },
+  "drone_ambient": {
+    "subtitle": "subtitles.latexdrone.drone_ambient",
+    "sounds": [
+      "latexdrone:drone_ambient",
+      "latexdrone:drone_ambient2"
+    ]
+  },
+  "drone_hurt": {
+    "subtitle": "subtitles.latexdrone.drone_hurt",
+    "sounds": [
+      "latexdrone:drone_hurt"
+    ]
+  },
+  "goo_ambient": {
+    "subtitle": "subtitles.latexdrone.goo_ambient",
+    "sounds": [
+      "latexdrone:goo_ambient",
+      "latexdrone:goo_ambient2"
+    ]
+  },
+  "scientist_ambient": {
+    "subtitle": "subtitles.latexdrone.scientist_ambient",
+    "sounds": [
+      "latexdrone:scientist_ambient",
+      "latexdrone:scientist_ambient2"
+    ]
+  },
+  "scientist_hurt": {
+    "subtitle": "subtitles.latexdrone.scientist_hurt",
+    "sounds": [
+      "latexdrone:scientist_hurt"
+    ]
+  },
+  "scientist_death": {
+    "subtitle": "subtitles.latexdrone.scientist_death",
+    "sounds": [
+      "latexdrone:scientist_death"
+    ]
+  },
+  "syringe_inject": {
+    "subtitle": "subtitles.latexdrone.syringe_inject",
+    "sounds": [
+      "latexdrone:syringe_inject"
+    ]
+  },
+  "syringe_shoot": {
+    "subtitle": "subtitles.latexdrone.syringe_shoot",
+    "sounds": [
+      "latexdrone:syringe_shoot"
+    ]
+  },
+  "hypno_hum": {
+    "subtitle": "subtitles.latexdrone.hypno_hum",
+    "sounds": [
+      "latexdrone:hypno_hum"
+    ]
+  },
+  "transform": {
+    "subtitle": "subtitles.latexdrone.transform",
+    "sounds": [
+      "latexdrone:transform"
+    ]
+  },
+  "heartbeat": {
+    "subtitle": "subtitles.latexdrone.heartbeat",
+    "sounds": [
+      "latexdrone:heartbeat"
+    ]
+  },
+  "purifier_shot": {
+    "subtitle": "subtitles.latexdrone.purifier_shot",
+    "sounds": [
+      "latexdrone:purifier_shot"
+    ]
+  },
+  "blade_swing": {
+    "subtitle": "subtitles.latexdrone.blade_swing",
+    "sounds": [
+      "latexdrone:blade_swing"
+    ]
+  },
+  "pod_activate": {
+    "subtitle": "subtitles.latexdrone.pod_activate",
+    "sounds": [
+      "latexdrone:pod_activate"
+    ]
+  },
+  "infect_hit": {
+    "subtitle": "subtitles.latexdrone.infect_hit",
+    "sounds": [
+      "latexdrone:infect_hit"
+    ]
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "IGI",
+    "GLG",
+    "IRI"
+  ],
+  "key": {
+    "I": {
+      "item": "minecraft:iron_block"
+    },
+    "G": {
+      "item": "latexdrone:reinforced_lab_glass"
+    },
+    "L": {
+      "item": "latexdrone:latex_injector"
+    },
+    "R": {
+      "item": "minecraft:redstone_block"
+    }
+  },
+  "result": {
+    "item": "latexdrone:drone_conversion_pod",
+    "count": 1
+  }
+}

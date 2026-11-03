@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "  H",
+    " S ",
+    "S  "
+  ],
+  "key": {
+    "H": {
+      "item": "latexdrone:hypno_crystal_shard"
+    },
+    "S": {
+      "item": "minecraft:stick"
+    }
+  },
+  "result": {
+    "item": "latexdrone:hypno_staff",
+    "count": 1
+  }
+}

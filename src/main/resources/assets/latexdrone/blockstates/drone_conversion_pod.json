@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "latexdrone:block/drone_conversion_pod"
+    },
+    "facing=east": {
+      "model": "latexdrone:block/drone_conversion_pod",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "latexdrone:block/drone_conversion_pod",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "latexdrone:block/drone_conversion_pod",
+      "y": 270
+    }
+  }
+}

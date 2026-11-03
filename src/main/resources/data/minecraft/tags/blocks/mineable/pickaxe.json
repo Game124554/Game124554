@@ -1,0 +1,28 @@
+{
+  "replace": false,
+  "values": [
+    "latexdrone:latex_crystal",
+    "latexdrone:white_latex_crystal",
+    "latexdrone:infected_stone",
+    "latexdrone:latex_bricks",
+    "latexdrone:cracked_latex_bricks",
+    "latexdrone:lab_tile",
+    "latexdrone:dark_lab_tile",
+    "latexdrone:lab_wall",
+    "latexdrone:lab_wall_striped",
+    "latexdrone:lab_floor",
+    "latexdrone:lab_ceiling_light",
+    "latexdrone:reinforced_lab_glass",
+    "latexdrone:containment_tank",
+    "latexdrone:lab_vent",
+    "latexdrone:hazard_block",
+    "latexdrone:steel_panel",
+    "latexdrone:rusted_steel_panel",
+    "latexdrone:metal_grate",
+    "latexdrone:warning_light",
+    "latexdrone:lab_computer",
+    "latexdrone:server_rack",
+    "latexdrone:hypno_screen",
+    "latexdrone:drone_conversion_pod"
+  ]
+}

@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/orientable",
+  "textures": {
+    "top": "latexdrone:block/machine_top",
+    "front": "latexdrone:block/hypno_screen_front",
+    "side": "latexdrone:block/machine_side"
+  }
+}

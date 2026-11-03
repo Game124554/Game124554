@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "R",
+    "G"
+  ],
+  "key": {
+    "R": {
+      "item": "minecraft:redstone_lamp"
+    },
+    "G": {
+      "item": "minecraft:red_stained_glass"
+    }
+  },
+  "result": {
+    "item": "latexdrone:warning_light",
+    "count": 1
+  }
+}

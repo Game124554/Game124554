@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "id": "latexdrone",
+  "version": "${version}",
+  "name": "Latex Drone Infection",
+  "description": "Latex creatures, drones and evil anthro scientists. Get infected, get hypnotized, become one of them.",
+  "authors": ["marchantben5"],
+  "license": "MIT",
+  "icon": "assets/latexdrone/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": ["com.latexdrone.LatexDroneMod"],
+    "client": ["com.latexdrone.client.LatexDroneClient"]
+  },
+  "mixins": ["latexdrone.mixins.json"],
+  "depends": {
+    "fabricloader": ">=0.14.21",
+    "minecraft": "~1.20.1",
+    "java": ">=17",
+    "fabric-api": "*"
+  }
+}

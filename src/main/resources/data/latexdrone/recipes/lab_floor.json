@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "QQ",
+    "QQ"
+  ],
+  "key": {
+    "Q": {
+      "item": "minecraft:light_gray_concrete"
+    }
+  },
+  "result": {
+    "item": "latexdrone:lab_floor",
+    "count": 4
+  }
+}

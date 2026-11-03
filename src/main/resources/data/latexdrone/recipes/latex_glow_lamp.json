@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "GLG"
+  ],
+  "key": {
+    "G": {
+      "item": "latexdrone:latex_goo"
+    },
+    "L": {
+      "item": "minecraft:glowstone"
+    }
+  },
+  "result": {
+    "item": "latexdrone:latex_glow_lamp",
+    "count": 2
+  }
+}

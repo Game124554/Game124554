@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "latexdrone:block/dark_lab_tile"
+    }
+  }
+}

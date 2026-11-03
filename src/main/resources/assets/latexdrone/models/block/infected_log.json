@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column",
+  "textures": {
+    "end": "latexdrone:block/infected_log_top",
+    "side": "latexdrone:block/infected_log"
+  }
+}

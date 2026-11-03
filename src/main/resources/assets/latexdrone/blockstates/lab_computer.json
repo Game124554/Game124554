@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "latexdrone:block/lab_computer"
+    },
+    "facing=east": {
+      "model": "latexdrone:block/lab_computer",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "latexdrone:block/lab_computer",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "latexdrone:block/lab_computer",
+      "y": 270
+    }
+  }
+}
