@@ -65,7 +65,7 @@ public final class SmoothMesher {
 	/** Lighting is done here (smooth light + corner shading), so the renderer's own AO and shading are off. */
 	private static volatile RenderMaterial material;
 
-	private static RenderMaterial material() {
+	static RenderMaterial material() {
 		RenderMaterial m = material;
 		if (m == null) {
 			Renderer r = RendererAccess.INSTANCE.getRenderer();

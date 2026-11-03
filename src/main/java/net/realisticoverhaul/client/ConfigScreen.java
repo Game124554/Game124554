@@ -21,6 +21,7 @@ import java.util.function.IntConsumer;
 public class ConfigScreen extends Screen {
 	private final Screen parent;
 	private final boolean smoothAtOpen;
+	private final boolean snowAtOpen;
 	private int scroll;
 	private int maxScroll;
 
@@ -28,6 +29,7 @@ public class ConfigScreen extends Screen {
 		super(Text.translatable("realisticoverhaul.config.title"));
 		this.parent = parent;
 		this.smoothAtOpen = ROConfig.get().smoothTerrain;
+		this.snowAtOpen = ROConfig.get().smoothSnow;
 	}
 
 	@Override
@@ -56,9 +58,14 @@ public class ConfigScreen extends Screen {
 		w.add(new IntSlider("Max corpses", "", 1, 128, c.maxCorpses, v -> c.maxCorpses = v));
 		w.add(toggle("Blood splatter", c.blood, v -> c.blood = v));
 		w.add(toggle("Hurt mobs limp", c.woundedMobs, v -> c.woundedMobs = v));
+		w.add(toggle("Creepy mob animations", c.creepyMobs, v -> c.creepyMobs = v));
+		w.add(toggle("Glowing eyes at night", c.glowingEyes, v -> c.glowingEyes = v));
 		w.add(toggle("Rain puddles", c.puddles, v -> c.puddles = v));
 		w.add(toggle("Snow build-up", c.snowAccumulation, v -> c.snowAccumulation = v));
 		w.add(new IntSlider("Max snow layers", "", 1, 8, c.maxSnowLayers, v -> c.maxSnowLayers = v));
+		w.add(toggle("Snow drifts", c.snowDrifts, v -> c.snowDrifts = v));
+		w.add(toggle("Smooth snow", c.smoothSnow, v -> c.smoothSnow = v));
+		w.add(toggle("Blowing snow", c.blowingSnow, v -> c.blowingSnow = v));
 		w.add(toggle("Fast lava", c.fastLava, v -> c.fastLava = v));
 		w.add(toggle("Steam (water+lava)", c.steamParticles, v -> c.steamParticles = v));
 		w.add(toggle("Bedrock breakable", c.bedrockBreakable, v -> c.bedrockBreakable = v));
@@ -122,7 +129,7 @@ public class ConfigScreen extends Screen {
 	public void close() {
 		ROConfig.save();
 		SmoothTerrain.reload();
-		if (ROConfig.get().smoothTerrain != smoothAtOpen) SmoothTerrain.rebuildChunks();
+		if (ROConfig.get().smoothTerrain != smoothAtOpen || ROConfig.get().smoothSnow != snowAtOpen) SmoothTerrain.rebuildChunks();
 		if (this.client != null) this.client.setScreen(parent);
 	}
 

@@ -7,6 +7,7 @@ import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayConnectionEvents;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry;
+import net.fabricmc.fabric.api.client.rendering.v1.LivingEntityFeatureRendererRegistrationCallback;
 import net.fabricmc.fabric.api.client.screen.v1.ScreenEvents;
 import net.fabricmc.fabric.api.client.screen.v1.Screens;
 import net.minecraft.client.gui.screen.option.OptionsScreen;
@@ -39,8 +40,14 @@ public class RealisticOverhaulClient implements ClientModInitializer {
 		SmoothTerrain.registerModels();
 
 		BlockRenderLayerMap.INSTANCE.putBlock(ModBlocks.PUDDLE, RenderLayer.getTranslucent());
-		ColorProviderRegistry.BLOCK.register((state, world, pos, tintIndex) ->
-				world != null && pos != null ? BiomeColors.getWaterColor(world, pos) : 0x3F76E4, ModBlocks.PUDDLE);
+		// Puddles mirror the bright sky more than they show the water's own blue.
+		ColorProviderRegistry.BLOCK.register((state, world, pos, tintIndex) -> {
+			int water = world != null && pos != null ? BiomeColors.getWaterColor(world, pos) : 0x3F76E4;
+			int r = ((water >> 16) & 0xFF) * 3 / 10 + 0xC8 * 7 / 10;
+			int g = ((water >> 8) & 0xFF) * 3 / 10 + 0xD4 * 7 / 10;
+			int b = (water & 0xFF) * 3 / 10 + 0xE2 * 7 / 10;
+			return (r << 16) | (g << 8) | b;
+		}, ModBlocks.PUDDLE);
 
 		ClientTickEvents.END_CLIENT_TICK.register(client -> {
 			while (openConfig.wasPressed()) {
@@ -80,6 +87,17 @@ public class RealisticOverhaulClient implements ClientModInitializer {
 			}
 		});
 
+		// Glowing eyes on zombies and skeletons.
+		LivingEntityFeatureRendererRegistrationCallback.EVENT.register((entityType, entityRenderer, helper, context) -> {
+			if (MobAnimations.hasGlowEyes(entityType)) registerGlowEyes(helper, entityRenderer);
+		});
+
 		ClientSelfTest.init();
+	}
+
+	@SuppressWarnings({"unchecked", "rawtypes"})
+	private static void registerGlowEyes(LivingEntityFeatureRendererRegistrationCallback.RegistrationHelper helper,
+										 net.minecraft.client.render.entity.LivingEntityRenderer<?, ?> renderer) {
+		helper.register(new GlowEyesFeature(renderer));
 	}
 }

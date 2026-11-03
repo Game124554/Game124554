@@ -81,6 +81,7 @@ public final class SmoothTerrain {
 				Identifier blockId = new Identifier(mid.getNamespace(), mid.getPath());
 				if (Registries.BLOCK.containsId(blockId)) {
 					Block block = Registries.BLOCK.get(blockId);
+					if (block == Blocks.SNOW) return new SmoothSnowModel(model);
 					if (block != Blocks.AIR && (blocks.contains(block)
 							|| block.getDefaultState().isOpaqueFullCube(EmptyBlockView.INSTANCE, BlockPos.ORIGIN))) {
 						return new SmoothBakedModel(model);

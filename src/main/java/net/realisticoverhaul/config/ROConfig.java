@@ -70,12 +70,22 @@ public class ROConfig {
 	public boolean blood = true;
 	/** Mobs under 30% health move slower. */
 	public boolean woundedMobs = true;
+	/** Client: zombies hunch and limp, skeletons and endermen twitch, creepers breathe, spiders fidget. */
+	public boolean creepyMobs = true;
+	/** Client: zombies and skeletons have glowing eyes in the dark. */
+	public boolean glowingEyes = true;
 
 	// ---- Weather ----
 	public boolean puddles = true;
 	public float puddleChance = 0.08f;
 	public boolean snowAccumulation = true;
-	public int maxSnowLayers = 4;
+	public int maxSnowLayers = 6;
+	/** Snow builds dunes and piles up against walls. */
+	public boolean snowDrifts = true;
+	/** Client: snow layers are drawn as one smooth, wavy snow surface. */
+	public boolean smoothSnow = true;
+	/** Client: wind blows snow around in snowy places. */
+	public boolean blowingSnow = true;
 
 	// ---- Water & lava ----
 	public boolean fastLava = true;

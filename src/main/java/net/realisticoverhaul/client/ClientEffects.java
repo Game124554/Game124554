@@ -62,6 +62,7 @@ public final class ClientEffects {
 		Random r = world.random;
 		if (hellIntensity > 0.02f) spawnHellParticles(world, player, r, cfg);
 		if (cfg.steamParticles) spawnSteam(world, player, r, cfg);
+		if (cfg.blowingSnow) spawnBlowingSnow(world, player, r, cfg);
 	}
 
 	private static void tickStepSmoothing(ClientPlayerEntity player, ROConfig cfg) {
@@ -102,6 +103,32 @@ public final class ClientEffects {
 				world.addParticle(ParticleTypes.SMOKE, x, y, z, 0, 0.01, 0);
 			} else {
 				world.addParticle(ParticleTypes.LAVA, x, y, z, 0, 0, 0);
+			}
+		}
+	}
+
+	/** Wind-blown snow: flurries while it snows, and snow skimming over the ground in snowy places. */
+	private static void spawnBlowingSnow(ClientWorld world, ClientPlayerEntity player, Random r, ROConfig cfg) {
+		BlockPos at = player.getBlockPos();
+		if (world.getBiome(at).value().getPrecipitation(at) != net.minecraft.world.biome.Biome.Precipitation.SNOW) return;
+		float t = world.getTime() * 0.01f;
+		double windX = 0.12 + 0.08 * MathHelper.sin(t), windZ = 0.05 * MathHelper.cos(t * 1.3f);
+		boolean snowing = world.isRaining();
+		int n = (snowing ? 3 : 1) * cfg.particleDensity;
+		BlockPos.Mutable pos = new BlockPos.Mutable();
+		for (int i = 0; i < n; i++) {
+			double x = player.getX() + (r.nextDouble() - 0.5) * 24;
+			double z = player.getZ() + (r.nextDouble() - 0.5) * 24;
+			if (snowing) {
+				double y = player.getY() + r.nextDouble() * 10 - 2;
+				pos.set(x, y, z);
+				if (!world.isSkyVisible(pos)) continue;
+				world.addParticle(ParticleTypes.SNOWFLAKE, x, y, z, windX * 2, -0.05, windZ * 2);
+			} else if (r.nextInt(3) == 0) {
+				int top = world.getTopY(net.minecraft.world.Heightmap.Type.MOTION_BLOCKING, (int) Math.floor(x), (int) Math.floor(z));
+				pos.set(x, top - 1, z);
+				if (!world.getBlockState(pos).isOf(net.minecraft.block.Blocks.SNOW) && !world.getBlockState(pos).isOf(net.minecraft.block.Blocks.SNOW_BLOCK)) continue;
+				world.addParticle(ParticleTypes.SNOWFLAKE, x, top + 0.1 + r.nextDouble() * 0.4, z, windX, 0.0, windZ);
 			}
 		}
 	}

@@ -60,13 +60,14 @@ public final class Weather {
 			}
 		}
 		if (random.nextFloat() < chance) {
-			world.setBlockState(top, ModBlocks.PUDDLE.getDefaultState(), Block.NOTIFY_ALL);
+			world.setBlockState(top, ((PuddleBlock) ModBlocks.PUDDLE).shaped(world, top), Block.NOTIFY_ALL);
 		}
 	}
 
 	private static void addSnow(ServerWorld world, BlockPos top, ROConfig cfg) {
 		if (!world.isSkyVisible(top)) return;
 		int max = Math.max(1, Math.min(8, cfg.maxSnowLayers));
+		if (cfg.snowDrifts) max = driftHeight(world, top, max);
 		BlockPos target = top;
 		BlockState at = world.getBlockState(top);
 		if (!at.isOf(Blocks.SNOW)) {
@@ -82,5 +83,37 @@ public final class Weather {
 		} else if (at.isAir() && Blocks.SNOW.getDefaultState().canPlaceAt(world, top)) {
 			world.setBlockState(top, Blocks.SNOW.getDefaultState(), Block.NOTIFY_ALL);
 		}
+	}
+
+	/**
+	 * Wind drifts: the allowed depth changes smoothly across the ground (dunes) and snow
+	 * piles up 2 layers higher against walls and other solid blocks.
+	 */
+	private static int driftHeight(ServerWorld world, BlockPos pos, int max) {
+		double n = valueNoise(pos.getX() * 0.11, pos.getZ() * 0.11) * 0.65 + valueNoise(pos.getX() * 0.37 + 50, pos.getZ() * 0.37) * 0.35;
+		int h = 1 + (int) Math.round(n * (max - 1));
+		for (Direction d : Direction.Type.HORIZONTAL) {
+			BlockPos side = pos.offset(d);
+			if (world.getBlockState(side).isSolidBlock(world, side)) {
+				h += 2;
+				break;
+			}
+		}
+		return Math.max(1, Math.min(8, h));
+	}
+
+	private static double valueNoise(double x, double z) {
+		int x0 = (int) Math.floor(x), z0 = (int) Math.floor(z);
+		double fx = x - x0, fz = z - z0;
+		fx = fx * fx * (3 - 2 * fx);
+		fz = fz * fz * (3 - 2 * fz);
+		double a = hash(x0, z0), b = hash(x0 + 1, z0), c = hash(x0, z0 + 1), d = hash(x0 + 1, z0 + 1);
+		return (a + (b - a) * fx) + ((c + (d - c) * fx) - (a + (b - a) * fx)) * fz;
+	}
+
+	private static double hash(int x, int z) {
+		long h = x * 3129871L ^ z * 116129781L;
+		h = h * h * 42317861L + h * 11L;
+		return ((h >> 16) & 0xFFFF) / 65535.0;
 	}
 }

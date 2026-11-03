@@ -6,6 +6,7 @@ import net.minecraft.client.render.entity.LivingEntityRenderer;
 import net.minecraft.client.render.entity.model.EntityModel;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.LivingEntity;
+import net.realisticoverhaul.client.MobAnimations;
 import net.realisticoverhaul.client.Ragdoll;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -36,6 +37,13 @@ public abstract class LivingEntityRendererMixin {
 	private void realisticoverhaul$ragdoll(LivingEntity entity, float yaw, float tickDelta, MatrixStack matrices,
 										   VertexConsumerProvider vertexConsumers, int light, CallbackInfo ci) {
 		Ragdoll.pose(entity, this.model, tickDelta);
+		MobAnimations.pose(entity, this.model, tickDelta);
+	}
+
+	@Inject(method = "setupTransforms", at = @At("TAIL"))
+	private void realisticoverhaul$creepyTransforms(LivingEntity entity, MatrixStack matrices, float animationProgress,
+													float bodyYaw, float tickDelta, CallbackInfo ci) {
+		MobAnimations.transforms(entity, matrices, tickDelta);
 	}
 
 	@Inject(method = RENDER, at = @At("RETURN"))

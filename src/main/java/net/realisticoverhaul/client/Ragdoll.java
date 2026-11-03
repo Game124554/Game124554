@@ -234,6 +234,11 @@ public final class Ragdoll {
 		}
 	}
 
+	/** Remember a part's angles so they are restored after this entity is drawn. */
+	public static void save(ModelPart part) {
+		if (part != null) SAVED.add(new Saved(part, part.pitch, part.yaw, part.roll));
+	}
+
 	private static void copy(ModelPart to, ModelPart from) {
 		if (to == null || from == null) return;
 		SAVED.add(new Saved(to, to.pitch, to.yaw, to.roll));

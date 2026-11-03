@@ -38,6 +38,7 @@ public final class ClientSelfTest {
 	private static int phase;
 	private static int phaseTicks;
 	private static int totalTicks;
+	private static int nightShotAt = -1;
 	private static volatile double[] farView;
 	private static volatile double[] nearView;
 	private static volatile double[] mobSpot;
@@ -168,8 +169,83 @@ public final class ClientSelfTest {
 					if (phaseTicks == 75) shot(client, "5a_corpses_falling");
 					if (phaseTicks > 160 && ready(client, 160)) {
 						shot(client, "5b_corpses");
-						client.setScreen(new ConfigScreen(null));
+						phase = 19;
+						next(); // -> 20
+					}
+				}
+				case 20 -> { // rain puddles
+					int[] b = base();
+					int qx = b[0] + 16, py = b[1], pz = b[2];
+					if (phaseTicks == 1) {
+						cmd(client, f("fill %d %d %d %d %d %d minecraft:smooth_stone", qx, py, pz - 5, qx + 11, py, pz + 7));
+						cmd(client, f("fill %d %d %d %d %d %d realisticoverhaul:puddle", qx + 2, py + 1, pz - 1, qx + 6, py + 1, pz + 3));
+						cmd(client, f("fill %d %d %d %d %d %d realisticoverhaul:puddle", qx + 5, py + 1, pz + 2, qx + 9, py + 1, pz + 5));
+						cmd(client, f("setblock %d %d %d realisticoverhaul:puddle", qx + 2, py + 1, pz + 5));
+						cmd(client, f("setblock %d %d %d realisticoverhaul:puddle", qx + 9, py + 1, pz - 2));
+						cmd(client, "weather rain");
+						tp(client, new double[]{qx + 5.5, py + 4.5, pz - 5.0, 0, 48});
+					}
+					if (phaseTicks > 120 && ready(client, 120)) {
+						shot(client, "9_puddles_rain");
 						next();
+					}
+				}
+				case 21 -> { // snow drifts
+					int[] b = base();
+					int sx = b[0] + 34, py = b[1], pz = b[2];
+					if (phaseTicks == 1) {
+						cmd(client, "weather clear");
+						cmd(client, f("fill %d %d %d %d %d %d minecraft:smooth_stone", sx - 1, py, pz - 5, sx + 10, py, pz + 9));
+						cmd(client, f("fill %d %d %d %d %d %d minecraft:stone", sx + 9, py + 1, pz - 5, sx + 10, py + 2, pz + 9));
+						for (int x = 0; x <= 8; x++) {
+							for (int z = -4; z <= 8; z++) {
+								int layers = (int) Math.round(3 + 2.5 * Math.sin(x * 0.7) * Math.cos(z * 0.5) + (x >= 7 ? 2 : 0));
+								layers = Math.max(1, Math.min(8, layers));
+								cmd(client, f("setblock %d %d %d minecraft:snow[layers=%d]", sx + x, py + 1, pz + z, layers));
+							}
+						}
+						tp(client, new double[]{sx + 4.5, py + 4.2, pz - 7.5, 0, 33});
+					}
+					if (phaseTicks == 160) {
+						shot(client, "10a_smooth_snow");
+						ROConfig.get().smoothSnow = false;
+						SmoothTerrain.rebuildChunks();
+					}
+					if (phaseTicks > 300 && ready(client, 300)) {
+						shot(client, "10b_snow_layers_vanilla");
+						ROConfig.get().smoothSnow = true;
+						SmoothTerrain.rebuildChunks();
+						next();
+					}
+				}
+				case 22 -> { // creepy mobs at night
+					int[] b = base();
+					int nx = b[0] + 52, py = b[1], pz = b[2];
+					if (phaseTicks == 1) {
+						cmd(client, "difficulty easy");
+						cmd(client, "time set 18000");
+						cmd(client, f("fill %d %d %d %d %d %d minecraft:smooth_stone", nx - 1, py, pz - 2, nx + 13, py, pz + 10));
+						String[] mobs = {"zombie", "skeleton", "husk", "enderman", "creeper", "spider"};
+						for (int i = 0; i < mobs.length; i++) {
+							cmd(client, f("summon minecraft:%s %d.5 %d %d.5 {NoAI:1b,PersistenceRequired:1b,Rotation:[0f,0f]}", mobs[i], nx + 1 + i * 2, py + 1, pz + 1));
+						}
+						tp(client, new double[]{nx + 6.5, py + 2.8, pz + 8.5, 180, 12});
+						client.options.getGamma().setValue(1.0);
+					}
+					if (nightShotAt < 0 && phaseTicks > 160 && ready(client, 160)) {
+						shot(client, "11_night_mobs");
+						cmd(client, "time set 12900");
+						nightShotAt = phaseTicks;
+					}
+					if (nightShotAt > 0 && phaseTicks == nightShotAt + 40) {
+						shot(client, "12_dusk_mobs");
+						cmd(client, "kill @e[type=!player]");
+						cmd(client, "difficulty peaceful");
+						cmd(client, "time set 5000");
+						client.options.getGamma().setValue(0.5);
+						client.setScreen(new ConfigScreen(null));
+						phase = 7;
+						next(); // -> 8
 					}
 				}
 				case 8 -> {
@@ -222,6 +298,16 @@ public final class ClientSelfTest {
 			RealisticOverhaul.LOGGER.error("[SELFTEST] client", t);
 			finish(client);
 		}
+	}
+
+	private static String f(String fmt, Object... args) {
+		return String.format(java.util.Locale.ROOT, fmt, args);
+	}
+
+	/** Corner of the test platforms (above the mob spot). */
+	private static int[] base() {
+		double[] m = mobSpot;
+		return new int[]{(int) Math.floor(m[0]), (int) m[1] + 20, (int) Math.floor(m[2])};
 	}
 
 	/** Server thread: find a hill near spawn and camera spots looking at it. */
