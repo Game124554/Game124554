@@ -1,0 +1,25 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "net.realisticoverhaul.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "mixins": [
+    "AbstractBlockStateMixin",
+    "BlockMixin",
+    "ExplosionMixin",
+    "FireBlockMixin",
+    "LavaFluidMixin",
+    "LivingEntityMixin",
+    "PiglinBrainMixin",
+    "ProjectileEntityMixin"
+  ],
+  "client": [
+    "client.BackgroundRendererMixin",
+    "client.CameraMixin",
+    "client.LimbAnimatorAccessor",
+    "client.PlayerEntityRendererMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 0
+  }
+}
