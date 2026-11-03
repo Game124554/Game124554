@@ -10,6 +10,8 @@ import java.io.Writer;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * All settings. Saved to config/realisticoverhaul.json.
@@ -29,6 +31,16 @@ public class ROConfig {
 	public int maxCorpses = 16;
 	public int particleDensity = 6;
 	public int weatherAttemptsPerTick = 3;
+
+	// ---- Smooth terrain (NoCubes style) ----
+	/** Client: draw natural terrain as smooth slopes instead of cubes. */
+	public boolean smoothTerrain = true;
+	/** Server: players walk up 1-block steps without jumping. */
+	public boolean stepAssist = true;
+	/** Client: the camera glides up steps instead of snapping. */
+	public boolean smoothStepCamera = true;
+	/** Blocks drawn smooth. Block ids, or #tags such as "#minecraft:dirt". */
+	public List<String> smoothBlocks = defaultSmoothBlocks();
 
 	// ---- Block physics (collapse / falling blocks) ----
 	public boolean blockPhysics = true;
@@ -51,6 +63,13 @@ public class ROConfig {
 	public boolean corpses = true;
 	public int corpseSeconds = 60;
 	public float ragdollImpulse = 0.45f;
+	/** Client: corpse arms, legs and head flop and swing separately. */
+	public boolean ragdollLimbs = true;
+
+	// ---- Mobs ----
+	public boolean blood = true;
+	/** Mobs under 30% health move slower. */
+	public boolean woundedMobs = true;
 
 	// ---- Weather ----
 	public boolean puddles = true;
@@ -73,6 +92,24 @@ public class ROConfig {
 	public boolean deathToNether = true;
 	public boolean piglinForm = true;
 
+	public static List<String> defaultSmoothBlocks() {
+		List<String> l = new ArrayList<>(List.of(
+				"#minecraft:base_stone_overworld", "#minecraft:base_stone_nether", "#minecraft:dirt",
+				"#minecraft:sand", "#minecraft:terracotta", "#minecraft:nylium",
+				"#minecraft:coal_ores", "#minecraft:iron_ores", "#minecraft:copper_ores", "#minecraft:gold_ores",
+				"#minecraft:redstone_ores", "#minecraft:emerald_ores", "#minecraft:lapis_ores", "#minecraft:diamond_ores",
+				"minecraft:stone", "minecraft:granite", "minecraft:diorite", "minecraft:andesite", "minecraft:deepslate",
+				"minecraft:tuff", "minecraft:calcite", "minecraft:dripstone_block", "minecraft:smooth_basalt",
+				"minecraft:grass_block", "minecraft:dirt", "minecraft:coarse_dirt", "minecraft:rooted_dirt",
+				"minecraft:podzol", "minecraft:mycelium", "minecraft:mud", "minecraft:clay", "minecraft:moss_block",
+				"minecraft:gravel", "minecraft:sand", "minecraft:red_sand", "minecraft:sandstone", "minecraft:red_sandstone",
+				"minecraft:terracotta", "minecraft:snow_block", "minecraft:packed_ice", "minecraft:blue_ice",
+				"minecraft:netherrack", "minecraft:soul_soil", "minecraft:basalt", "minecraft:blackstone",
+				"minecraft:magma_block", "minecraft:crimson_nylium", "minecraft:warped_nylium", "minecraft:end_stone",
+				"minecraft:nether_gold_ore", "minecraft:nether_quartz_ore"));
+		return l;
+	}
+
 	public void applyPreset() {
 		performancePreset.applyTo(this);
 	}
@@ -88,6 +125,7 @@ public class ROConfig {
 				ROConfig loaded = GSON.fromJson(r, ROConfig.class);
 				if (loaded != null) {
 					if (loaded.performancePreset == null) loaded.performancePreset = PerformancePreset.MEDIUM;
+					if (loaded.smoothBlocks == null) loaded.smoothBlocks = defaultSmoothBlocks();
 					instance = loaded;
 				}
 			} catch (Exception e) {

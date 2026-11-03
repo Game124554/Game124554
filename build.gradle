@@ -19,10 +19,18 @@ dependencies {
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 }
 
+// Release builds tolerate a missing injection point (better than crashing next to other mods).
+// CI tests run with -PmixinRequire=1 so every injection must apply.
+def mixinRequire = project.findProperty("mixinRequire") ?: "0"
+
 processResources {
 	inputs.property "version", project.version
+	inputs.property "mixinRequire", mixinRequire
 	filesMatching("fabric.mod.json") {
 		expand "version": project.version
+	}
+	filesMatching("realisticoverhaul.mixins.json") {
+		expand "mixinRequire": mixinRequire
 	}
 }
 
@@ -34,4 +42,10 @@ tasks.withType(JavaCompile).configureEach {
 java {
 	sourceCompatibility = JavaVersion.VERSION_17
 	targetCompatibility = JavaVersion.VERSION_17
+}
+
+jar {
+	from("LICENSE") {
+		rename { "${it}_${project.archivesBaseName}" }
+	}
 }

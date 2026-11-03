@@ -3,19 +3,31 @@
   "id": "realisticoverhaul",
   "version": "${version}",
   "name": "Realistic Overhaul",
-  "description": "Block collapse physics, breakable glass, camera shake, corpses with ragdoll knockback, rain puddles, snow build-up, fast lava and steam, breakable/removed bedrock, hellish underground and Nether, and death sends you to the Nether as a Piglin. Press O in-game for settings.",
-  "authors": ["Realistic Overhaul"],
+  "description": "NoCubes-style smooth terrain, realistic terrain generation (big continents, tall mountains, deep valleys), block collapse physics, falling trees, breakable glass, camera shake, corpses with limb ragdolls, blood and limping mobs, rain puddles, deep snow, fast lava and steam, removed bedrock, hellish Nether and deep caves, and death sends you to the Nether as a Piglin. Press O (or Options > Realistic Overhaul...) for settings.",
+  "authors": [
+    "Realistic Overhaul"
+  ],
   "license": "MIT",
   "environment": "*",
   "entrypoints": {
-    "main": ["net.realisticoverhaul.RealisticOverhaul"],
-    "client": ["net.realisticoverhaul.client.RealisticOverhaulClient"]
+    "main": [
+      "net.realisticoverhaul.RealisticOverhaul"
+    ],
+    "client": [
+      "net.realisticoverhaul.client.RealisticOverhaulClient"
+    ]
   },
-  "mixins": ["realisticoverhaul.mixins.json"],
+  "mixins": [
+    "realisticoverhaul.mixins.json"
+  ],
   "depends": {
     "fabricloader": ">=0.14.21",
     "fabric-api": "*",
     "minecraft": "~1.20.1",
     "java": ">=17"
-  }
+  },
+  "contact": {
+    "sources": "https://github.com/Game124554/Game124554/tree/realistic-overhaul"
+  },
+  "breaks": {}
 }

@@ -19,6 +19,9 @@ public final class ClientEffects {
 	/** 0 = normal, 1 = full hell look. Smoothed. */
 	public static float hellIntensity;
 	private static float lastHealth = -1f;
+	private static float stepOffset;
+	private static float prevStepOffset;
+	private static double lastY = Double.NaN;
 
 	private ClientEffects() {}
 
@@ -28,13 +31,18 @@ public final class ClientEffects {
 		if (world == null || player == null) {
 			hellIntensity = 0f;
 			lastHealth = -1f;
+			stepOffset = prevStepOffset = 0f;
+			lastY = Double.NaN;
 			CameraShake.reset();
+			Ragdoll.clear();
 			return;
 		}
 		if (client.isPaused()) return;
 		ROConfig cfg = ROConfig.get();
 
 		CameraShake.tick();
+		tickStepSmoothing(player, cfg);
+		Ragdoll.tick(world);
 		float health = player.getHealth();
 		if (lastHealth >= 0f && health < lastHealth - 0.01f) {
 			CameraShake.add(Math.min(0.7f, (lastHealth - health) * 0.07f + 0.12f));
@@ -54,6 +62,25 @@ public final class ClientEffects {
 		Random r = world.random;
 		if (hellIntensity > 0.02f) spawnHellParticles(world, player, r, cfg);
 		if (cfg.steamParticles) spawnSteam(world, player, r, cfg);
+	}
+
+	private static void tickStepSmoothing(ClientPlayerEntity player, ROConfig cfg) {
+		prevStepOffset = stepOffset;
+		stepOffset *= 0.55f;
+		if (Math.abs(stepOffset) < 0.01f) stepOffset = 0f;
+		double y = player.getY();
+		if (cfg.smoothStepCamera && !Double.isNaN(lastY) && player.isOnGround() && !player.hasVehicle()) {
+			double dy = y - lastY;
+			if (dy > 0.3 && dy < 1.05) {
+				stepOffset = (float) Math.max(-1.2, stepOffset - dy);
+			}
+		}
+		lastY = y;
+	}
+
+	/** Camera offset (negative) that hides the snap when walking up a step. */
+	public static float stepOffset(float tickDelta) {
+		return MathHelper.lerp(tickDelta, prevStepOffset, stepOffset);
 	}
 
 	private static void spawnHellParticles(ClientWorld world, ClientPlayerEntity player, Random r, ROConfig cfg) {

@@ -6,6 +6,7 @@
   "mixins": [
     "AbstractBlockStateMixin",
     "BlockMixin",
+    "EntityStepMixin",
     "ExplosionMixin",
     "FireBlockMixin",
     "LavaFluidMixin",
@@ -15,11 +16,16 @@
   ],
   "client": [
     "client.BackgroundRendererMixin",
+    "client.BlockRenderManagerMixin",
     "client.CameraMixin",
+    "client.IntegratedServerLoaderInvoker",
     "client.LimbAnimatorAccessor",
-    "client.PlayerEntityRendererMixin"
+    "client.LivingEntityRendererMixin",
+    "client.ModelPartAccessor",
+    "client.PlayerEntityRendererMixin",
+    "client.QuadrupedEntityModelAccessor"
   ],
   "injectors": {
-    "defaultRequire": 0
+    "defaultRequire": ${mixinRequire}
   }
 }

@@ -7,6 +7,7 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.realisticoverhaul.config.ROConfig;
 import net.realisticoverhaul.entity.Corpses;
+import net.realisticoverhaul.entity.MobRealism;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -47,5 +48,11 @@ public abstract class LivingEntityMixin {
 				self.velocityModified = true;
 			}
 		}
+	}
+
+	@Inject(method = "tick", at = @At("TAIL"))
+	private void realisticoverhaul$wounded(CallbackInfo ci) {
+		LivingEntity self = (LivingEntity) (Object) this;
+		if (!self.getWorld().isClient && self.age % 10 == 0) MobRealism.tickWounded(self);
 	}
 }
