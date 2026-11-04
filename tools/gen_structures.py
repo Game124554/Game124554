@@ -869,7 +869,7 @@ def loot_tables():
     table("chests/research", [pool(3, 6, [
         doc, item("minecraft:book", 10, 1, 3), item("minecraft:paper", 10, 2, 6), item("minecraft:redstone", 8, 1, 6),
         item(f"{M}:keycard_level_2", 8), item(f"{M}:keycard_level_3", 4), item("minecraft:glass_bottle", 6, 1, 3),
-        item("minecraft:experience_bottle", 4, 1, 3), item(f"{M}:scp_500", 1), item(f"{M}:scp_207", 2), item(f"{M}:scp_294_cup", 2), item(f"{M}:scp_1471", 1)])])
+        item("minecraft:experience_bottle", 4, 1, 3), item(f"{M}:scp_500", 1), item(f"{M}:scp_207", 2), item(f"{M}:scp_294_cup", 2), item(f"{M}:scp_1471", 1), item(f"{M}:scp_008", 1), item(f"{M}:scp_178", 1)])])
     table("chests/archive", [pool(2, 5, [
         item(f"{M}:scp_document", 40, 1, 5), item("minecraft:book", 10, 1, 3), item("minecraft:writable_book", 4),
         item(f"{M}:keycard_level_2", 6), item(f"{M}:keycard_level_3", 4), item(f"{M}:keycard_level_4", 1), item(f"{M}:scp_1025", 2)])])
@@ -886,11 +886,11 @@ def loot_tables():
     table("chests/o5_vault", [pool(3, 5, [
         item(f"{M}:keycard_o5", 4), item(f"{M}:keycard_level_5", 6), item("minecraft:diamond", 10, 1, 4), item("minecraft:emerald", 10, 2, 6),
         item("minecraft:netherite_scrap", 3), item(f"{M}:scp_500", 4), item(f"{M}:scp_005", 2), item(f"{M}:scp_714", 2),
-        item(f"{M}:scp_427", 2), item(f"{M}:scp_268", 2), item(f"{M}:scp_document", 10, 2, 6)])])
+        item(f"{M}:scp_427", 2), item(f"{M}:scp_268", 2), item(f"{M}:scp_document", 10, 2, 6), item(f"{M}:scp_035", 2), item(f"{M}:scp_963", 2)])])
     table("chests/insurgency", [pool(3, 6, [
         item("minecraft:crossbow", 6), item("minecraft:arrow", 10, 4, 12), item("minecraft:tnt", 5, 1, 3), item("minecraft:gold_ingot", 8, 1, 4),
         item("minecraft:emerald", 6, 1, 3), item(f"{M}:keycard_level_3", 4), item(f"{M}:keycard_level_4", 2), item(f"{M}:scp_207", 3),
-        item(f"{M}:scp_document", 8, 1, 2), item("minecraft:cooked_porkchop", 8, 1, 4), item(f"{M}:scp_1471", 2)])])
+        item(f"{M}:scp_document", 8, 1, 2), item("minecraft:cooked_porkchop", 8, 1, 4), item(f"{M}:scp_1471", 2), item(f"{M}:scp_008", 2)])])
     table("chests/goc", [pool(3, 6, [
         item("minecraft:iron_chestplate", 5), item("minecraft:iron_helmet", 5), item("minecraft:arrow", 10, 4, 16), item("minecraft:bow", 6),
         item("minecraft:tnt", 6, 1, 4), item("minecraft:emerald", 8, 1, 4), item("minecraft:gunpowder", 8, 2, 6),
@@ -898,7 +898,7 @@ def loot_tables():
     table("chests/serpents_hand", [pool(3, 6, [
         item("minecraft:book", 12, 1, 4), item("minecraft:book", 6, extra_fn={"function": "minecraft:enchant_randomly"}),
         item("minecraft:ender_pearl", 6, 1, 3), item("minecraft:lapis_lazuli", 10, 2, 8), item("minecraft:amethyst_shard", 8, 1, 6),
-        item(f"{M}:scp_document", 10, 1, 4), item(f"{M}:scp_427", 1), item(f"{M}:scp_714", 1), item("minecraft:experience_bottle", 6, 1, 4)])])
+        item(f"{M}:scp_document", 10, 1, 4), item(f"{M}:scp_427", 1), item(f"{M}:scp_714", 1), item("minecraft:experience_bottle", 6, 1, 4), item(f"{M}:scp_035", 1), item(f"{M}:scp_963", 1)])])
     for it in ["scp_500", "scp_207", "scp_018", "scp_005", "scp_427", "scp_714", "scp_268", "scp_063"]:
         cnt = 3 if it in ("scp_500", "scp_207") else 1
         table(f"chests/vault/{it}", [
@@ -960,7 +960,7 @@ def build_all():
     # ---- 74 Foundation facilities and hostile-group sites --------------------------
     def site(n): return f"SITE-{n}"
     hostile = ["scp_173", "scp_096", "scp_049", "scp_106", "scp_939", "scp_049_2", "scp_049_2"]
-    safe = ["scp_999", "scp_131", "scp_529", "scp_1048", "scp_066"]
+    safe = ["scp_999", "scp_131", "scp_529", "scp_1048", "scp_066", "scp_2295"]
     lockers = ["locker:scp_500", "locker:scp_207", "locker:scp_018", "locker:scp_427", "locker:scp_714", "locker:scp_063"]
 
     for i, n in enumerate([19, 17, 43, 62, 77]):

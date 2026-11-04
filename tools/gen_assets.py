@@ -457,6 +457,82 @@ def item_textures():
     px(img, 6, 9, (255, 255, 255)); px(img, 5, 10, (255, 255, 255)); px(img, 10, 11, (230, 250, 255))
     save_png(img, IT, "scp_006.png")
 
+    # SCP-008 vial
+    img = new16()
+    fill_rect(img, 6, 1, 4, 2, (60, 60, 65))
+    fill_rect(img, 6, 3, 4, 11, (200, 225, 210, 170))
+    fill_rect(img, 6, 7, 4, 7, (95, 150, 60))
+    fill_rect(img, 5, 9, 6, 3, (235, 200, 40))
+    px(img, 7, 10, (20, 20, 20)); px(img, 8, 10, (20, 20, 20))
+    px(img, 6, 4, (255, 255, 255))
+    save_png(img, IT, "scp_008.png")
+
+    # SCP-963 amulet (original design: dark disc with a bright red core)
+    img = new16()
+    for i in range(4, 12):
+        px(img, i, 1 + abs(i - 8) // 3, (180, 160, 100))
+    for x in range(16):
+        for y in range(16):
+            d = math.hypot(x - 7.5, y - 9.5)
+            if d <= 4.6:
+                px(img, x, y, (60, 50, 45))
+            if d <= 3.2:
+                px(img, x, y, (150, 120, 70))
+            if d <= 1.6:
+                px(img, x, y, (210, 30, 40))
+    px(img, 6, 8, (255, 120, 120))
+    save_png(img, IT, "scp_963.png")
+
+    # SCP-178 3-D specs
+    img = new16()
+    fill_rect(img, 1, 6, 14, 1, (240, 240, 235))
+    fill_rect(img, 2, 7, 5, 4, (220, 40, 40, 220))
+    fill_rect(img, 9, 7, 5, 4, (40, 160, 230, 220))
+    fill_rect(img, 1, 7, 1, 4, (240, 240, 235)); fill_rect(img, 7, 7, 2, 2, (240, 240, 235)); fill_rect(img, 14, 7, 1, 4, (240, 240, 235))
+    fill_rect(img, 1, 11, 14, 1, (240, 240, 235))
+    save_png(img, IT, "scp_178.png")
+
+    # SCP-035 mask (original design: cracked white porcelain, half smiling half frowning, black tears)
+    img = new16()
+    for x in range(16):
+        for y in range(16):
+            dx, dy = (x - 7.5) / 6.8, (y - 7.5) / 7.6
+            if dx * dx + dy * dy <= 1.0:
+                px(img, x, y, (238, 234, 226))
+    for (x, y) in [(4, 5), (5, 5), (4, 6), (5, 6), (10, 5), (11, 5), (10, 6), (11, 6)]:
+        px(img, x, y, (10, 10, 12))
+    for y in range(7, 12):
+        px(img, 4, y, (30, 20, 25)); px(img, 11, y + 1 if y < 11 else y, (30, 20, 25))
+    for (x, y) in [(5, 11), (6, 12), (7, 12)]:
+        px(img, x, y, (40, 20, 25))
+    for (x, y) in [(8, 12), (9, 11), (10, 11)]:
+        px(img, x, y, (40, 20, 25))
+    for (x, y) in [(8, 2), (8, 3), (9, 4), (9, 5)]:
+        px(img, x, y, (150, 145, 140))
+    save_png(img, IT, "scp_035.png")
+
+    # SCP-049-2 face (zombie-player head)
+    img = new16((122, 140, 118), 8, 90)
+    fill_rect(img, 3, 6, 3, 2, (230, 230, 220)); fill_rect(img, 10, 6, 3, 2, (230, 230, 220))
+    fill_rect(img, 4, 11, 8, 2, (60, 30, 30))
+    for y in range(2, 14):
+        px(img, 8, y, (120, 30, 30))
+    save_png(img, IT, "scp_049_2_face.png")
+    save_png(new16((112, 130, 108), 10, 91), IT, "scp_049_2_skin.png")
+
+    # SCP-008 infection effect icon (18x18)
+    icon = Image.new("RGBA", (18, 18), (0, 0, 0, 0))
+    for x in range(18):
+        for y in range(18):
+            d = math.hypot(x - 8.5, y - 8.5)
+            if d <= 3.5:
+                px(icon, x, y, (95, 150, 60))
+    for ang in range(0, 360, 45):
+        a = math.radians(ang)
+        for t in range(4, 8):
+            px(icon, int(round(8.5 + math.cos(a) * t)), int(round(8.5 + math.sin(a) * t)), (70, 120, 45))
+    icon.save(p(ASSETS, "textures", "mob_effect", "scp_008_infection.png"))
+
     # SCP-458 pizza slice
     img = new16()
     for y in range(2, 14):
@@ -564,6 +640,11 @@ BEASTS = {
         ],
     },
 }
+
+
+BEASTS["scp_2295"] = {"color": (200, 110, 140), "noise": 6, "patchwork": True,
+                      "parts": [dict(part, cubes=[c[:6] + ("patch" if c[6] not in ("ear",) else "patch",) for c in part["cubes"]])
+                                for part in BEASTS["scp_1048"]["parts"]]}
 
 
 def pack_uvs(model):
@@ -687,6 +768,18 @@ def paint_features(img, key, uv, size, base, rng, variant=None):
                         px(img, x + i, y + j, shade(base, 1.35))
                     elif (i - j) % 4 == 0:
                         px(img, x + i, y + j, shade(base, 0.7))
+    if key == "patch":  # sewn-together patches of different fabrics with stitches
+        cols = [(200, 110, 140), (90, 155, 210), (235, 200, 90), (120, 190, 120), (230, 230, 225), (170, 120, 200)]
+        for name, (x, y, ww, hh) in F.items():
+            for i in range(0, ww, 3):
+                for j in range(0, hh, 3):
+                    fill_rect(img, x + i, y + j, min(3, ww - i), min(3, hh - j), rng.choice(cols), 6, rng)
+            for i in range(ww):
+                if i % 2 == 0:
+                    px(img, x + i, y + hh // 2, (60, 40, 40))
+        if key == "patch" and fw >= 6 and fh >= 6:
+            px(img, fx + 1, fy + 2, (15, 15, 15)); px(img, fx + fw - 2, fy + 2, (15, 15, 15))
+            fill_rect(img, fx + fw // 2 - 1, fy + fh - 3, 2, 2, (220, 40, 60))
     if key == "bearhead":
         px(img, fx + 1, fy + 2, (15, 15, 15)); px(img, fx + fw - 2, fy + 2, (15, 15, 15))
     if key == "bearbody":
@@ -924,10 +1017,10 @@ ALL_BLOCKS = SIMPLE_BLOCKS + list(FACING_BLOCKS) + SHAPED_BLOCKS
 
 GENERATED_ITEMS = ["scp_document", "keycard_level_1", "keycard_level_2", "keycard_level_3", "keycard_level_4",
                    "keycard_level_5", "keycard_o5", "scp_500", "scp_207", "scp_018", "scp_005", "scp_427",
-                   "scp_714", "scp_268", "scp_294_cup", "scp_1471", "scp_1025", "scp_006", "scp_330_candy", "scp_458_pizza"]
+                   "scp_714", "scp_268", "scp_294_cup", "scp_1471", "scp_1025", "scp_006", "scp_008", "scp_963", "scp_178", "scp_330_candy", "scp_458_pizza"]
 HANDHELD_ITEMS = ["scp_063"]
 SPAWN_EGGS = ["scp_173", "scp_096", "scp_049", "scp_049_2", "scp_106", "scp_682", "scp_939", "scp_999",
-              "scp_131", "scp_529", "scp_1048", "scp_066", "scp_1471_a"]
+              "scp_131", "scp_529", "scp_1048", "scp_066", "scp_1471_a", "scp_2295"]
 
 FACING_Y = {"north": 0, "east": 90, "south": 180, "west": 270}
 
@@ -979,6 +1072,24 @@ def models_and_states():
         write_json(os.path.join(im, f"{b}.json"), {"parent": f"{MODID}:block/{b}"})
     for it in GENERATED_ITEMS:
         write_json(os.path.join(im, f"{it}.json"), {"parent": "minecraft:item/generated", "textures": {"layer0": f"{MODID}:item/{it}"}})
+    # SCP-035: a porcelain plate worn over the face
+    write_json(os.path.join(im, "scp_035.json"), {
+        "parent": "minecraft:block/block", "textures": {"mask": f"{MODID}:item/scp_035", "particle": f"{MODID}:item/scp_035"},
+        "elements": [{"from": [1, 0, -1], "to": [15, 16, 0.5], "faces": {"north": {"texture": "#mask"}, "south": {"texture": "#mask"}}}],
+        "display": {"gui": {"rotation": [0, 180, 0], "scale": [0.8, 0.8, 0.8]},
+                    "ground": {"translation": [0, 3, 0], "scale": [0.5, 0.5, 0.5]},
+                    "fixed": {"rotation": [0, 180, 0]},
+                    "thirdperson_righthand": {"rotation": [75, 180, 0], "translation": [0, 2.5, 0], "scale": [0.4, 0.4, 0.4]},
+                    "firstperson_righthand": {"rotation": [0, 135, 0], "scale": [0.4, 0.4, 0.4]},
+                    "head": {"rotation": [0, 0, 0], "translation": [0, 0, 0], "scale": [1, 1, 1]}}})
+    # SCP-049-2 head for zombie players
+    write_json(os.path.join(im, "scp_049_2_mask.json"), {
+        "parent": "minecraft:block/block",
+        "textures": {"face": f"{MODID}:item/scp_049_2_face", "skin": f"{MODID}:item/scp_049_2_skin", "particle": f"{MODID}:item/scp_049_2_skin"},
+        "elements": [{"from": [0, 0, 0], "to": [16, 16, 16], "faces": {"north": {"texture": "#face"}, "south": {"texture": "#skin"},
+                      "east": {"texture": "#skin"}, "west": {"texture": "#skin"}, "up": {"texture": "#skin"}, "down": {"texture": "#skin"}}}],
+        "display": {"head": {"rotation": [0, 0, 0], "translation": [0, 0, 0], "scale": [0.85, 0.85, 0.85]},
+                    "gui": {"rotation": [30, 225, 0], "scale": [0.625, 0.625, 0.625]}}})
     for it in HANDHELD_ITEMS:
         write_json(os.path.join(im, f"{it}.json"), {"parent": "minecraft:item/handheld", "textures": {"layer0": f"{MODID}:item/{it}"}})
     for e in SPAWN_EGGS:
@@ -1084,6 +1195,35 @@ LANG = {
     "disease.scpfoundation.night_blindness": "night blindness",
     "disease.scpfoundation.necrosis": "necrosis",
     "disease.scpfoundation.insomnia": "insomnia",
+    "item.scpfoundation.scp_008": "SCP-008 Vial \"Zombie Plague\"",
+    "item.scpfoundation.scp_035": "SCP-035 \"Possessive Mask\"",
+    "item.scpfoundation.scp_963": "SCP-963 \"Immortality\"",
+    "item.scpfoundation.scp_178": "SCP-178 \"3-D Specs\"",
+    "item.scpfoundation.scp_049_2_mask": "Face of SCP-049-2",
+    "entity.scpfoundation.scp_2295": "SCP-2295",
+    "effect.scpfoundation.scp_008_infection": "SCP-008 Infection",
+    "tooltip.scpfoundation.scp_008": "Use on a creature to infect it. Sneak + use to infect yourself.",
+    "tooltip.scpfoundation.scp_035": "Put it on. It wants you to.",
+    "tooltip.scpfoundation.scp_963": "Carry it: cheats death once every 5 minutes.",
+    "tooltip.scpfoundation.scp_178": "Wear them to see every living thing around you.",
+    "message.scpfoundation.008_infected": "You have been infected with SCP-008.",
+    "message.scpfoundation.008_stage2": "SCP-008: you feel feverish and starving...",
+    "message.scpfoundation.008_stage3": "SCP-008: your skin is turning grey. Find SCP-500!",
+    "message.scpfoundation.zombie_became": "You have become SCP-049-2. Spread the plague. (SCP-500 cures you)",
+    "message.scpfoundation.zombie_announce": "%s has turned into SCP-049-2!",
+    "message.scpfoundation.zombie_cured": "The plague leaves your body. You are human again.",
+    "message.scpfoundation.963_saved": "Your consciousness refuses to leave this body...",
+    "message.scpfoundation.2295_heal": "SCP-2295 stitches your wounds closed.",
+    "message.scpfoundation.035_worn": "The mask fuses to your face. You feel... free.",
+    "message.scpfoundation.035_call": "Something in your bag whispers: put me on...",
+    "message.scpfoundation.035.0": "Isn't this better than being yourself?",
+    "message.scpfoundation.035.1": "They locked me in a box. You let me out.",
+    "message.scpfoundation.035.2": "Your body will not last. I will find another.",
+    "message.scpfoundation.035.3": "We could do so much together.",
+    "message.scpfoundation.035.4": "Don't take me off. You'd miss me.",
+    "message.scpfoundation.035.5": "I can see everything you've done.",
+    "gamerule.scpDeadPlayersRise": "SCP: dead players rise as SCP-049-2",
+    "gamerule.scpPlayableZombies": "SCP: players killed by SCP-049/008 play as SCP-049-2",
     "item.scpfoundation.scp_294_cup": "Cup",
     "item.scpfoundation.scp_294_cup.named": "Cup of %s",
     "item.scpfoundation.scp_330_candy": "SCP-330 Candy",

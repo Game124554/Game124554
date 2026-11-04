@@ -10,6 +10,7 @@ import net.scpfoundation.ScpFoundation;
 import net.scpfoundation.entity.Scp018Entity;
 import net.scpfoundation.entity.Scp066Entity;
 import net.scpfoundation.entity.Scp1471Entity;
+import net.scpfoundation.entity.Scp2295Entity;
 import net.scpfoundation.entity.Scp0492Entity;
 import net.scpfoundation.entity.Scp049Entity;
 import net.scpfoundation.entity.Scp096Entity;
@@ -49,6 +50,8 @@ public final class ModEntities {
             EntityType.Builder.<Scp066Entity>create(Scp066Entity::new, SpawnGroup.CREATURE).setDimensions(0.6f, 0.6f).maxTrackingRange(8));
     public static final EntityType<Scp1471Entity> SCP_1471_A = register("scp_1471_a",
             EntityType.Builder.<Scp1471Entity>create(Scp1471Entity::new, SpawnGroup.MISC).setDimensions(0.7f, 2.6f).maxTrackingRange(10));
+    public static final EntityType<Scp2295Entity> SCP_2295 = register("scp_2295",
+            EntityType.Builder.<Scp2295Entity>create(Scp2295Entity::new, SpawnGroup.CREATURE).setDimensions(0.5f, 0.8f).maxTrackingRange(8));
     public static final EntityType<Scp018Entity> SCP_018 = register("scp_018",
             EntityType.Builder.<Scp018Entity>create(Scp018Entity::new, SpawnGroup.MISC).setDimensions(0.25f, 0.25f).maxTrackingRange(6).trackingTickInterval(2));
 
@@ -71,6 +74,7 @@ public final class ModEntities {
         FabricDefaultAttributeRegistry.register(SCP_529, Scp529Entity.createAttributes());
         FabricDefaultAttributeRegistry.register(SCP_1048, Scp1048Entity.createAttributes());
         FabricDefaultAttributeRegistry.register(SCP_066, Scp066Entity.createAttributes());
+        FabricDefaultAttributeRegistry.register(SCP_2295, Scp2295Entity.createAttributes());
         FabricDefaultAttributeRegistry.register(SCP_1471_A, Scp1471Entity.createAttributes());
     }
 }

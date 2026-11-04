@@ -32,6 +32,9 @@
 | **1471** | The "MalO ver1.0.0" phone. Use it to install the app, and from then on a skull-faced figure (SCP-1471-A) keeps appearing behind you. Use the phone to take photos. Uninstalling always fails; only SCP-500 removes it. |
 | **012** | A Bad Composition: an unfinished score that pulls nearby players in and hurts them. Wear a carved pumpkin as a blindfold to resist it. |
 | **2521** | Type "2521" in chat and something takes an item stack from your inventory. |
+| **008** | The zombie plague. SCP-049-2 bites and zombie players spread it. Infected players get fever stages, and when it runs out they turn into SCP-049-2. SCP-500 cures it. |
+| **035** | The possessive mask. Wear it for strength, resistance and haste, and hostile mobs back off. But it whispers to you, rots you slowly, and can't be taken off (SCP-500 pries it loose). |
+| **963 / 178 / 2295** | An amulet that cheats death once every 5 minutes; 3-D glasses that make every living thing glow; a patchwork bear that heals hurt players and sews out SCP-008. |
 | **1025 / 006** | An encyclopedia that gives you the disease you read about, and bottled water that heals. |
 
 ### SCP items and blocks
@@ -49,6 +52,15 @@
 - **SCP-063**: breaks wood, leaves, wool and plants instantly.
 - **Keycards, Level 1–5 plus O5**, and **Keycard Readers, Level 1–5**. A reader opens nearby iron doors for 4 seconds. You can craft a Level 1 card (paper + iron nugget + redstone); SCP-914 on Fine upgrades cards.
 - Building blocks: Reinforced Concrete, Facility Wall, Facility Floor, Hazard Stripes, Containment Glass, Foundation Emblem.
+
+### Zombie mode: play as SCP-049-2
+Two game rules (both on by default):
+- `/gamerule scpDeadPlayersRise true|false`: when a player dies, an SCP-049-2 with their name rises where they fell.
+- `/gamerule scpPlayableZombies true|false`: if you're killed by SCP-049, SCP-049-2 or a zombie player, or die from SCP-008, you respawn where you died **as SCP-049-2**.
+  - As a zombie you wear a rotting face, get Strength, Resistance and Night Vision, and never get hungry. The undead and SCP-049 leave you alone.
+  - Every hit you land infects your target with SCP-008, and villagers you kill rise as SCP-049-2.
+  - SCP-500 turns you back into a human.
+- Operator commands: `/scp zombify [player]` and `/scp cure [player]`.
 
 ### SCP-106's Pocket Dimension
 A dark, endless corroded floor that slowly withers you. Walk more than 40 blocks from the centre: 60% of the time you escape back near where you were taken, otherwise the corridor loops you back to the middle.

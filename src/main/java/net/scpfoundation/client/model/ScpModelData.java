@@ -17,6 +17,7 @@ public final class ScpModelData {
     public static final String[] SCP_529_PARTS = {"head", "body", "leg_a1", "leg_b1"};
     public static final String[] SCP_066_PARTS = {"bob_body", "tail1", "tail2", "tail3"};
     public static final String[] SCP_1048_PARTS = {"head", "body", "arm_a", "arm_b", "leg_a1", "leg_b1"};
+    public static final String[] SCP_2295_PARTS = {"head", "body", "arm_a", "arm_b", "leg_a1", "leg_b1"};
 
     public static TexturedModelData scp682() {
         ModelData data = new ModelData();
@@ -87,6 +88,18 @@ public final class ScpModelData {
         ModelPartData p2 = root.addChild("arm_a", ModelPartBuilder.create().uv(8, 11).cuboid(-1.0f, 0.0f, -1.0f, 2.0f, 5.0f, 2.0f), ModelTransform.of(-4.0f, 14.0f, 0.0f, 0.0f, 0.0f, 0.0f));
         ModelPartData p3 = root.addChild("arm_b", ModelPartBuilder.create().uv(8, 11).cuboid(-1.0f, 0.0f, -1.0f, 2.0f, 5.0f, 2.0f), ModelTransform.of(4.0f, 14.0f, 0.0f, 0.0f, 0.0f, 0.0f));
         ModelPartData p4 = root.addChild("leg_a1", ModelPartBuilder.create().uv(26, 11).cuboid(-1.0f, 0.0f, -2.0f, 2.0f, 4.0f, 3.0f), ModelTransform.of(-2.0f, 20.0f, 0.0f, 0.0f, 0.0f, 0.0f));
+        ModelPartData p5 = root.addChild("leg_b1", ModelPartBuilder.create().uv(26, 11).cuboid(-1.0f, 0.0f, -2.0f, 2.0f, 4.0f, 3.0f), ModelTransform.of(2.0f, 20.0f, 0.0f, 0.0f, 0.0f, 0.0f));
+        return TexturedModelData.of(data, 64, 32);
+    }
+
+    public static TexturedModelData scp2295() {
+        ModelData data = new ModelData();
+        ModelPartData root = data.getRoot();
+        ModelPartData p0 = root.addChild("head", ModelPartBuilder.create().uv(0, 0).cuboid(-3.0f, -6.0f, -3.0f, 6.0f, 6.0f, 5.0f).uv(22, 0).cuboid(-4.0f, -8.0f, -1.0f, 2.0f, 2.0f, 1.0f).uv(28, 0).cuboid(2.0f, -8.0f, -1.0f, 2.0f, 2.0f, 1.0f).uv(34, 0).cuboid(-2.0f, -3.0f, -4.0f, 3.0f, 2.0f, 1.0f), ModelTransform.of(0.0f, 13.0f, 0.0f, 0.0f, 0.0f, 0.0f));
+        ModelPartData p1 = root.addChild("body", ModelPartBuilder.create().uv(42, 0).cuboid(-3.0f, 0.0f, -2.0f, 6.0f, 7.0f, 4.0f), ModelTransform.of(0.0f, 13.0f, 0.0f, 0.0f, 0.0f, 0.0f));
+        ModelPartData p2 = root.addChild("arm_a", ModelPartBuilder.create().uv(0, 11).cuboid(-1.0f, 0.0f, -1.0f, 2.0f, 5.0f, 2.0f), ModelTransform.of(-4.0f, 14.0f, 0.0f, 0.0f, 0.0f, 0.0f));
+        ModelPartData p3 = root.addChild("arm_b", ModelPartBuilder.create().uv(8, 11).cuboid(-1.0f, 0.0f, -1.0f, 2.0f, 5.0f, 2.0f), ModelTransform.of(4.0f, 14.0f, 0.0f, 0.0f, 0.0f, 0.0f));
+        ModelPartData p4 = root.addChild("leg_a1", ModelPartBuilder.create().uv(16, 11).cuboid(-1.0f, 0.0f, -2.0f, 2.0f, 4.0f, 3.0f), ModelTransform.of(-2.0f, 20.0f, 0.0f, 0.0f, 0.0f, 0.0f));
         ModelPartData p5 = root.addChild("leg_b1", ModelPartBuilder.create().uv(26, 11).cuboid(-1.0f, 0.0f, -2.0f, 2.0f, 4.0f, 3.0f), ModelTransform.of(2.0f, 20.0f, 0.0f, 0.0f, 0.0f, 0.0f));
         return TexturedModelData.of(data, 64, 32);
     }

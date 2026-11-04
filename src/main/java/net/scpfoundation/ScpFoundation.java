@@ -5,6 +5,8 @@ import net.minecraft.util.Identifier;
 import net.scpfoundation.registry.ModBlockEntities;
 import net.scpfoundation.registry.ModBlocks;
 import net.scpfoundation.registry.ModCommands;
+import net.scpfoundation.registry.ModEffects;
+import net.scpfoundation.world.ZombiePlayers;
 import net.scpfoundation.registry.ModEntities;
 import net.scpfoundation.registry.ModEvents;
 import net.scpfoundation.registry.ModItemGroups;
@@ -27,6 +29,7 @@ public class ScpFoundation implements ModInitializer {
 
     @Override
     public void onInitialize() {
+        ModEffects.register();
         ModBlocks.register();
         ModEntities.register();
         ModItems.register();
@@ -35,6 +38,7 @@ public class ScpFoundation implements ModInitializer {
         ModCommands.register();
         ModEvents.register();
         PocketDimension.register();
+        ZombiePlayers.register();
         LOGGER.info("SCP Foundation initialised: Secure. Contain. Protect.");
     }
 }

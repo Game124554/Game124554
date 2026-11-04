@@ -27,7 +27,9 @@ public final class ModEvents {
     public static void register() {
         // SCP-049's "cure": anything it kills rises again as SCP-049-2.
         ServerEntityCombatEvents.AFTER_KILLED_OTHER_ENTITY.register((world, killer, killed) -> {
-            if (killer instanceof Scp049Entity && !(killed instanceof Scp0492Entity) && isCurable(killed)) {
+            boolean plague = killer instanceof Scp049Entity || killer instanceof Scp0492Entity
+                    || (killer instanceof net.minecraft.entity.player.PlayerEntity p && net.scpfoundation.world.ZombiePlayers.isZombie(p));
+            if (plague && !(killed instanceof Scp0492Entity) && isCurable(killed)) {
                 spawnInstance(world, killed);
             }
         });
@@ -71,8 +73,7 @@ public final class ModEvents {
     }
 
     private static boolean isCurable(LivingEntity killed) {
-        return killed instanceof net.minecraft.entity.player.PlayerEntity
-                || killed instanceof net.minecraft.entity.passive.MerchantEntity
+        return killed instanceof net.minecraft.entity.passive.MerchantEntity
                 || killed instanceof net.minecraft.entity.mob.ZombieEntity
                 || killed instanceof net.minecraft.entity.mob.AbstractPiglinEntity
                 || killed instanceof net.minecraft.entity.mob.IllagerEntity

@@ -62,13 +62,18 @@ public final class ScpDatabase {
         game(1471, "MalO ver1.0.0", "Euclid", "A phone app. Once installed, a dark figure with a canine skull starts appearing in the owner's photos - and behind them.");
         game(2521, "\u25CF\u25CF|\u25CF\u25CF\u25CF\u25CF\u25CF|\u25CF\u25CF|\u25CF", "Keter", "An entity that takes from anyone who writes about it in words. In-game: type its number in chat and it takes something from you.");
 
+        game(8, "Zombie Plague", "Euclid", "A prion that turns its victims into aggressive undead. In-game: SCP-049-2 bites and zombie players spread it; it runs its course in minutes. Only SCP-500 cures it.");
+        game(35, "Possessive Mask", "Keter", "A porcelain mask that whispers to anyone nearby. Whoever puts it on is taken over: strong, resilient - and slowly rotting.");
+        game(178, "3-D Specs", "Euclid", "A pair of cardboard 3-D glasses that let the wearer see things others cannot. In-game: every living thing nearby glows.");
+        game(963, "Immortality", "Safe", "An amulet that preserves the mind of whoever holds it. In-game: carrying it saves you from death once every five minutes.");
+        game(2295, "The Bear with a Heart of Patchwork", "Safe", "A patchwork teddy bear that seeks out injured people and stitches them back together.");
+
         // --- catalogued files (not physically present) ---
         file(1, "[ACCESS RESTRICTED]", "[REDACTED]", "Level 5 clearance required.");
         file(2, "The 'Living' Room", "Euclid", "A fleshy pod that contains a furnished room which absorbs anyone who enters.");
         file(3, "Biological Motherboard", "Euclid", "A computer motherboard made of living tissue.");
         file(4, "The 12 Rusty Keys and the Door", "Euclid", "A door that leads to different, often deadly places depending on the key used.");
         file(7, "Abdominal Planet", "Safe", "A man with a tiny, living planet in his abdomen.");
-        file(8, "Zombie Plague", "Euclid", "A prion that turns its hosts into aggressive undead.");
         file(9, "Red Ice", "Euclid", "A red liquid that freezes when heated and melts when cooled.");
         file(13, "Blue Lady Cigarettes", "Safe", "Cigarettes that change the smoker's self-image.");
         file(14, "The Concrete Man", "Safe", "A man made of concrete who is still alive.");
@@ -77,7 +82,6 @@ public final class ScpDatabase {
         file(17, "Shadow Person", "Keter", "A humanoid shadow that engulfs anything in darkness.");
         file(19, "The Monster Pot", "Keter", "A large clay pot from which creatures sometimes emerge.");
         file(20, "Unseen Mold", "Keter", "An invisible, airborne mold.");
-        file(35, "Possessive Mask", "Keter", "A porcelain mask that takes control of whoever wears it.");
         file(53, "Young Girl", "Euclid", "A small child; anyone who becomes hostile toward her suffers severe consequences.");
         file(55, "[unknown]", "Keter", "An object that cannot be remembered, only what it is not.");
         file(58, "Heart of Darkness", "Keter", "A cow-heart-like creature with tentacles and a malevolent intellect.");
@@ -101,7 +105,6 @@ public final class ScpDatabase {
         file(701, "The Hanged King's Tragedy", "Euclid", "A play whose performances cause violent outbreaks.");
         file(860, "Blue Key", "Safe", "A key that opens a door to a strange forest.");
         file(895, "Camera Disruption", "Euclid", "A coffin that distorts camera recordings near it.");
-        file(963, "Immortality", "Safe", "An amulet that preserves the mind of whoever touches it.");
         file(966, "Sleep Killer", "Euclid", "Creatures that prevent their victims from sleeping.");
         file(990, "Dream Man", "Keter", "A man who appears in people's dreams to warn of disasters.");
         file(1000, "Bigfoot", "Keter", "A species that has hidden from humanity for a very long time.");

@@ -122,6 +122,11 @@
           "type": "minecraft:item",
           "name": "scpfoundation:scp_1471",
           "weight": 2
+        },
+        {
+          "type": "minecraft:item",
+          "name": "scpfoundation:scp_008",
+          "weight": 2
         }
       ]
     }

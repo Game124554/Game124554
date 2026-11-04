@@ -31,6 +31,11 @@ public class Scp500Item extends Item {
             user.setHealth(user.getMaxHealth());
             user.extinguish();
             user.getCommandTags().remove(net.scpfoundation.entity.Scp1471Entity.INSTALLED_TAG);
+            if (user instanceof net.minecraft.server.network.ServerPlayerEntity sp) net.scpfoundation.world.ZombiePlayers.cure(sp);
+            if (user.getEquippedStack(net.minecraft.entity.EquipmentSlot.HEAD).isOf(net.scpfoundation.registry.ModItems.SCP_035)) {
+                user.equipStack(net.minecraft.entity.EquipmentSlot.HEAD, ItemStack.EMPTY);
+                user.getInventory().offerOrDrop(new ItemStack(net.scpfoundation.registry.ModItems.SCP_035));
+            }
             user.getHungerManager().add(4, 0.5f);
             world.playSound(null, user.getX(), user.getY(), user.getZ(), SoundEvents.ENTITY_GENERIC_EAT, SoundCategory.PLAYERS, 1.0f, 1.2f);
             ((ServerWorld) world).spawnParticles(ParticleTypes.HAPPY_VILLAGER, user.getX(), user.getBodyY(0.6), user.getZ(), 15, 0.4, 0.6, 0.4, 0.0);

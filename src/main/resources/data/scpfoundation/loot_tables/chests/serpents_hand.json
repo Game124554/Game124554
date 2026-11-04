@@ -117,6 +117,16 @@
               }
             }
           ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "scpfoundation:scp_035",
+          "weight": 1
+        },
+        {
+          "type": "minecraft:item",
+          "name": "scpfoundation:scp_963",
+          "weight": 1
         }
       ]
     }

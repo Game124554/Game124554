@@ -43,8 +43,18 @@ public class Scp0492Entity extends HostileEntity {
         this.goalSelector.add(8, new LookAtEntityGoal(this, PlayerEntity.class, 8.0f));
         this.goalSelector.add(8, new LookAroundGoal(this));
         this.targetSelector.add(1, new RevengeGoal(this));
-        this.targetSelector.add(2, new ActiveTargetGoal<>(this, PlayerEntity.class, true));
+        this.targetSelector.add(2, new ActiveTargetGoal<>(this, PlayerEntity.class, 10, true, false,
+                living -> !(living instanceof PlayerEntity p && net.scpfoundation.world.ZombiePlayers.isZombie(p))));
         this.targetSelector.add(3, new ActiveTargetGoal<>(this, MerchantEntity.class, false));
+    }
+
+    @Override
+    public boolean tryAttack(net.minecraft.entity.Entity target) {
+        boolean hit = super.tryAttack(target);
+        if (hit && target instanceof net.minecraft.entity.LivingEntity living && this.random.nextFloat() < 0.3f) {
+            net.scpfoundation.world.ZombiePlayers.infect(living, net.scpfoundation.item.Scp008Item.INFECTION_TICKS);
+        }
+        return hit;
     }
 
     @Override
