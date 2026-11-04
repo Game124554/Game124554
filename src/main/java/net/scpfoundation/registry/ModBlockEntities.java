@@ -6,6 +6,7 @@ import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.scpfoundation.ScpFoundation;
 import net.scpfoundation.block.Scp012BlockEntity;
+import net.scpfoundation.block.Scp079BlockEntity;
 import net.scpfoundation.block.Scp330BlockEntity;
 
 public final class ModBlockEntities {
@@ -14,6 +15,9 @@ public final class ModBlockEntities {
 
     public static final BlockEntityType<Scp012BlockEntity> SCP_012 = Registry.register(Registries.BLOCK_ENTITY_TYPE,
             ScpFoundation.id("scp_012"), FabricBlockEntityTypeBuilder.create(Scp012BlockEntity::new, ModBlocks.SCP_012).build());
+
+    public static final BlockEntityType<Scp079BlockEntity> SCP_079 = Registry.register(Registries.BLOCK_ENTITY_TYPE,
+            ScpFoundation.id("scp_079"), FabricBlockEntityTypeBuilder.create(Scp079BlockEntity::new, ModBlocks.SCP_079).build());
 
     private ModBlockEntities() {}
 

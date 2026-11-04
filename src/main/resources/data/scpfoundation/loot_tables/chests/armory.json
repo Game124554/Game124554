@@ -87,6 +87,11 @@
           "type": "minecraft:item",
           "name": "scpfoundation:scp_018",
           "weight": 1
+        },
+        {
+          "type": "minecraft:item",
+          "name": "scpfoundation:scp_148",
+          "weight": 1
         }
       ]
     }

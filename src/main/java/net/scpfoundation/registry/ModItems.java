@@ -13,6 +13,8 @@ import net.scpfoundation.item.CandyItem;
 import net.scpfoundation.item.KeycardItem;
 import net.scpfoundation.item.Scp005Item;
 import net.scpfoundation.item.Scp008Item;
+import net.scpfoundation.item.Scp109Item;
+import net.scpfoundation.item.Scp148Item;
 import net.scpfoundation.item.Scp035Item;
 import net.scpfoundation.item.Scp0492MaskItem;
 import net.scpfoundation.item.Scp178Item;
@@ -61,6 +63,8 @@ public final class ModItems {
     public static final Item SCP_963 = register("scp_963", new Scp963Item(new Item.Settings().maxCount(1).rarity(Rarity.EPIC)));
     public static final Item SCP_178 = register("scp_178", new Scp178Item(new Item.Settings().maxCount(1).rarity(Rarity.EPIC)));
     public static final Item SCP_049_2_MASK = register("scp_049_2_mask", new Scp0492MaskItem(new Item.Settings().maxCount(1)));
+    public static final Item SCP_148 = register("scp_148", new Scp148Item(new Item.Settings().maxCount(1).rarity(Rarity.EPIC)));
+    public static final Item SCP_109 = register("scp_109", new Scp109Item(new Item.Settings().maxCount(1).rarity(Rarity.EPIC)));
     public static final Item SCP_294_CUP = register("scp_294_cup", new Scp294CupItem(new Item.Settings().maxCount(16)));
     public static final Item SCP_330_CANDY = register("scp_330_candy", new CandyItem(new Item.Settings().food(
             new FoodComponent.Builder().hunger(2).saturationModifier(0.3f).alwaysEdible().snack().build())));
@@ -84,6 +88,13 @@ public final class ModItems {
     public static final Item SCP_1471_A_SPAWN_EGG = egg("scp_1471_a", ModEntities.SCP_1471_A, 0x0E0E10, 0xE6E1D2);
 
     public static final Item SCP_2295_SPAWN_EGG = egg("scp_2295", ModEntities.SCP_2295, 0xC86E8C, 0x5A9BD2);
+
+    public static final Item SCP_457_SPAWN_EGG = egg("scp_457", ModEntities.SCP_457, 0xF07814, 0xFFDC32);
+    public static final Item SCP_017_SPAWN_EGG = egg("scp_017", ModEntities.SCP_017, 0x050505, 0x2A2A30);
+    public static final Item SCP_966_SPAWN_EGG = egg("scp_966", ModEntities.SCP_966, 0x8C8C96, 0x3C3C46);
+    public static final Item SCP_650_SPAWN_EGG = egg("scp_650", ModEntities.SCP_650, 0x101012, 0x505058);
+    public static final Item SCP_073_SPAWN_EGG = egg("scp_073", ModEntities.SCP_073, 0xC8A078, 0x8C8C96);
+    public static final Item SCP_076_SPAWN_EGG = egg("scp_076", ModEntities.SCP_076, 0x463224, 0x969696);
 
     private ModItems() {}
 

@@ -35,6 +35,13 @@
 | **008** | The zombie plague. SCP-049-2 bites and zombie players spread it. Infected players get fever stages, and when it runs out they turn into SCP-049-2. SCP-500 cures it. |
 | **035** | The possessive mask. Wear it for strength, resistance and haste, and hostile mobs back off. But it whispers to you, rots you slowly, and can't be taken off (SCP-500 pries it loose). |
 | **963 / 178 / 2295** | An amulet that cheats death once every 5 minutes; 3-D glasses that make every living thing glow; a patchwork bear that heals hurt players and sews out SCP-008. |
+| **457** | The Burning Man: a living fire that sets you and the ground ablaze. It heals in flames and is hurt by water. |
+| **017** | The Shadow Person: fast and deadly in the dark, but bright light burns it away. |
+| **966** | Sleep Killers: invisible unless you have night vision (SCP-178, SCP-035 or a potion). Their claws drain you. |
+| **650** | The Startling Statue: when nobody's watching, it appears right behind you. |
+| **073 / 076** | Cain reflects any damage back at the attacker, and plants wither around him. Able is a regenerating warrior armed with a netherite sword. |
+| **079 / 261 / 610** | Old AI (insults you and plays with iron doors); a vending machine that sells snacks from other worlds; a flesh growth that slowly spreads. |
+| **148 / 109** | A Telekill helmet that blocks SCP-012, SCP-1471 and SCP-939's voices; a canteen that never runs dry. |
 | **1025 / 006** | An encyclopedia that gives you the disease you read about, and bottled water that heals. |
 
 ### SCP items and blocks

@@ -11,6 +11,12 @@ import net.scpfoundation.entity.Scp018Entity;
 import net.scpfoundation.entity.Scp066Entity;
 import net.scpfoundation.entity.Scp1471Entity;
 import net.scpfoundation.entity.Scp2295Entity;
+import net.scpfoundation.entity.Scp457Entity;
+import net.scpfoundation.entity.Scp017Entity;
+import net.scpfoundation.entity.Scp966Entity;
+import net.scpfoundation.entity.Scp650Entity;
+import net.scpfoundation.entity.Scp073Entity;
+import net.scpfoundation.entity.Scp076Entity;
 import net.scpfoundation.entity.Scp0492Entity;
 import net.scpfoundation.entity.Scp049Entity;
 import net.scpfoundation.entity.Scp096Entity;
@@ -52,6 +58,18 @@ public final class ModEntities {
             EntityType.Builder.<Scp1471Entity>create(Scp1471Entity::new, SpawnGroup.MISC).setDimensions(0.7f, 2.6f).maxTrackingRange(10));
     public static final EntityType<Scp2295Entity> SCP_2295 = register("scp_2295",
             EntityType.Builder.<Scp2295Entity>create(Scp2295Entity::new, SpawnGroup.CREATURE).setDimensions(0.5f, 0.8f).maxTrackingRange(8));
+    public static final EntityType<Scp457Entity> SCP_457 = register("scp_457",
+            EntityType.Builder.<Scp457Entity>create(Scp457Entity::new, SpawnGroup.MONSTER).setDimensions(0.6f, 1.95f).maxTrackingRange(10).makeFireImmune());
+    public static final EntityType<Scp017Entity> SCP_017 = register("scp_017",
+            EntityType.Builder.<Scp017Entity>create(Scp017Entity::new, SpawnGroup.MONSTER).setDimensions(0.6f, 1.95f).maxTrackingRange(10));
+    public static final EntityType<Scp966Entity> SCP_966 = register("scp_966",
+            EntityType.Builder.<Scp966Entity>create(Scp966Entity::new, SpawnGroup.MONSTER).setDimensions(0.6f, 2.3f).maxTrackingRange(10));
+    public static final EntityType<Scp650Entity> SCP_650 = register("scp_650",
+            EntityType.Builder.<Scp650Entity>create(Scp650Entity::new, SpawnGroup.CREATURE).setDimensions(0.6f, 2.2f).maxTrackingRange(10));
+    public static final EntityType<Scp073Entity> SCP_073 = register("scp_073",
+            EntityType.Builder.<Scp073Entity>create(Scp073Entity::new, SpawnGroup.CREATURE).setDimensions(0.6f, 1.95f).maxTrackingRange(10));
+    public static final EntityType<Scp076Entity> SCP_076 = register("scp_076",
+            EntityType.Builder.<Scp076Entity>create(Scp076Entity::new, SpawnGroup.MONSTER).setDimensions(0.6f, 1.95f).maxTrackingRange(10));
     public static final EntityType<Scp018Entity> SCP_018 = register("scp_018",
             EntityType.Builder.<Scp018Entity>create(Scp018Entity::new, SpawnGroup.MISC).setDimensions(0.25f, 0.25f).maxTrackingRange(6).trackingTickInterval(2));
 
@@ -75,6 +93,12 @@ public final class ModEntities {
         FabricDefaultAttributeRegistry.register(SCP_1048, Scp1048Entity.createAttributes());
         FabricDefaultAttributeRegistry.register(SCP_066, Scp066Entity.createAttributes());
         FabricDefaultAttributeRegistry.register(SCP_2295, Scp2295Entity.createAttributes());
+        FabricDefaultAttributeRegistry.register(SCP_457, Scp457Entity.createAttributes());
+        FabricDefaultAttributeRegistry.register(SCP_017, Scp017Entity.createAttributes());
+        FabricDefaultAttributeRegistry.register(SCP_966, Scp966Entity.createAttributes());
+        FabricDefaultAttributeRegistry.register(SCP_650, Scp650Entity.createAttributes());
+        FabricDefaultAttributeRegistry.register(SCP_073, Scp073Entity.createAttributes());
+        FabricDefaultAttributeRegistry.register(SCP_076, Scp076Entity.createAttributes());
         FabricDefaultAttributeRegistry.register(SCP_1471_A, Scp1471Entity.createAttributes());
     }
 }

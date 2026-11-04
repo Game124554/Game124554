@@ -73,7 +73,7 @@ public class Scp012Block extends HorizontalFacingBlock implements BlockEntityPro
         if (world.getTime() % 5 != 0) return;
         Vec3d center = Vec3d.ofCenter(pos);
         for (PlayerEntity p : world.getEntitiesByClass(PlayerEntity.class, new Box(pos).expand(RANGE), ScpUtil::isTargetablePlayer)) {
-            if (p.getEquippedStack(EquipmentSlot.HEAD).isOf(Items.CARVED_PUMPKIN)) continue;
+            if (p.getEquippedStack(EquipmentSlot.HEAD).isOf(Items.CARVED_PUMPKIN) || net.scpfoundation.item.Scp148Item.isShielded(p)) continue;
             Vec3d to = center.subtract(p.getPos());
             double dist = Math.sqrt(to.x * to.x + to.z * to.z);
             if (dist > RANGE) continue;

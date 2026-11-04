@@ -21,6 +21,13 @@ import net.scpfoundation.entity.Scp049Entity;
 import net.scpfoundation.entity.Scp066Entity;
 import net.scpfoundation.entity.Scp1471Entity;
 import net.scpfoundation.entity.Scp2295Entity;
+import net.scpfoundation.entity.Scp457Entity;
+import net.scpfoundation.entity.Scp017Entity;
+import net.scpfoundation.entity.Scp966Entity;
+import net.scpfoundation.entity.Scp650Entity;
+import net.scpfoundation.entity.Scp073Entity;
+import net.scpfoundation.entity.Scp076Entity;
+import net.scpfoundation.client.render.Scp966Renderer;
 import net.scpfoundation.entity.Scp096Entity;
 import net.scpfoundation.entity.Scp1048Entity;
 import net.scpfoundation.entity.Scp106Entity;
@@ -48,6 +55,12 @@ public class ScpFoundationClient implements ClientModInitializer {
     public static final EntityModelLayer SCP_1048 = layer("scp_1048");
     public static final EntityModelLayer SCP_066 = layer("scp_066");
     public static final EntityModelLayer SCP_2295 = layer("scp_2295");
+    public static final EntityModelLayer SCP_457 = layer("scp_457");
+    public static final EntityModelLayer SCP_017 = layer("scp_017");
+    public static final EntityModelLayer SCP_966 = layer("scp_966");
+    public static final EntityModelLayer SCP_650 = layer("scp_650");
+    public static final EntityModelLayer SCP_073 = layer("scp_073");
+    public static final EntityModelLayer SCP_076 = layer("scp_076");
     public static final EntityModelLayer SCP_1471_A = layer("scp_1471_a");
 
     private static EntityModelLayer layer(String name) {
@@ -73,6 +86,12 @@ public class ScpFoundationClient implements ClientModInitializer {
         EntityModelLayerRegistry.registerModelLayer(SCP_1048, ScpModelData::scp1048);
         EntityModelLayerRegistry.registerModelLayer(SCP_066, ScpModelData::scp066);
         EntityModelLayerRegistry.registerModelLayer(SCP_2295, ScpModelData::scp2295);
+        EntityModelLayerRegistry.registerModelLayer(SCP_457, ScpBipedModel::plain);
+        EntityModelLayerRegistry.registerModelLayer(SCP_017, ScpBipedModel::plain);
+        EntityModelLayerRegistry.registerModelLayer(SCP_966, ScpBipedModel::plain);
+        EntityModelLayerRegistry.registerModelLayer(SCP_650, ScpBipedModel::plain);
+        EntityModelLayerRegistry.registerModelLayer(SCP_073, ScpBipedModel::plain);
+        EntityModelLayerRegistry.registerModelLayer(SCP_076, ScpBipedModel::plain);
         EntityModelLayerRegistry.registerModelLayer(SCP_1471_A, ScpBipedModel::withSnout);
 
         EntityRendererRegistry.register(ModEntities.SCP_173, ctx -> new ScpBipedRenderer<Scp173Entity>(ctx,
@@ -105,6 +124,18 @@ public class ScpFoundationClient implements ClientModInitializer {
                 new ScpBipedModel<Scp1471Entity>(ctx.getPart(SCP_1471_A), ScpBipedModel.Pose.STALKER), tex("scp_1471_a"), 0.5f, 0.95f, 1.28f));
         EntityRendererRegistry.register(ModEntities.SCP_2295, ctx -> new BeastRenderer<Scp2295Entity>(ctx,
                 new ScpBeastModel<Scp2295Entity>(ctx.getPart(SCP_2295), ScpModelData.SCP_2295_PARTS), 0.3f, 1.0f, e -> tex("scp_2295")));
+        EntityRendererRegistry.register(ModEntities.SCP_457, ctx -> new ScpBipedRenderer<Scp457Entity>(ctx,
+                new ScpBipedModel<Scp457Entity>(ctx.getPart(SCP_457), ScpBipedModel.Pose.REACH), tex("scp_457"), 0.5f, 1.0f, 1.0f));
+        EntityRendererRegistry.register(ModEntities.SCP_017, ctx -> new ScpBipedRenderer<Scp017Entity>(ctx,
+                new ScpBipedModel<Scp017Entity>(ctx.getPart(SCP_017), ScpBipedModel.Pose.REACH), tex("scp_017"), 0.0f, 1.0f, 1.0f));
+        EntityRendererRegistry.register(ModEntities.SCP_966, ctx -> new Scp966Renderer(ctx,
+                new ScpBipedModel<Scp966Entity>(ctx.getPart(SCP_966), ScpBipedModel.Pose.SHAMBLE), tex("scp_966")));
+        EntityRendererRegistry.register(ModEntities.SCP_650, ctx -> new ScpBipedRenderer<Scp650Entity>(ctx,
+                new ScpBipedModel<Scp650Entity>(ctx.getPart(SCP_650), ScpBipedModel.Pose.STATUE), tex("scp_650"), 0.4f, 0.85f, 1.12f));
+        EntityRendererRegistry.register(ModEntities.SCP_073, ctx -> new ScpBipedRenderer<Scp073Entity>(ctx,
+                new ScpBipedModel<Scp073Entity>(ctx.getPart(SCP_073), ScpBipedModel.Pose.NORMAL), tex("scp_073"), 0.5f, 1.0f, 1.0f));
+        EntityRendererRegistry.register(ModEntities.SCP_076, ctx -> new ScpBipedRenderer<Scp076Entity>(ctx,
+                new ScpBipedModel<Scp076Entity>(ctx.getPart(SCP_076), ScpBipedModel.Pose.NORMAL), tex("scp_076"), 0.5f, 1.0f, 1.0f));
         EntityRendererRegistry.register(ModEntities.SCP_018, FlyingItemEntityRenderer::new);
 
         BlockRenderLayerMap.INSTANCE.putBlock(ModBlocks.CONTAINMENT_GLASS, RenderLayer.getTranslucent());

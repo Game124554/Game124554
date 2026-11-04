@@ -66,7 +66,7 @@ public final class ModEvents {
     private static void haunt1471(MinecraftServer server) {
         if (server.getTicks() % 20 != 0) return;
         for (ServerPlayerEntity player : server.getPlayerManager().getPlayerList()) {
-            if (!Scp1471Item.isInstalled(player) || player.isSpectator()) continue;
+            if (!Scp1471Item.isInstalled(player) || player.isSpectator() || net.scpfoundation.item.Scp148Item.isShielded(player)) continue;
             if (player.getRandom().nextInt(75) != 0) continue;
             if (!Scp1471Entity.hasActiveFigure(player)) Scp1471Entity.spawnFor(player);
         }

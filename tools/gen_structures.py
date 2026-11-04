@@ -242,6 +242,8 @@ def furnish(t, kind, x0, x1, z0, z1, door, rng, h, cell_mob=None, cell_level=3):
                     t.set(x, 2, z, rng.choice(["minecraft:observer[facing=north,powered=false]", "minecraft:black_concrete", "minecraft:target[power=0]"]))
         if ok(x1, door[1]) and x1 != door[0]:
             t.chest(x1, 1, door[1], "chests/research", "west")
+        if rng.random() < 0.45 and ok(x0, far_z):
+            t.set(x0, 1, far_z, f"{M}:scp_079[facing={fz_face}]")
     elif kind == "breakroom":
         mx, mz = (x0 + x1) // 2, (z0 + z1) // 2
         if ok(mx, mz):
@@ -252,6 +254,8 @@ def furnish(t, kind, x0, x1, z0, z1, door, rng, h, cell_mob=None, cell_level=3):
                 t.set(x, 1, far_z, rng.choice(["minecraft:smoker[facing=" + fz_face + ",lit=false]", "minecraft:white_concrete", "minecraft:crafting_table"]))
         if ok(x1, mz):
             t.chest(x1, 1, mz, "chests/facility_common", "west")
+        if rng.random() < 0.5 and ok(x0, far_z):
+            t.set(x0, 1, far_z, f"{M}:scp_261[facing={fz_face}]")
     elif kind == "security":
         for x in range(x0, x1 + 1):
             if ok(x, far_z):
@@ -277,7 +281,7 @@ def furnish(t, kind, x0, x1, z0, z1, door, rng, h, cell_mob=None, cell_level=3):
     elif kind.startswith("anomaly:"):
         block = kind.split(":")[1]
         mx = (x0 + x1) // 2
-        t.set(mx, 1, far_z, f"{M}:{block}[facing={fz_face}]")
+        t.set(mx, 1, far_z, f"{M}:{block}" if block == "scp_610" else f"{M}:{block}[facing={fz_face}]")
         for x in range(x0, x1 + 1):
             t.set(x, 0, far_z, HAZ)
     elif kind.startswith("locker:"):
@@ -877,16 +881,16 @@ def loot_tables():
         item("minecraft:iron_sword", 8), item("minecraft:crossbow", 6), item("minecraft:arrow", 12, 4, 16), item("minecraft:shield", 6),
         item("minecraft:iron_helmet", 5), item("minecraft:iron_chestplate", 4), item("minecraft:iron_leggings", 4), item("minecraft:iron_boots", 5),
         item(f"{M}:keycard_level_3", 6), item(f"{M}:keycard_level_4", 3), item("minecraft:cooked_beef", 8, 1, 4),
-        item(f"{M}:scp_018", 1)])])
+        item(f"{M}:scp_018", 1), item(f"{M}:scp_148", 1)])])
     table("chests/medical", [pool(2, 5, [
         item("minecraft:golden_apple", 4), item("minecraft:bread", 10, 1, 3), item("minecraft:glistering_melon_slice", 4, 1, 2),
         item("minecraft:potion", 10, extra_fn={"function": "minecraft:set_potion", "id": "minecraft:healing"}),
         item("minecraft:potion", 6, extra_fn={"function": "minecraft:set_potion", "id": "minecraft:regeneration"}),
-        item("minecraft:milk_bucket", 4), item(f"{M}:scp_500", 2), item(f"{M}:scp_006", 3, 1, 2), item(f"{M}:keycard_level_2", 5)])])
+        item("minecraft:milk_bucket", 4), item(f"{M}:scp_500", 2), item(f"{M}:scp_006", 3, 1, 2), item(f"{M}:scp_109", 1), item(f"{M}:keycard_level_2", 5)])])
     table("chests/o5_vault", [pool(3, 5, [
         item(f"{M}:keycard_o5", 4), item(f"{M}:keycard_level_5", 6), item("minecraft:diamond", 10, 1, 4), item("minecraft:emerald", 10, 2, 6),
         item("minecraft:netherite_scrap", 3), item(f"{M}:scp_500", 4), item(f"{M}:scp_005", 2), item(f"{M}:scp_714", 2),
-        item(f"{M}:scp_427", 2), item(f"{M}:scp_268", 2), item(f"{M}:scp_document", 10, 2, 6), item(f"{M}:scp_035", 2), item(f"{M}:scp_963", 2)])])
+        item(f"{M}:scp_427", 2), item(f"{M}:scp_268", 2), item(f"{M}:scp_document", 10, 2, 6), item(f"{M}:scp_035", 2), item(f"{M}:scp_963", 2), item(f"{M}:scp_148", 2)])])
     table("chests/insurgency", [pool(3, 6, [
         item("minecraft:crossbow", 6), item("minecraft:arrow", 10, 4, 12), item("minecraft:tnt", 5, 1, 3), item("minecraft:gold_ingot", 8, 1, 4),
         item("minecraft:emerald", 6, 1, 3), item(f"{M}:keycard_level_3", 4), item(f"{M}:keycard_level_4", 2), item(f"{M}:scp_207", 3),
@@ -959,8 +963,9 @@ def build_all():
 
     # ---- 74 Foundation facilities and hostile-group sites --------------------------
     def site(n): return f"SITE-{n}"
-    hostile = ["scp_173", "scp_096", "scp_049", "scp_106", "scp_939", "scp_049_2", "scp_049_2"]
-    safe = ["scp_999", "scp_131", "scp_529", "scp_1048", "scp_066", "scp_2295"]
+    hostile = ["scp_173", "scp_096", "scp_049", "scp_106", "scp_939", "scp_049_2", "scp_049_2",
+               "scp_457", "scp_017", "scp_966", "scp_650", "scp_076"]
+    safe = ["scp_999", "scp_131", "scp_529", "scp_1048", "scp_066", "scp_2295", "scp_073"]
     lockers = ["locker:scp_500", "locker:scp_207", "locker:scp_018", "locker:scp_427", "locker:scp_714", "locker:scp_063"]
 
     for i, n in enumerate([19, 17, 43, 62, 77]):
@@ -1009,7 +1014,7 @@ def build_all():
                                     door_levels={"office": 5, "archive": 5, "security": 4, "cell": 5, "locker:scp_005": 5, "storage": 4},
                                     cell_mobs=["scp_682"] if False else ["scp_999"], sign=["O5 COUNCIL", "[REDACTED]"], loot_vault="chests/o5_vault"))
     for i, n in enumerate([4, 8, 26, 59]):
-        t = facility("ruin", 8700 + n, ["lab", "cell", "storage", "office"], sign=[site(n), "DECOMMISSIONED"],
+        t = facility("ruin", 8700 + n, ["lab", "cell", "anomaly:scp_610" if n in (8, 59) else "storage", "office"], sign=[site(n), "DECOMMISSIONED"],
                      cell_mobs=["scp_049_2", "scp_049_2", "scp_939"], entrance=0)
         add(f"ruined_site_{n}", ruin(t, 8700 + n, 0.25 + i * 0.05))
     for i in range(4):

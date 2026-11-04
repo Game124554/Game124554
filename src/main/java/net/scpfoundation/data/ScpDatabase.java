@@ -68,6 +68,18 @@ public final class ScpDatabase {
         game(963, "Immortality", "Safe", "An amulet that preserves the mind of whoever holds it. In-game: carrying it saves you from death once every five minutes.");
         game(2295, "The Bear with a Heart of Patchwork", "Safe", "A patchwork teddy bear that seeks out injured people and stitches them back together.");
 
+        game(17, "Shadow Person", "Keter", "A living shadow that engulfs whatever it touches. In-game: deadly in the dark, burned away by bright light.");
+        game(73, "Cain", "Euclid", "A calm, polite man. Harm done to him is turned back on the attacker, and plants wither where he walks.");
+        game(76, "Able", "Keter", "A ferocious warrior who hates all living things and keeps coming back.");
+        game(79, "Old AI", "Euclid", "A sentient AI on obsolete hardware. In-game: it insults people and plays with nearby iron doors.");
+        game(109, "Infinite Canteen", "Safe", "A canteen that never runs out of water. In-game: drink from it or pour water sources anywhere.");
+        game(148, "The 'Telekill' Alloy", "Euclid", "A metal that blocks psychic effects. In-game: a helmet that shields you from SCP-012, SCP-1471 and SCP-939's voices.");
+        game(261, "Pan-dimensional Vending", "Safe", "A vending machine that sells snacks from other worlds. In-game: pay with an iron nugget.");
+        game(457, "Burning Man", "Euclid", "A sentient fire in roughly human shape. It spreads flames, heals in fire and is hurt by water.");
+        game(610, "The Flesh that Hates", "Keter", "A spreading flesh growth. In-game: it slowly converts natural blocks around it and sickens anything walking on it.");
+        game(650, "Startling Statue", "Euclid", "A black statue that, whenever nobody is watching, appears right behind someone.");
+        game(966, "Sleep Killer", "Euclid", "Predators invisible to normal sight that drain their victims' sleep. In-game: only visible with night vision.");
+
         // --- catalogued files (not physically present) ---
         file(1, "[ACCESS RESTRICTED]", "[REDACTED]", "Level 5 clearance required.");
         file(2, "The 'Living' Room", "Euclid", "A fleshy pod that contains a furnished room which absorbs anyone who enters.");
@@ -79,33 +91,25 @@ public final class ScpDatabase {
         file(14, "The Concrete Man", "Safe", "A man made of concrete who is still alive.");
         file(15, "Pipe Nightmare", "Keter", "A network of pipes that keeps growing on its own.");
         file(16, "Sentient Microscopic Organism", "Keter", "A microorganism that reshapes its hosts.");
-        file(17, "Shadow Person", "Keter", "A humanoid shadow that engulfs anything in darkness.");
         file(19, "The Monster Pot", "Keter", "A large clay pot from which creatures sometimes emerge.");
         file(20, "Unseen Mold", "Keter", "An invisible, airborne mold.");
         file(53, "Young Girl", "Euclid", "A small child; anyone who becomes hostile toward her suffers severe consequences.");
         file(55, "[unknown]", "Keter", "An object that cannot be remembered, only what it is not.");
         file(58, "Heart of Darkness", "Keter", "A cow-heart-like creature with tentacles and a malevolent intellect.");
-        file(73, "Cain", "Euclid", "A man whose presence withers plant life and who cannot be harmed directly.");
-        file(76, "Able", "Keter", "A hostile humanoid kept in a stone coffin who repeatedly returns.");
-        file(79, "Old AI", "Euclid", "A sentient artificial intelligence on outdated hardware.");
         file(93, "Red Sea Object", "Euclid", "A disc that opens a way into another world when held near a mirror.");
         file(105, "Iris", "Safe", "A woman who can interact with the scenes in photographs.");
         file(111, "Dragon-Snails", "Safe", "Small snails that breathe fire.");
-        file(148, "The 'Telekill' Alloy", "Euclid", "A metal that blocks psychic and telepathic effects.");
         file(169, "The Leviathan", "Keter", "A creature so large it may be an entire landmass.");
         file(191, "Cyborg Child", "Safe", "A child heavily modified with machinery.");
         file(231, "Special Personnel Requirements", "Keter", "Classified. Containment procedures must never be discussed.");
-        file(261, "Pan-dimensional Vending", "Safe", "A vending machine that sells snacks from other worlds.");
         file(343, "'God'", "Safe", "An elderly man who claims to be God and can appear anywhere.");
         file(372, "Peripheral Jumper", "Euclid", "A creature that is only ever seen in the corner of your eye.");
         file(426, "I am a Toaster", "Euclid", "A toaster that makes those near it believe they are the toaster.");
         file(447, "Ball of Green Slime", "Safe", "A ball of slime that turns corpses into slime.");
         file(513, "A Cowbell", "Euclid", "A cowbell that causes horrifying hallucinations when rung.");
-        file(610, "The Flesh that Hates", "Keter", "A spreading infection that converts living tissue.");
         file(701, "The Hanged King's Tragedy", "Euclid", "A play whose performances cause violent outbreaks.");
         file(860, "Blue Key", "Safe", "A key that opens a door to a strange forest.");
         file(895, "Camera Disruption", "Euclid", "A coffin that distorts camera recordings near it.");
-        file(966, "Sleep Killer", "Euclid", "Creatures that prevent their victims from sleeping.");
         file(990, "Dream Man", "Keter", "A man who appears in people's dreams to warn of disasters.");
         file(1000, "Bigfoot", "Keter", "A species that has hidden from humanity for a very long time.");
         file(1123, "Atrocity Skull", "Safe", "A skull that makes those who touch it relive a historical atrocity.");

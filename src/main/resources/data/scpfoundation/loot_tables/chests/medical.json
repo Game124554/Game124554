@@ -92,6 +92,11 @@
         },
         {
           "type": "minecraft:item",
+          "name": "scpfoundation:scp_109",
+          "weight": 1
+        },
+        {
+          "type": "minecraft:item",
           "name": "scpfoundation:keycard_level_2",
           "weight": 5
         }

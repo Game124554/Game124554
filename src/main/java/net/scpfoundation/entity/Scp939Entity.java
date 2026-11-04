@@ -72,7 +72,7 @@ public class Scp939Entity extends HostileEntity {
         Text line = Text.literal("<" + voice.getName().getString() + "> ")
                 .append(Text.translatable("message.scpfoundation.939." + this.random.nextInt(4)));
         for (PlayerEntity listener : near) {
-            if (listener != voice) listener.sendMessage(line.copy().formatted(Formatting.WHITE), false);
+            if (listener != voice && !net.scpfoundation.item.Scp148Item.isShielded(listener)) listener.sendMessage(line.copy().formatted(Formatting.WHITE), false);
         }
     }
 

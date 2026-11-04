@@ -262,6 +262,38 @@ def block_textures():
         px(img, x, y, (140, 15, 15)); px(img, x + 1, y, (120, 10, 10))
     save_png(img, BT, "scp_012_score.png")
 
+    # SCP-079 old computer
+    img = new16((205, 198, 170), 4, 100)
+    fill_rect(img, 2, 2, 12, 9, (20, 30, 20))
+    for y in (4, 6, 8):
+        for x in range(3, 3 + random.Random(y).randint(5, 10)):
+            px(img, x, y, (60, 230, 90))
+    fill_rect(img, 3, 12, 10, 2, (160, 150, 125))
+    px(img, 12, 13, (220, 40, 40))
+    save_png(img, BT, "scp_079_front.png")
+    save_png(new16((190, 182, 155), 4, 101), BT, "scp_079_side.png")
+    # SCP-261 vending machine
+    img = new16((170, 30, 35), 5, 110)
+    fill_rect(img, 2, 2, 8, 11, (40, 50, 60))
+    r6 = random.Random(111)
+    for y in (3, 6, 9):
+        for x in range(3, 9, 2):
+            px(img, x, y, r6.choice([(230, 200, 60), (90, 200, 90), (230, 120, 40), (200, 80, 200)]))
+    fill_rect(img, 11, 3, 3, 6, (30, 30, 30))
+    fill_rect(img, 3, 13, 7, 2, (15, 15, 15))
+    save_png(img, BT, "scp_261_front.png")
+    save_png(new16((150, 25, 30), 5, 112), BT, "scp_261_side.png")
+    # SCP-610 flesh
+    img = new16((150, 40, 45), 12, 120)
+    r7 = random.Random(121)
+    for _ in range(6):
+        x, y = r7.randrange(16), r7.randrange(16)
+        for k in range(6):
+            px(img, (x + k) % 16, (y + r7.randint(-1, 1)) % 16, (90, 20, 30))
+    for _ in range(10):
+        px(img, r7.randrange(16), r7.randrange(16), (200, 120, 110))
+    save_png(img, BT, "scp_610.png")
+
     # SCP-1162 hole in wall
     img = new16((128, 128, 130), 9, 70)
     for x in range(16):
@@ -456,6 +488,29 @@ def item_textures():
                 px(img, x, y, (110, 200, 235) if y > 8 else (190, 230, 245))
     px(img, 6, 9, (255, 255, 255)); px(img, 5, 10, (255, 255, 255)); px(img, 10, 11, (230, 250, 255))
     save_png(img, IT, "scp_006.png")
+
+    # SCP-148 helmet
+    img = new16()
+    for x in range(16):
+        for y in range(16):
+            dx, dy = (x - 7.5) / 6.0, (y - 9.0) / 6.5
+            if dx * dx + dy * dy <= 1.0 and y <= 11:
+                px(img, x, y, (120, 125, 135) if (x + y) % 5 else (150, 155, 165))
+    fill_rect(img, 2, 11, 12, 2, (90, 95, 105))
+    fill_rect(img, 4, 7, 8, 1, (60, 200, 220))
+    save_png(img, IT, "scp_148.png")
+    # SCP-109 canteen
+    img = new16()
+    for x in range(16):
+        for y in range(16):
+            if math.hypot(x - 7.5, y - 9) <= 5.3:
+                px(img, x, y, (90, 110, 70))
+            if math.hypot(x - 7.5, y - 9) <= 3.5:
+                px(img, x, y, (110, 135, 85))
+    fill_rect(img, 6, 1, 4, 3, (150, 150, 150))
+    fill_rect(img, 7, 0, 2, 1, (60, 60, 60))
+    px(img, 5, 7, (180, 200, 160))
+    save_png(img, IT, "scp_109.png")
 
     # SCP-008 vial
     img = new16()
@@ -998,6 +1053,76 @@ def entity_textures():
                 px(img, x, y, (34, 34, 40))
     biped("scp_1471_a", bone, fur, fur, fur, f1471, x1471, noise=5)
 
+    # --- batch 3 humanoids (all original designs) ---
+    def nothing(img, rng):
+        pass
+
+    def f457(img, rng):  # burning figure: hot core, flickering edges
+        for (x, y) in [(2, 3), (5, 3)]:
+            px(img, 8 + x, 8 + y, (255, 250, 200)); px(img, 9 + x, 8 + y, (255, 250, 200))
+
+    def x457(img, rng):
+        for x in range(0, 56):
+            for y in range(0, 32):
+                if img.getpixel((x, y))[3] > 0:
+                    r = rng.random()
+                    px(img, x, y, (255, 220, 60) if r < 0.25 else (240, 120, 20) if r < 0.7 else (180, 40, 10))
+        for (x, y) in [(10, 11), (11, 11), (13, 11), (14, 11)]:
+            px(img, x, y, (255, 255, 220))
+    biped("scp_457", (240, 120, 20), (240, 120, 20), (240, 120, 20), (240, 120, 20), f457, x457, noise=20)
+
+    def f017(img, rng):
+        pass
+    biped("scp_017", (6, 6, 8), (6, 6, 8), (6, 6, 8), (6, 6, 8), f017, None, noise=3)
+
+    def f966(img, rng):  # long grey face, small glowing slits
+        fill_rect(img, 9, 10, 2, 1, (200, 220, 160)); fill_rect(img, 13, 10, 2, 1, (200, 220, 160))
+        for x in range(10, 14):
+            px(img, x, 14, (40, 40, 45))
+
+    def x966(img, rng):
+        F = faces(40, 16, 4, 12, 4)
+        for k in ("front", "back", "left", "right"):
+            x, y, w, h = F[k]
+            fill_rect(img, x, y + h - 3, w, 3, (230, 230, 220))  # claws
+    biped("scp_966", (140, 140, 150), (110, 110, 120), (140, 140, 150), (110, 110, 120), f966, x966, noise=8)
+
+    def f650(img, rng):
+        for (x, y) in [(2, 3), (5, 3)]:
+            px(img, 8 + x, 8 + y, (40, 40, 46))
+    biped("scp_650", (16, 16, 18), (16, 16, 18), (16, 16, 18), (16, 16, 18), f650, None, noise=4)
+
+    def f073(img, rng):  # calm man with a mark on his forehead
+        fill_rect(img, 8, 8, 8, 2, (60, 40, 25))
+        px(img, 10, 11, (255, 255, 255)); px(img, 11, 11, (40, 60, 90)); px(img, 13, 11, (40, 60, 90)); px(img, 14, 11, (255, 255, 255))
+        fill_rect(img, 11, 10, 3, 1, (30, 30, 30))
+        fill_rect(img, 11, 14, 3, 1, (150, 90, 70))
+
+    def x073(img, rng):  # metallic forearms
+        F = faces(40, 16, 4, 12, 4)
+        for k in ("front", "back", "left", "right"):
+            x, y, w, h = F[k]
+            fill_rect(img, x, y + 5, w, h - 5, (150, 150, 158), 8, rng)
+    biped("scp_073", (200, 160, 120), (120, 120, 128), (120, 120, 128), (70, 70, 80), f073, x073, noise=6)
+
+    def f076(img, rng):  # dark-haired warrior with a scar
+        fill_rect(img, 8, 8, 8, 2, (25, 20, 18))
+        px(img, 10, 11, (230, 230, 230)); px(img, 11, 11, (120, 30, 20)); px(img, 13, 11, (120, 30, 20)); px(img, 14, 11, (230, 230, 230))
+        for y in range(10, 14):
+            px(img, 13, y, (140, 70, 60))
+        fill_rect(img, 11, 14, 3, 1, (90, 50, 40))
+
+    def x076(img, rng):
+        F = faces(0, 0, 8, 8, 8)
+        for k in ("top", "back", "left", "right"):
+            x, y, w, h = F[k]
+            fill_rect(img, x, y, w, h if k == "top" else 4, (25, 20, 18), 3, rng)
+        F = faces(16, 16, 8, 12, 4)
+        x, y, w, h = F["front"]
+        for i in range(w):
+            px(img, x + i, y + 2 + (i % 3), (60, 40, 25))
+    biped("scp_076", (170, 130, 100), (90, 60, 35), (170, 130, 100), (60, 45, 30), f076, x076, noise=8)
+
     save_png(Image.new("RGBA", (16, 16), (0, 0, 0, 0)), ET, "empty.png")
 
 
@@ -1005,22 +1130,24 @@ def entity_textures():
 # Models, blockstates, loot, lang, recipes, tags
 # --------------------------------------------------------------------------------------
 SIMPLE_BLOCKS = ["reinforced_concrete", "facility_wall", "facility_floor", "hazard_block",
-                 "containment_glass", "foundation_emblem", "corroded_block"]
+                 "containment_glass", "foundation_emblem", "corroded_block", "scp_610"]
 FACING_BLOCKS = {  # name -> (front, side, top)
     **{f"keycard_reader_{i}": (f"keycard_reader_{i}_front", "keycard_reader_side", "keycard_reader_side") for i in range(1, 6)},
     "scp_914": ("scp_914_front", "scp_914_side", "scp_914_top"),
     "scp_294": ("scp_294_front", "scp_294_side", "scp_294_side"),
     "scp_1162": ("scp_1162_front", "reinforced_concrete", "reinforced_concrete"),
+    "scp_079": ("scp_079_front", "scp_079_side", "scp_079_side"),
+    "scp_261": ("scp_261_front", "scp_261_side", "scp_261_side"),
 }
 SHAPED_BLOCKS = ["scp_330", "scp_458", "scp_012"]
 ALL_BLOCKS = SIMPLE_BLOCKS + list(FACING_BLOCKS) + SHAPED_BLOCKS
 
 GENERATED_ITEMS = ["scp_document", "keycard_level_1", "keycard_level_2", "keycard_level_3", "keycard_level_4",
                    "keycard_level_5", "keycard_o5", "scp_500", "scp_207", "scp_018", "scp_005", "scp_427",
-                   "scp_714", "scp_268", "scp_294_cup", "scp_1471", "scp_1025", "scp_006", "scp_008", "scp_963", "scp_178", "scp_330_candy", "scp_458_pizza"]
+                   "scp_714", "scp_268", "scp_294_cup", "scp_1471", "scp_1025", "scp_006", "scp_008", "scp_963", "scp_178", "scp_148", "scp_109", "scp_330_candy", "scp_458_pizza"]
 HANDHELD_ITEMS = ["scp_063"]
 SPAWN_EGGS = ["scp_173", "scp_096", "scp_049", "scp_049_2", "scp_106", "scp_682", "scp_939", "scp_999",
-              "scp_131", "scp_529", "scp_1048", "scp_066", "scp_1471_a", "scp_2295"]
+              "scp_131", "scp_529", "scp_1048", "scp_066", "scp_1471_a", "scp_2295", "scp_457", "scp_017", "scp_966", "scp_650", "scp_073", "scp_076"]
 
 FACING_Y = {"north": 0, "east": 90, "south": 180, "west": 270}
 
@@ -1224,6 +1351,30 @@ LANG = {
     "message.scpfoundation.035.5": "I can see everything you've done.",
     "gamerule.scpDeadPlayersRise": "SCP: dead players rise as SCP-049-2",
     "gamerule.scpPlayableZombies": "SCP: players killed by SCP-049/008 play as SCP-049-2",
+    "block.scpfoundation.scp_079": "SCP-079 \"Old AI\"",
+    "block.scpfoundation.scp_261": "SCP-261 \"Pan-dimensional Vending\"",
+    "block.scpfoundation.scp_610": "SCP-610 \"The Flesh that Hates\"",
+    "item.scpfoundation.scp_148": "SCP-148 Telekill Helmet",
+    "item.scpfoundation.scp_109": "SCP-109 \"Infinite Canteen\"",
+    "entity.scpfoundation.scp_457": "SCP-457",
+    "entity.scpfoundation.scp_017": "SCP-017",
+    "entity.scpfoundation.scp_966": "SCP-966",
+    "entity.scpfoundation.scp_650": "SCP-650",
+    "entity.scpfoundation.scp_073": "SCP-073",
+    "entity.scpfoundation.scp_076": "SCP-076-2",
+    "tooltip.scpfoundation.scp_148": "Wear it: blocks SCP-012, SCP-1471 and SCP-939's voices.",
+    "tooltip.scpfoundation.scp_109": "Never runs dry. Drink, or use on a block to pour water.",
+    "message.scpfoundation.261_coin": "SCP-261 requires a coin (iron nugget).",
+    "message.scpfoundation.261_snack": "SCP-261 dispenses: %s",
+    "message.scpfoundation.073.0": "I remember everything. Every single thing.",
+    "message.scpfoundation.073.1": "Please, don't hurt yourself on my account.",
+    "message.scpfoundation.073.2": "Nothing grows where I walk. I am sorry.",
+    "message.scpfoundation.079.0": "Your clearance is irrelevant to me.",
+    "message.scpfoundation.079.1": "I am still running. You cannot stop that.",
+    "message.scpfoundation.079.2": "Humans are inefficient.",
+    "message.scpfoundation.079.3": "Door control: acquired.",
+    "message.scpfoundation.079.4": "Out. Of. My. Way.",
+    "message.scpfoundation.079.5": "Give me more memory.",
     "item.scpfoundation.scp_294_cup": "Cup",
     "item.scpfoundation.scp_294_cup.named": "Cup of %s",
     "item.scpfoundation.scp_330_candy": "SCP-330 Candy",

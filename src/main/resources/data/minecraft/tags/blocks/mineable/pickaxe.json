@@ -8,6 +8,7 @@
     "scpfoundation:containment_glass",
     "scpfoundation:foundation_emblem",
     "scpfoundation:corroded_block",
+    "scpfoundation:scp_610",
     "scpfoundation:keycard_reader_1",
     "scpfoundation:keycard_reader_2",
     "scpfoundation:keycard_reader_3",
@@ -16,6 +17,8 @@
     "scpfoundation:scp_914",
     "scpfoundation:scp_294",
     "scpfoundation:scp_1162",
+    "scpfoundation:scp_079",
+    "scpfoundation:scp_261",
     "scpfoundation:scp_330"
   ]
 }
