@@ -28,7 +28,11 @@ public final class ClientSelfTest {
     public static void init() {
         if (!Boolean.getBoolean("teardown_voxel.selftest")) return;
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
-            if (done || !(client.currentScreen instanceof TitleScreen)) return;
+            if (done) return;
+            // First launch on 1.20 shows the accessibility onboarding screen instead of the title screen.
+            boolean menu = client.currentScreen instanceof TitleScreen
+                    || client.currentScreen instanceof net.minecraft.client.gui.screen.AccessibilityOnboardingScreen;
+            if (!menu || client.getOverlay() != null) return;
             if (++titleTicks < 40) return;
             done = true;
             run(client);
