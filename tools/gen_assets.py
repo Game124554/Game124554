@@ -221,6 +221,8 @@ def gen_lang():
         f"commands.{M}.cure": "Cured %s",
         f"commands.{M}.unknown_form": "Unknown form: %s",
     })
+    with open(os.path.join(ROOT, "tools", "lang_extra.json")) as f:
+        L.update(json.load(f))   # drone orders / standby texts
     wj(L, ASSETS, "lang", "en_us.json")
 
 

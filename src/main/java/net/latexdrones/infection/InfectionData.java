@@ -31,6 +31,22 @@ public final class InfectionData {
         public int transformTicks;
         /** The drone's serial number shown on the HUD. */
         public int unit;
+
+        // ---- life as a drone (see DroneTasks)
+        /** Current order from a scientist (DroneTasks.Task ordinal, 0 = none). */
+        public int task;
+        public int taskProgress;
+        public int taskGoal;
+        /** Number of orders completed - decides the drone's rank. */
+        public int tasksDone;
+        /** Asleep in standby mode on a charging pad. */
+        public boolean standby;
+        /** Server only: ticks spent in standby, pad position, guard spot, order cooldown. */
+        public int standbyTicks;
+        public long standbyPos;
+        public int guardX;
+        public int guardZ;
+        public int orderCooldown;
     }
 
     public static final Map<UUID, Entry> SERVER = new ConcurrentHashMap<>();

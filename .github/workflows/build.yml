@@ -1,10 +1,14 @@
-# Builds the mod jar in the cloud. Push this project to a GitHub repository,
-# open the "Actions" tab, pick the latest run and download the "latexdrones-jar" artifact.
+# Builds the mod jar. Every push builds it; the jar is uploaded as the "latexdrones-jar" artifact
+# (Actions tab -> latest run) and also committed to dist/ on the branch for easy downloading.
 name: Build mod
 on:
   push:
+    paths-ignore:
+      - 'dist/**'
   pull_request:
   workflow_dispatch:
+permissions:
+  contents: write
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -23,3 +27,15 @@ jobs:
         with:
           name: latexdrones-jar
           path: build/libs/*.jar
+      - name: Commit jar to dist/
+        if: github.event_name != 'pull_request'
+        run: |
+          mkdir -p dist
+          rm -f dist/*.jar
+          cp $(ls build/libs/*.jar | grep -v -- '-sources') dist/
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add dist
+          git commit -m "Built jar [skip ci]" || exit 0
+          git pull --rebase origin "${GITHUB_REF_NAME}"
+          git push origin "HEAD:${GITHUB_REF_NAME}"

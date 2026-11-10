@@ -3,10 +3,7 @@
 A Fabric mod for **Minecraft Java Edition 1.20.1**. A latex outbreak spreads through the world:
 drones, goo creatures and evil anthro scientists hunt you, and if the infection wins **you become one of them**.
 
-> **Status: source project, not yet compiled.** Everything is here (code, textures, sounds, structures),
-> but this project was written without access to the Minecraft/Fabric build servers, so the code has
-> **not been compiled or played yet**. Expect to fix a few small errors on the first build - see
-> [If the build fails](#if-the-build-fails).
+> **Status:** compiles on GitHub Actions; the ready jar is in `dist/`. Not yet play-tested in the game.
 
 ![The 100 mobs](docs/mobs.png)
 
@@ -38,6 +35,21 @@ drones, goo creatures and evil anthro scientists hunt you, and if the infection 
 * +4 hearts, +2 attack damage, +12% speed, night vision. Charging pads heal you.
 * Your punches infect other players. Antidote darts and decontamination pads hurt you.
 * Only a **Cure Serum** turns you human again.
+
+### Drone life: orders, ranks and sleep
+
+* The scientists stop hunting you - you work for them now. **Right-click a scientist** to get an **order**
+  (idle drones near a scientist also get called over). The order and your progress show at the top of the screen.
+* Orders: collect Raw Latex, bring Iron Ingots, convert villagers or zombies, eliminate intruders,
+  recharge on a charging pad, guard an area. Collect orders are handed in by right-clicking a scientist;
+  the others finish by themselves.
+* Every finished order pays XP, emeralds and sometimes a Drone Core. Ranks: **Drone -> Loyal Drone (3 orders)
+  -> Elite Drone (6) -> Commander Unit (10)**, each rank adds a heart.
+* Hitting a scientist counts as disobedience: you get hypnotised and re-programmed.
+* **Sleep:** right-click a **Drone Charging Pad** to go into **standby mode**. The screen powers down, you heal
+  and refuel, and if everyone else is asleep (or in standby) the night passes. Sneak to wake up; taking damage
+  wakes you too.
+* Whatever a drone player kills that can be converted (villagers, illagers, zombies) rises as a new drone.
 
 ### The six scientists
 

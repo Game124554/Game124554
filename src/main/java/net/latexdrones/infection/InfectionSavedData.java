@@ -27,6 +27,12 @@ public class InfectionSavedData extends SavedData {
             e.transformed = t.getBoolean("transformed");
             e.form = t.getString("form");
             e.unit = t.getInt("unit");
+            e.task = t.getInt("task");
+            e.taskProgress = t.getInt("taskProgress");
+            e.taskGoal = t.getInt("taskGoal");
+            e.tasksDone = t.getInt("tasksDone");
+            e.guardX = t.getInt("guardX");
+            e.guardZ = t.getInt("guardZ");
             InfectionData.SERVER.put(t.getUUID("uuid"), e);
         }
         return data;
@@ -46,6 +52,12 @@ public class InfectionSavedData extends SavedData {
             t.putBoolean("transformed", e.transformed);
             t.putString("form", e.form);
             t.putInt("unit", e.unit);
+            t.putInt("task", e.task);
+            t.putInt("taskProgress", e.taskProgress);
+            t.putInt("taskGoal", e.taskGoal);
+            t.putInt("tasksDone", e.tasksDone);
+            t.putInt("guardX", e.guardX);
+            t.putInt("guardZ", e.guardZ);
             list.add(t);
         }
         tag.put("players", list);

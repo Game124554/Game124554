@@ -25,6 +25,11 @@ public final class ModNetworking {
         buf.writeUtf(e.form);
         buf.writeVarInt(e.transformTicks);
         buf.writeVarInt(e.unit);
+        buf.writeVarInt(e.task);
+        buf.writeVarInt(e.taskProgress);
+        buf.writeVarInt(e.taskGoal);
+        buf.writeVarInt(e.tasksDone);
+        buf.writeBoolean(e.standby);
         ServerPlayNetworking.send(to, SYNC, buf);
     }
 }

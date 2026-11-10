@@ -29,6 +29,11 @@ public final class ClientHooks {
         String form = buf.readUtf();
         int transformTicks = buf.readVarInt();
         int unit = buf.readVarInt();
+        int task = buf.readVarInt();
+        int taskProgress = buf.readVarInt();
+        int taskGoal = buf.readVarInt();
+        int tasksDone = buf.readVarInt();
+        boolean standby = buf.readBoolean();
         client.execute(() -> {
             InfectionData.Entry old = InfectionData.CLIENT.get(id);
             InfectionData.Entry e = new InfectionData.Entry();
@@ -36,6 +41,11 @@ public final class ClientHooks {
             e.transformed = transformed;
             e.form = form;
             e.unit = unit;
+            e.task = task;
+            e.taskProgress = taskProgress;
+            e.taskGoal = taskGoal;
+            e.tasksDone = tasksDone;
+            e.standby = standby;
             // keep our own smoothly advancing counter while the sequence is running
             e.transformTicks = (transformTicks > 0 && old != null && old.transformTicks > 0) ? Math.max(old.transformTicks, 1) : transformTicks;
             InfectionData.CLIENT.put(id, e);

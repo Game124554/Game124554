@@ -1,6 +1,7 @@
 package net.latexdrones.entity;
 
 import net.latexdrones.content.MobDef;
+import net.latexdrones.infection.DroneTasks;
 import net.latexdrones.infection.InfectionData;
 import net.latexdrones.infection.InfectionManager;
 import net.latexdrones.registry.ModBlocks;
@@ -111,6 +112,9 @@ public class DartEntity extends ThrowableItemProjectile {
                     && level instanceof ServerLevel server) {
                 InfectionManager.spawnDroneFrom(server, living, this.sourceForm);
                 living.discard();
+                if (owner instanceof ServerPlayer converter) {
+                    DroneTasks.onConvert(converter);
+                }
             }
         }
         if (this.hypnoTicks > 0 && hit instanceof LivingEntity living && !(hit instanceof LatexDroneEntity)) {

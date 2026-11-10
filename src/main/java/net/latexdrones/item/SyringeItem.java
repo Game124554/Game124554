@@ -1,6 +1,7 @@
 package net.latexdrones.item;
 
 import net.latexdrones.entity.LatexDroneEntity;
+import net.latexdrones.infection.DroneTasks;
 import net.latexdrones.infection.InfectionData;
 import net.latexdrones.infection.InfectionManager;
 import net.latexdrones.registry.ModEffects;
@@ -66,6 +67,9 @@ public class SyringeItem extends Item {
                 && level instanceof ServerLevel server) {
             InfectionManager.spawnDroneFrom(server, target, form);
             target.discard();
+            if (player instanceof ServerPlayer converter) {
+                DroneTasks.onConvert(converter);
+            }
             used = true;
         } else if (this.kind != Kind.LATEX && target instanceof LatexDroneEntity drone && !drone.def().scientist) {
             drone.hurt(level.damageSources().magic(), this.kind == Kind.CURE ? 30.0F : 12.0F);
