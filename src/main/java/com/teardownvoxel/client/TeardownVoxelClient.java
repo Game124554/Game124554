@@ -40,5 +40,7 @@ public class TeardownVoxelClient implements ClientModInitializer {
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
             if (!client.isPaused()) ScreenShake.tick();
         });
+
+        ClientSelfTest.init();
     }
 }

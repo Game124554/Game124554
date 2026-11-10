@@ -21,6 +21,11 @@ loom {
                 vmArg '-Dteardown_voxel.selftest=true'
             }
         }
+        client {
+            if (project.hasProperty('selftest')) {
+                vmArg '-Dteardown_voxel.selftest=true'
+            }
+        }
     }
 }
 
