@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "latexdrones:antidote_syringe"
+    },
+    {
+      "item": "minecraft:golden_apple"
+    },
+    {
+      "item": "latexdrones:drone_core"
+    }
+  ],
+  "result": {
+    "item": "latexdrones:cure_serum"
+  }
+}

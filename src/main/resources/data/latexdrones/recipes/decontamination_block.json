@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "IVI",
+    "IAI",
+    "III"
+  ],
+  "key": {
+    "I": {
+      "item": "minecraft:iron_ingot"
+    },
+    "V": {
+      "item": "latexdrones:lab_vent"
+    },
+    "A": {
+      "item": "latexdrones:antidote_syringe"
+    }
+  },
+  "result": {
+    "item": "latexdrones:decontamination_block"
+  }
+}

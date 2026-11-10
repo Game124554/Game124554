@@ -1,0 +1,14 @@
+{
+  "structures": [
+    {
+      "structure": "latexdrones:latex_spire",
+      "weight": 1
+    }
+  ],
+  "placement": {
+    "type": "minecraft:random_spread",
+    "spacing": 45,
+    "separation": 14,
+    "salt": 222190
+  }
+}

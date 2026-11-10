@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/cube_bottom_top",
+  "textures": {
+    "top": "latexdrones:block/infected_grass_top",
+    "bottom": "latexdrones:block/infected_dirt",
+    "side": "latexdrones:block/infected_grass_side"
+  }
+}

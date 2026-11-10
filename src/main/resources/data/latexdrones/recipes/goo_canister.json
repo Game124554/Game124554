@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "equipment",
+  "ingredients": [
+    {
+      "item": "latexdrones:raw_latex"
+    },
+    {
+      "item": "latexdrones:raw_latex"
+    },
+    {
+      "item": "minecraft:slime_ball"
+    },
+    {
+      "item": "minecraft:iron_nugget"
+    }
+  ],
+  "result": {
+    "item": "latexdrones:goo_canister",
+    "count": 4
+  }
+}

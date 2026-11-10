@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "IVI",
+    "ILI",
+    "III"
+  ],
+  "key": {
+    "I": {
+      "item": "minecraft:iron_ingot"
+    },
+    "V": {
+      "item": "latexdrones:lab_vent"
+    },
+    "L": {
+      "item": "latexdrones:raw_latex_block"
+    }
+  },
+  "result": {
+    "item": "latexdrones:latex_gas_vent"
+  }
+}

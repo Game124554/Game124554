@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column",
+  "textures": {
+    "end": "latexdrones:block/containment_tank_top",
+    "side": "latexdrones:block/containment_tank"
+  }
+}

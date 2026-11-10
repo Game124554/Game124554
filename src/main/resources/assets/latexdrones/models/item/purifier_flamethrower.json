@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/handheld",
+  "textures": {
+    "layer0": "latexdrones:item/purifier_flamethrower"
+  }
+}

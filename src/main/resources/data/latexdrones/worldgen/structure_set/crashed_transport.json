@@ -1,0 +1,14 @@
+{
+  "structures": [
+    {
+      "structure": "latexdrones:crashed_transport",
+      "weight": 1
+    }
+  ],
+  "placement": {
+    "type": "minecraft:random_spread",
+    "spacing": 39,
+    "separation": 11,
+    "salt": 198433
+  }
+}

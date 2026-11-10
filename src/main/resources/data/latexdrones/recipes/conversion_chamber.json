@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "IDI",
+    "GCG",
+    "ILI"
+  ],
+  "key": {
+    "I": {
+      "item": "minecraft:iron_ingot"
+    },
+    "D": {
+      "item": "minecraft:diamond"
+    },
+    "G": {
+      "item": "latexdrones:lab_reinforced_glass"
+    },
+    "C": {
+      "item": "latexdrones:drone_core"
+    },
+    "L": {
+      "item": "latexdrones:raw_latex_block"
+    }
+  },
+  "result": {
+    "item": "latexdrones:conversion_chamber"
+  }
+}

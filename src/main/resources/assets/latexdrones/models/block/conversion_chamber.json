@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/cube_bottom_top",
+  "textures": {
+    "top": "latexdrones:block/conversion_chamber_top",
+    "bottom": "latexdrones:block/lab_vent",
+    "side": "latexdrones:block/conversion_chamber_side"
+  }
+}

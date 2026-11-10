@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "IGI",
+    "GLG",
+    "IGI"
+  ],
+  "key": {
+    "I": {
+      "item": "minecraft:iron_ingot"
+    },
+    "G": {
+      "item": "latexdrones:lab_glass"
+    },
+    "L": {
+      "item": "latexdrones:raw_latex_block"
+    }
+  },
+  "result": {
+    "item": "latexdrones:containment_tank"
+  }
+}

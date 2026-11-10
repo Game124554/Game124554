@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/cube_bottom_top",
+  "textures": {
+    "top": "latexdrones:block/decontamination_block_top",
+    "bottom": "latexdrones:block/lab_vent",
+    "side": "latexdrones:block/decontamination_block_side"
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "ingredients": [
+    {
+      "item": "latexdrones:lab_glass"
+    },
+    {
+      "item": "latexdrones:lab_glass"
+    },
+    {
+      "item": "minecraft:iron_bars"
+    }
+  ],
+  "result": {
+    "item": "latexdrones:lab_reinforced_glass",
+    "count": 2
+  }
+}

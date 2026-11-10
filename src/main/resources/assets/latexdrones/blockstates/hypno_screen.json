@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "latexdrones:block/hypno_screen"
+    },
+    "facing=east": {
+      "model": "latexdrones:block/hypno_screen",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "latexdrones:block/hypno_screen",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "latexdrones:block/hypno_screen",
+      "y": 270
+    }
+  }
+}

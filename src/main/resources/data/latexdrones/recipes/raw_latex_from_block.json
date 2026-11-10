@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "latexdrones:raw_latex_block"
+    }
+  ],
+  "result": {
+    "item": "latexdrones:raw_latex",
+    "count": 9
+  }
+}

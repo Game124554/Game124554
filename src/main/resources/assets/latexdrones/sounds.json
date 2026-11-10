@@ -1,0 +1,124 @@
+{
+  "drone_ambient": {
+    "subtitle": "subtitles.latexdrones.drone_ambient",
+    "sounds": [
+      "latexdrones:drone_ambient1",
+      "latexdrones:drone_ambient2"
+    ]
+  },
+  "drone_hurt": {
+    "subtitle": "subtitles.latexdrones.drone_hurt",
+    "sounds": [
+      "latexdrones:drone_hurt"
+    ]
+  },
+  "drone_death": {
+    "subtitle": "subtitles.latexdrones.drone_death",
+    "sounds": [
+      "latexdrones:drone_death"
+    ]
+  },
+  "drone_step": {
+    "subtitle": "subtitles.latexdrones.drone_step",
+    "sounds": [
+      "latexdrones:drone_step1",
+      "latexdrones:drone_step2"
+    ]
+  },
+  "beast_growl": {
+    "subtitle": "subtitles.latexdrones.beast_growl",
+    "sounds": [
+      "latexdrones:beast_growl"
+    ]
+  },
+  "blob_squish": {
+    "subtitle": "subtitles.latexdrones.blob_squish",
+    "sounds": [
+      "latexdrones:blob_squish"
+    ]
+  },
+  "hover_buzz": {
+    "subtitle": "subtitles.latexdrones.hover_buzz",
+    "sounds": [
+      "latexdrones:hover_buzz"
+    ]
+  },
+  "scientist_laugh": {
+    "subtitle": "subtitles.latexdrones.scientist_laugh",
+    "sounds": [
+      "latexdrones:scientist_laugh"
+    ]
+  },
+  "scientist_hurt": {
+    "subtitle": "subtitles.latexdrones.scientist_hurt",
+    "sounds": [
+      "latexdrones:scientist_hurt"
+    ]
+  },
+  "inject": {
+    "subtitle": "subtitles.latexdrones.inject",
+    "sounds": [
+      "latexdrones:inject"
+    ]
+  },
+  "dart_shoot": {
+    "subtitle": "subtitles.latexdrones.dart_shoot",
+    "sounds": [
+      "latexdrones:dart_shoot"
+    ]
+  },
+  "goo_splat": {
+    "subtitle": "subtitles.latexdrones.goo_splat",
+    "sounds": [
+      "latexdrones:goo_splat"
+    ]
+  },
+  "flamethrower": {
+    "subtitle": "subtitles.latexdrones.flamethrower",
+    "sounds": [
+      "latexdrones:flamethrower"
+    ]
+  },
+  "zap": {
+    "subtitle": "subtitles.latexdrones.zap",
+    "sounds": [
+      "latexdrones:zap"
+    ]
+  },
+  "transform_start": {
+    "subtitle": "subtitles.latexdrones.transform_start",
+    "sounds": [
+      "latexdrones:transform_start"
+    ]
+  },
+  "transform_complete": {
+    "subtitle": "subtitles.latexdrones.transform_complete",
+    "sounds": [
+      "latexdrones:transform_complete"
+    ]
+  },
+  "hypnosis": {
+    "subtitle": "subtitles.latexdrones.hypnosis",
+    "sounds": [
+      "latexdrones:hypnosis"
+    ]
+  },
+  "alarm": {
+    "subtitle": "subtitles.latexdrones.alarm",
+    "sounds": [
+      "latexdrones:alarm"
+    ]
+  },
+  "heartbeat": {
+    "subtitle": "subtitles.latexdrones.heartbeat",
+    "sounds": [
+      "latexdrones:heartbeat"
+    ]
+  },
+  "cure": {
+    "subtitle": "subtitles.latexdrones.cure",
+    "sounds": [
+      "latexdrones:cure"
+    ]
+  }
+}

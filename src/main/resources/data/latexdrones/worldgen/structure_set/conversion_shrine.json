@@ -1,0 +1,14 @@
+{
+  "structures": [
+    {
+      "structure": "latexdrones:conversion_shrine",
+      "weight": 1
+    }
+  ],
+  "placement": {
+    "type": "minecraft:random_spread",
+    "spacing": 59,
+    "separation": 17,
+    "salt": 206352
+  }
+}

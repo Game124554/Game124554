@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/inner_stairs",
+  "textures": {
+    "bottom": "latexdrones:block/lab_tile",
+    "top": "latexdrones:block/lab_tile",
+    "side": "latexdrones:block/lab_tile"
+  }
+}

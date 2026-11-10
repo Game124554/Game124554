@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "latexdrones:block/lab_wall_slab"
+    },
+    "type=top": {
+      "model": "latexdrones:block/lab_wall_slab_top"
+    },
+    "type=double": {
+      "model": "latexdrones:block/lab_wall"
+    }
+  }
+}

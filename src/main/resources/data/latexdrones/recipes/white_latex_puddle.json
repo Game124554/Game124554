@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "pattern": [
+    "##"
+  ],
+  "key": {
+    "#": {
+      "item": "latexdrones:white_latex_goo"
+    }
+  },
+  "result": {
+    "item": "latexdrones:white_latex_puddle",
+    "count": 3
+  }
+}

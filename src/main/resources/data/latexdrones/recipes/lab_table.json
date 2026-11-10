@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "III",
+    "W W",
+    "W W"
+  ],
+  "key": {
+    "I": {
+      "item": "minecraft:iron_ingot"
+    },
+    "W": {
+      "item": "latexdrones:lab_wall"
+    }
+  },
+  "result": {
+    "item": "latexdrones:lab_table",
+    "count": 2
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "latexdrones:block/lab_emergency_light"
+    }
+  }
+}

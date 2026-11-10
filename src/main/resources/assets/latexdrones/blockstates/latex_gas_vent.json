@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "latexdrones:block/latex_gas_vent"
+    }
+  }
+}

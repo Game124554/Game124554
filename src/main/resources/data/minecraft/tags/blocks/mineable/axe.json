@@ -1,0 +1,8 @@
+{
+  "replace": false,
+  "values": [
+    "latexdrones:infected_log",
+    "latexdrones:infected_planks",
+    "latexdrones:lab_crate"
+  ]
+}

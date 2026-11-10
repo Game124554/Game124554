@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/slab_top",
+  "textures": {
+    "bottom": "latexdrones:block/lab_wall",
+    "top": "latexdrones:block/lab_wall",
+    "side": "latexdrones:block/lab_wall"
+  }
+}

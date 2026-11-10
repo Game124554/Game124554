@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "latexdrones:block/gray_latex_block"
+    }
+  }
+}

@@ -1,0 +1,159 @@
+{
+  "type": "minecraft:chest",
+  "pools": [
+    {
+      "rolls": {
+        "type": "minecraft:uniform",
+        "min": 4,
+        "max": 7
+      },
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "latexdrones:cure_serum",
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "type": "minecraft:uniform",
+                "min": 1,
+                "max": 1
+              }
+            }
+          ],
+          "weight": 5
+        },
+        {
+          "type": "minecraft:item",
+          "name": "latexdrones:antidote_syringe",
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "type": "minecraft:uniform",
+                "min": 1,
+                "max": 3
+              }
+            }
+          ],
+          "weight": 8
+        },
+        {
+          "type": "minecraft:item",
+          "name": "latexdrones:antidote_dart",
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "type": "minecraft:uniform",
+                "min": 2,
+                "max": 6
+              }
+            }
+          ],
+          "weight": 6
+        },
+        {
+          "type": "minecraft:item",
+          "name": "latexdrones:drone_core",
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "type": "minecraft:uniform",
+                "min": 1,
+                "max": 2
+              }
+            }
+          ],
+          "weight": 6
+        },
+        {
+          "type": "minecraft:item",
+          "name": "latexdrones:stun_baton",
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
+          "name": "latexdrones:syringe_gun",
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
+          "name": "latexdrones:tranq_rifle",
+          "weight": 2
+        },
+        {
+          "type": "minecraft:item",
+          "name": "latexdrones:tesla_prod",
+          "weight": 2
+        },
+        {
+          "type": "minecraft:item",
+          "name": "latexdrones:hypno_ray",
+          "weight": 1
+        },
+        {
+          "type": "minecraft:item",
+          "name": "latexdrones:purifier_flamethrower",
+          "weight": 2
+        },
+        {
+          "type": "minecraft:item",
+          "name": "latexdrones:goo_launcher",
+          "weight": 2
+        },
+        {
+          "type": "minecraft:item",
+          "name": "latexdrones:bone_saw",
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:diamond",
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "type": "minecraft:uniform",
+                "min": 1,
+                "max": 2
+              }
+            }
+          ],
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:golden_apple",
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "type": "minecraft:uniform",
+                "min": 1,
+                "max": 1
+              }
+            }
+          ],
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:iron_ingot",
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "type": "minecraft:uniform",
+                "min": 2,
+                "max": 6
+              }
+            }
+          ],
+          "weight": 8
+        }
+      ]
+    }
+  ]
+}

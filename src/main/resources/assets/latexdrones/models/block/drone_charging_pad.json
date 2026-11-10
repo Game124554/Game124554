@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/cube_bottom_top",
+  "textures": {
+    "top": "latexdrones:block/drone_charging_pad_top",
+    "bottom": "latexdrones:block/lab_vent",
+    "side": "latexdrones:block/drone_charging_pad_side"
+  }
+}

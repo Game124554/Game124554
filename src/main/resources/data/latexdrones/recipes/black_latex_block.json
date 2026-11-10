@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "pattern": [
+    "##",
+    "##"
+  ],
+  "key": {
+    "#": {
+      "item": "latexdrones:raw_latex"
+    }
+  },
+  "result": {
+    "item": "latexdrones:black_latex_block",
+    "count": 2
+  }
+}

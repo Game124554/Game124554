@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/carpet",
+  "textures": {
+    "wool": "latexdrones:block/white_latex_puddle"
+  }
+}
