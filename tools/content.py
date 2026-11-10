@@ -211,6 +211,9 @@ LATEX_COLORS = [
     ("purple", "Purple", "COLOR_PURPLE", 0x7A35C9), ("orange", "Orange", "COLOR_ORANGE", 0xE0762A),
     ("yellow", "Yellow", "COLOR_YELLOW", 0xE8C42E), ("pink", "Pink", "COLOR_PINK", 0xF08AB8),
     ("cyan", "Cyan", "COLOR_CYAN", 0x2EC4C9),
+    ("brown", "Brown", "COLOR_BROWN", 0x7A5232), ("lime", "Lime", "COLOR_LIGHT_GREEN", 0x86D12E),
+    ("magenta", "Magenta", "COLOR_MAGENTA", 0xC24FC8), ("light_blue", "Light Blue", "COLOR_LIGHT_BLUE", 0x5AA8E8),
+    ("light_gray", "Light Gray", "COLOR_LIGHT_GRAY", 0xA8ACB4),
 ]
 for cid, cname, mc, _hex in LATEX_COLORS:
     block(f"{cid}_latex_block", f"{cname} Latex Block", f"new InfectiousBlock(latex(MapColor.{mc}), 15)")
@@ -267,7 +270,43 @@ block("latex_gas_vent", "Latex Gas Vent", "new GasVentBlock(metal())", "bottom_t
 block("decontamination_block", "Decontamination Pad", "new DeconBlock(metal().lightLevel(s -> 6))", "bottom_top", tool="pickaxe")
 block("alarm_block", "Lab Alarm", "new AlarmBlock(metal().lightLevel(s -> 9))", tool="pickaxe")
 
-assert len(BLOCKS) == 61, len(BLOCKS)
+# ---- expansion: goo colours, latex masonry, more infected terrain, lab set, drone life blocks
+block("purple_latex_goo", "Purple Latex Goo", "new GooBlock(goo(MapColor.COLOR_PURPLE), 30)", "goo", "translucent")
+block("green_latex_goo", "Toxic Latex Goo", "new GooBlock(goo(MapColor.COLOR_GREEN), 30)", "goo", "translucent")
+block("purple_latex_puddle", "Purple Latex Puddle", "new PuddleBlock(puddle(MapColor.COLOR_PURPLE), 15)", "carpet")
+block("green_latex_puddle", "Toxic Latex Puddle", "new PuddleBlock(puddle(MapColor.COLOR_GREEN), 15)", "carpet")
+block("latex_bricks", "Latex Bricks", "new Block(rock(MapColor.COLOR_BLACK, 2.0F))", tool="pickaxe")
+block("latex_brick_slab", "Latex Brick Slab", "new SlabBlock(rock(MapColor.COLOR_BLACK, 2.0F))", "slab", tool="pickaxe", base="latex_bricks")
+block("latex_brick_stairs", "Latex Brick Stairs", "new ModStairBlock(LATEX_BRICKS.defaultBlockState(), rock(MapColor.COLOR_BLACK, 2.0F))", "stairs", tool="pickaxe", base="latex_bricks")
+block("polished_latex", "Polished Latex", "new Block(rock(MapColor.COLOR_BLACK, 2.0F))", tool="pickaxe")
+block("chiseled_latex", "Chiseled Latex", "new Block(rock(MapColor.COLOR_BLACK, 2.0F).lightLevel(s -> 5))", tool="pickaxe")
+block("infected_gravel", "Infected Gravel", "new InfectiousBlock(earth(MapColor.STONE, SoundType.GRAVEL, 0.6F), 6)", tool="shovel")
+block("infected_deepslate", "Infected Deepslate", "new InfectiousBlock(rock(MapColor.DEEPSLATE, 3.0F).sound(SoundType.DEEPSLATE), 5)", tool="pickaxe")
+block("infected_planks_slab", "Infected Plank Slab", "new SlabBlock(wood(MapColor.WOOD))", "slab", tool="axe", base="infected_planks")
+block("infected_planks_stairs", "Infected Plank Stairs", "new ModStairBlock(INFECTED_PLANKS.defaultBlockState(), wood(MapColor.WOOD))", "stairs", tool="axe", base="infected_planks")
+block("glowing_latex_pod", "Glowing Latex Pod", "new LatexPlantBlock(crystal(MapColor.COLOR_PURPLE).lightLevel(s -> 12), 0)", "cross", "cutout")
+block("lab_steel_plate", "Steel Plating", "new Block(metal())", tool="pickaxe")
+block("lab_steel_slab", "Steel Plating Slab", "new SlabBlock(metal())", "slab", tool="pickaxe", base="lab_steel_plate")
+block("lab_steel_stairs", "Steel Plating Stairs", "new ModStairBlock(LAB_STEEL_PLATE.defaultBlockState(), metal())", "stairs", tool="pickaxe", base="lab_steel_plate")
+block("lab_dark_wall", "Dark Lab Wall", "new Block(lab())", tool="pickaxe")
+block("lab_dark_wall_slab", "Dark Lab Wall Slab", "new SlabBlock(lab())", "slab", tool="pickaxe", base="lab_dark_wall")
+block("lab_dark_wall_stairs", "Dark Lab Wall Stairs", "new ModStairBlock(LAB_DARK_WALL.defaultBlockState(), lab())", "stairs", tool="pickaxe", base="lab_dark_wall")
+block("lab_floor_grate", "Floor Grate", "new GlassBlock(see(metal().noOcclusion()))", layer="cutout", tool="pickaxe")
+block("lab_monitor", "Lab Monitor", "new FacingBlock(metal().lightLevel(s -> 8))", "orientable", tool="pickaxe")
+block("lab_cabinet", "Lab Cabinet", "new FacingBlock(metal())", "orientable", tool="pickaxe")
+block("specimen_freezer", "Specimen Freezer", "new FacingBlock(metal().lightLevel(s -> 4))", "orientable", tool="pickaxe")
+block("research_desk", "Research Desk", "new FacingBlock(lab())", "orientable", tool="pickaxe")
+block("lab_generator", "Lab Generator", "new FacingBlock(metal().lightLevel(s -> 9))", "orientable", tool="pickaxe")
+block("lab_pipe", "Lab Pipe", "new RotatedPillarBlock(metal())", "pillar", tool="pickaxe")
+block("toxic_tank", "Toxic Tank", "new Block(metal().lightLevel(s -> 8))", "column", tool="pickaxe")
+block("drone_terminal", "Drone Terminal", "new DroneTerminalBlock(metal().lightLevel(s -> 10))", "orientable", tool="pickaxe")
+block("drone_pod", "Drone Sleep Pod", "new DronePodBlock(metal().lightLevel(s -> 7).noOcclusion())", "column", "translucent", tool="pickaxe")
+block("drone_fabricator", "Drone Fabricator", "new FacingBlock(metal().lightLevel(s -> 6))", "orientable", tool="pickaxe")
+block("drone_beacon", "Drone Beacon", "new Block(metal().lightLevel(s -> 15))", tool="pickaxe")
+block("hypno_pylon", "Hypno Pylon", "new Block(metal().lightLevel(s -> 11))", "column", tool="pickaxe")
+block("drone_locker", "Drone Locker", "new FacingBlock(metal())", "orientable", tool="pickaxe")
+
+assert len(BLOCKS) == 100, len(BLOCKS)
 
 # ---------------------------------------------------------------- items
 WEAPONS = [  # exactly nine
@@ -277,11 +316,12 @@ WEAPONS = [  # exactly nine
     ("hypno_ray", "Hypno Ray"),
 ]
 HANDHELD = {"stun_baton", "tesla_prod", "bone_saw", "latex_blade", "syringe_gun", "tranq_rifle",
-            "goo_launcher", "purifier_flamethrower", "hypno_ray"}
+            "goo_launcher", "purifier_flamethrower", "hypno_ray", "drone_mop"}
 MISC_ITEMS = [
     ("raw_latex", "Raw Latex"), ("drone_core", "Drone Core"),
     ("latex_dart", "Latex Dart"), ("tranq_dart", "Tranquilizer Dart"), ("antidote_dart", "Antidote Dart"),
     ("goo_canister", "Goo Canister"),
+    ("drone_mop", "Drone Mop"),
     ("latex_syringe", "Latex Syringe"), ("antidote_syringe", "Antidote Syringe"), ("cure_serum", "Cure Serum"),
 ]
 assert len(WEAPONS) == 9
@@ -296,6 +336,8 @@ SOUNDS = [  # (event, subtitle, variants)
     ("transform_start", "Latex spreads", 1), ("transform_complete", "Assimilation complete", 1),
     ("hypnosis", "Hypnotic hum", 1), ("alarm", "Alarm blares", 1), ("heartbeat", "Infection pulses", 1),
     ("cure", "Infection fades", 1),
+    ("terminal_beep", "Terminal beeps", 1), ("task_complete", "Task complete", 1), ("standby", "Drone powers down", 1),
+    ("correction", "Unit corrected", 1),
 ]
 
 # ---------------------------------------------------------------- structures (19)
@@ -320,8 +362,17 @@ STRUCTURES = [
     ("signal_tower", "Signal Tower", "surface", 56, 17),
     ("underground_bunker", "Underground Bunker", "buried", 50, 17),
     ("latex_cave_nest", "Latex Cave Nest", "underground", 34, 11),
+    ("drone_barracks", "Drone Barracks", "surface", 50, 17),
+    ("processing_center", "Processing Center", "surface", 62, 20),
+    ("contaminated_storage", "Contaminated Storage", "surface", 44, 14),
+    ("directors_office", "Director's Office", "surface", 76, 24),
+    ("drone_factory", "Drone Factory", "surface", 64, 20),
+    ("hypno_garden", "Hypno Garden", "surface", 52, 17),
+    ("latex_monolith", "Latex Monolith", "surface", 46, 14),
+    ("assimilated_farm", "Assimilated Farm", "surface", 48, 15),
+    ("observation_dome", "Observation Dome", "surface", 58, 18),
 ]
-assert len(STRUCTURES) == 19
+assert len(STRUCTURES) == 28
 
 LAND_BIOMES = [
     "plains", "sunflower_plains", "snowy_plains", "desert", "swamp", "forest", "flower_forest",

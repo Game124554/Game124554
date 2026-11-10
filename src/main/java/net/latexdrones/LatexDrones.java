@@ -3,6 +3,7 @@ package net.latexdrones;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
 import net.fabricmc.fabric.api.biome.v1.BiomeSelectors;
+import net.latexdrones.drone.DroneLife;
 import net.latexdrones.infection.InfectionManager;
 import net.latexdrones.infection.ModCommands;
 import net.latexdrones.registry.ModBlocks;
@@ -38,6 +39,7 @@ public class LatexDrones implements ModInitializer {
         ModEntities.init();
         ModItems.init();
         InfectionManager.init();
+        DroneLife.init();
         ModCommands.init();
 
         // latex ore (data/latexdrones/worldgen/placed_feature/latex_ore.json)

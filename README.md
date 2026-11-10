@@ -13,10 +13,10 @@ drones, goo creatures and evil anthro scientists hunt you, and if the infection 
 |---|---|---|
 | Mobs | **100** | 6 scientists, 20 drone units, 30 latex animals, 17 goo people & specials, 11 feral beasts, 8 goo blobs, 8 hover drones |
 | Spawn eggs | 100 | each with its own painted texture |
-| Blocks | **61** | latex, goo, infected terrain, crystals, lab building set, machines |
+| Blocks | **100** | 16 latex colours, goo, puddles, latex bricks, infected terrain, crystals, lab building set, machines, drone terminal, sleep pod |
 | Weapons | **9** | 4 melee, 5 ranged |
-| Structures | **19** | labs, hives, towers, a bunker, a cave nest ... |
-| Sound effects | 20 events / 22 files | all synthesised for this mod |
+| Structures | **28** | labs, hives, towers, a bunker, a cave nest, drone barracks, factory, director's office, hypno garden, observation dome ... |
+| Sound effects | 24 events / 26 files | all synthesised for this mod |
 | Status effects | 3 | Latex Infection, Hypnosis, Inoculated |
 
 ### The infection (it infects *you*)
@@ -36,19 +36,27 @@ drones, goo creatures and evil anthro scientists hunt you, and if the infection 
 * Your punches infect other players. Antidote darts and decontamination pads hurt you.
 * Only a **Cure Serum** turns you human again.
 
-### Drone life: orders, ranks and sleep
+### Drone life: you are a drone now
 
-* The scientists stop hunting you - you work for them now. **Right-click a scientist** to get an **order**
-  (idle drones near a scientist also get called over). The order and your progress show at the top of the screen.
-* Orders: collect Raw Latex, bring Iron Ingots, convert villagers or zombies, eliminate intruders,
-  recharge on a charging pad, guard an area. Collect orders are handed in by right-clicking a scientist;
-  the others finish by themselves.
-* Every finished order pays XP, emeralds and sometimes a Drone Core. Ranks: **Drone -> Loyal Drone (3 orders)
-  -> Elite Drone (6) -> Commander Unit (10)**, each rank adds a heart.
-* Hitting a scientist counts as disobedience: you get hypnotised and re-programmed.
-* **Sleep:** right-click a **Drone Charging Pad** to go into **standby mode**. The screen powers down, you heal
-  and refuel, and if everyone else is asleep (or in standby) the night passes. Sneak to wake up; taking damage
-  wakes you too.
+* **Orders.** Scientists near you hand out jobs (or right-click one, or use a **Drone Terminal**). Every order
+  has a **time limit** and shows at the top of the screen:
+  clean latex spills, bring Raw Latex, deliver Iron Ingots, patrol to a marked point, guard an area,
+  eliminate intruders, convert villagers.
+* **Cleaning.** A cleaning order spills latex puddles around you. Break them, or use the **Drone Mop**
+  (right-click the ground, cleans everything within 2 blocks).
+* **Obedience (0-100%).** Finishing orders raises it and pays XP, emeralds, latex, darts or a Drone Core.
+  **Disobeying** (letting the timer run out, refusing an order, hitting a scientist) lowers it: you are
+  *corrected* (shock + hypnosis) and the scientists turn on you for a while.
+  Below 25% you are a **ROGUE UNIT** and every drone hunts you; from 75% you are **LOYAL** and nearby
+  drones attack whoever hurts you.
+* **Ranks:** Drone -> Loyal Drone (3 orders) -> Elite Drone (6) -> Commander Unit (10); each rank adds a heart.
+* **Energy and sleep.** Your battery drains slowly (about 50 minutes). Below 20% you get slow, at 0% weak.
+  Right-click a **Drone Sleep Pod** or **Charging Pad** (or press *Enter Standby* at a terminal next to one)
+  to go into **standby**: the screen powers down, energy, health and hunger refill, and at night the night
+  passes once everyone is resting. Sneak to wake up; taking damage wakes you too.
+* **Drone Terminal (UI block).** Right-click it to open the hive terminal: unit number, rank, energy,
+  obedience and current order, with buttons **Request Task**, **Report** (hand in items), **Refuse Task**
+  and **Enter Standby**. Humans get *ACCESS DENIED*.
 * Whatever a drone player kills that can be converted (villagers, illagers, zombies) rises as a new drone.
 
 ### The six scientists
@@ -94,23 +102,18 @@ Latex Hive Core (infects the ground around it and grows drones).
 /latex infect <player> <0-100>
 /latex transform <player> [form]     form = any mob id, e.g. latex_wolf_black
 /latex cure <player>
+/latex obedience <player> <0-100>
+/latex task <player>                 give a drone player an order right away
 ```
 
 ## Getting the .jar
 
-You need the mod compiled once. Pick whichever is easiest:
+**Download it:** the GitHub repository builds the mod automatically on every change and puts the jar in
+`dist/` on the `latex-drone-mod` branch:
+https://github.com/Game124554/game124554/tree/latex-drone-mod/dist
 
-**A. Let GitHub build it (nothing to install)**
-1. Create a free GitHub account and a new repository, upload this whole folder.
-2. Open the repository's **Actions** tab - the "Build mod" run starts by itself.
-3. When it is green, open the run and download **latexdrones-jar**.
-
-**B. Build on your PC**
-1. Install Java 17 or 21 (for example from adoptium.net).
-2. In this folder run `gradlew build` (Windows) or `./gradlew build` (macOS / Linux). The first run downloads Minecraft and takes a while.
-3. The mod is `build/libs/latexdrones-1.0.0+mc1.20.1.jar`.
-
-**C. IntelliJ IDEA** - open the folder, let Gradle import, run the `build` task (or `runClient` to launch the game directly).
+**Or build it yourself:** install Java 17 or 21, then run `gradlew build` (Windows) or `./gradlew build`
+(macOS / Linux) in this folder. The jar ends up in `build/libs/`.
 
 ### Installing
 

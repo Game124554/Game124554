@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "latexdrones:block/specimen_freezer"
+    },
+    "facing=east": {
+      "model": "latexdrones:block/specimen_freezer",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "latexdrones:block/specimen_freezer",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "latexdrones:block/specimen_freezer",
+      "y": 270
+    }
+  }
+}

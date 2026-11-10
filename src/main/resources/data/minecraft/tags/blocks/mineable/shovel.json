@@ -3,6 +3,7 @@
   "values": [
     "latexdrones:infected_dirt",
     "latexdrones:infected_grass",
-    "latexdrones:infected_sand"
+    "latexdrones:infected_sand",
+    "latexdrones:infected_gravel"
   ]
 }

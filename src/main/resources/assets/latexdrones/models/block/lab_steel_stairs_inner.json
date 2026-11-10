@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/inner_stairs",
+  "textures": {
+    "bottom": "latexdrones:block/lab_steel_plate",
+    "top": "latexdrones:block/lab_steel_plate",
+    "side": "latexdrones:block/lab_steel_plate"
+  }
+}

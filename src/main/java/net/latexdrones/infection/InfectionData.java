@@ -32,22 +32,40 @@ public final class InfectionData {
         /** The drone's serial number shown on the HUD. */
         public int unit;
 
-        // ---- life as a drone (see DroneTasks)
-        /** Current order from a scientist (DroneTasks.Task ordinal, 0 = none). */
+        // ---- life as a drone (see net.latexdrones.drone.DroneLife)
+        /** Current order ({@link net.latexdrones.drone.DroneTask} ordinal, 0 = none). */
         public int task;
         public int taskProgress;
         public int taskGoal;
+        /** Ticks left before the order counts as failed. */
+        public int taskTicks;
+        /** Who gave the order: a scientist's mob name or "hive". */
+        public String taskGiver = "";
+        /** Patrol target / guard post. */
+        public int taskX;
+        public int taskY;
+        public int taskZ;
         /** Number of orders completed - decides the drone's rank. */
         public int tasksDone;
-        /** Asleep in standby mode on a charging pad. */
+        /** Battery 0..100. Drains slowly, refilled by standby (sleep). */
+        public int energy = 100;
+        /** 0..100. Below {@link InfectionData#ROGUE} the hive hunts you, from {@link InfectionData#LOYAL} it protects you. */
+        public int obedience = 60;
+        /** Asleep in standby mode (on a pod / charging pad). */
         public boolean standby;
-        /** Server only: ticks spent in standby, pad position, guard spot, order cooldown. */
+
+        // ---- server-side bookkeeping (not synced, not saved)
         public int standbyTicks;
-        public long standbyPos;
-        public int guardX;
-        public int guardZ;
+        public int standbyCooldown;
         public int orderCooldown;
+        public int huntedTicks;
+        public int drainTimer;
     }
+
+    /** Obedience below this: rogue unit, every drone attacks you. */
+    public static final int ROGUE = 25;
+    /** Obedience from this: loyal unit, drones defend you. */
+    public static final int LOYAL = 75;
 
     public static final Map<UUID, Entry> SERVER = new ConcurrentHashMap<>();
     public static final Map<UUID, Entry> CLIENT = new ConcurrentHashMap<>();

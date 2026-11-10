@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "latexdrones:lab_dark_wall"
+  },
+  "result": "latexdrones:lab_dark_wall_slab",
+  "count": 2
+}

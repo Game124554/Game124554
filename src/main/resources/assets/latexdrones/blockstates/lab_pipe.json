@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "axis=y": {
+      "model": "latexdrones:block/lab_pipe"
+    },
+    "axis=z": {
+      "model": "latexdrones:block/lab_pipe_horizontal",
+      "x": 90
+    },
+    "axis=x": {
+      "model": "latexdrones:block/lab_pipe_horizontal",
+      "x": 90,
+      "y": 90
+    }
+  }
+}

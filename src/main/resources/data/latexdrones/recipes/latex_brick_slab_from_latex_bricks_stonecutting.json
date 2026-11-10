@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "latexdrones:latex_bricks"
+  },
+  "result": "latexdrones:latex_brick_slab",
+  "count": 2
+}

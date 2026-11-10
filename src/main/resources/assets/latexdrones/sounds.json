@@ -120,5 +120,29 @@
     "sounds": [
       "latexdrones:cure"
     ]
+  },
+  "terminal_beep": {
+    "subtitle": "subtitles.latexdrones.terminal_beep",
+    "sounds": [
+      "latexdrones:terminal_beep"
+    ]
+  },
+  "task_complete": {
+    "subtitle": "subtitles.latexdrones.task_complete",
+    "sounds": [
+      "latexdrones:task_complete"
+    ]
+  },
+  "standby": {
+    "subtitle": "subtitles.latexdrones.standby",
+    "sounds": [
+      "latexdrones:standby"
+    ]
+  },
+  "correction": {
+    "subtitle": "subtitles.latexdrones.correction",
+    "sounds": [
+      "latexdrones:correction"
+    ]
   }
 }

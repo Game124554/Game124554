@@ -1,10 +1,11 @@
 package net.latexdrones.client;
 
+import net.latexdrones.drone.DroneLife;
+import net.latexdrones.drone.DroneTask;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.math.Axis;
 import net.latexdrones.LatexDrones;
 import net.latexdrones.content.MobDef;
-import net.latexdrones.infection.DroneTasks;
 import net.latexdrones.infection.InfectionData;
 import net.latexdrones.registry.ModEffects;
 import net.latexdrones.registry.ModEntities;
@@ -52,31 +53,32 @@ public final class HudOverlay {
                 MobDef def = ModEntities.form(e.form);
                 if (def != null) {
                     String tag = Component.translatable("hud.latexdrones.unit", String.valueOf(e.unit)).getString() + "  "
-                            + Component.translatable("rank.latexdrones." + DroneTasks.RANKS[DroneTasks.rank(e.tasksDone)]).getString() + "  "
+                            + Component.translatable("rank.latexdrones." + DroneLife.RANKS[DroneLife.rank(e.tasksDone)]).getString() + "  "
                             + Component.translatable("form.latexdrones." + def.name).getString();
-                    DroneTasks.Task task = DroneTasks.Task.of(e.task);
+                    String stats = Component.translatable("hud.latexdrones.energy", e.energy).getString() + "   "
+                            + Component.translatable("hud.latexdrones.obedience", e.obedience).getString();
+                    DroneTask task = DroneTask.byId(e.task);
                     String order;
                     int orderColor;
-                    if (task == DroneTasks.Task.NONE) {
+                    if (task == DroneTask.NONE) {
                         order = Component.translatable("hud.latexdrones.no_order").getString();
                         orderColor = 0xFFA0A0A8;
-                    } else if (task.isDelivery() && e.taskProgress >= e.taskGoal) {
-                        order = Component.translatable("hud.latexdrones.deliver").getString();
-                        orderColor = 0xFF60FF90;
                     } else {
-                        order = Component.translatable("hud.latexdrones.order",
-                                Component.translatable(task.key(), e.taskGoal), e.taskProgress, e.taskGoal).getString();
-                        orderColor = 0xFFFFE070;
+                        order = Component.translatable("hud.latexdrones.task", DroneLife.describe(e), e.taskProgress, e.taskGoal,
+                                DroneLife.formatTime(e.taskTicks)).getString();
+                        orderColor = e.taskTicks < 600 ? 0xFFFF8060 : 0xFFFFE070;
                     }
-                    int tw = Math.max(mc.font.width(tag), mc.font.width(order));
-                    graphics.fill(w / 2 - tw / 2 - 4, 3, w / 2 + tw / 2 + 4, 27, 0x90000000);
+                    int tw = Math.max(mc.font.width(tag), Math.max(mc.font.width(order), mc.font.width(stats)));
+                    graphics.fill(w / 2 - tw / 2 - 4, 3, w / 2 + tw / 2 + 4, 38, 0x90000000);
                     graphics.drawCenteredString(mc.font, tag, w / 2, 6, 0xFF000000 | def.glowColor);
-                    graphics.drawCenteredString(mc.font, order, w / 2, 17, orderColor);
+                    int statColor = e.obedience < InfectionData.ROGUE ? 0xFFFF5050 : (e.energy < 20 ? 0xFFFFA040 : 0xFFB8E8FF);
+                    graphics.drawCenteredString(mc.font, stats, w / 2, 17, statColor);
+                    graphics.drawCenteredString(mc.font, order, w / 2, 28, orderColor);
                 }
                 if (e.standby) {
-                    // standby = sleep: the screen powers down, a battery shows the charge (health)
+                    // standby = sleep: the screen powers down, a battery shows the charge
                     graphics.fill(0, 0, w, h, 0xC8050508);
-                    float charge = Mth.clamp(player.getHealth() / player.getMaxHealth(), 0.0F, 1.0F);
+                    float charge = Mth.clamp(e.energy / 100.0F, 0.0F, 1.0F);
                     int bw = 80;
                     int bx = w / 2 - bw / 2;
                     int by = h / 2 - 4;
@@ -85,9 +87,8 @@ public final class HudOverlay {
                     graphics.fill(bx + bw + 2, by + 2, bx + bw + 5, by + 8, 0xFF60646E);
                     int pulse = (int) (40.0F * (0.5F + 0.5F * Mth.sin(time * 0.15F)));
                     graphics.fill(bx, by, bx + (int) (bw * charge), by + 10, 0xFF000000 | ((0x30 + pulse) << 16) | (0xC0 << 8) | 0xFF);
-                    graphics.drawCenteredString(mc.font, Component.translatable("hud.latexdrones.standby").getString(), w / 2, by - 18, 0xFF5FD8FF);
-                    graphics.drawCenteredString(mc.font, (int) (charge * 100.0F) + "%", w / 2, by + 16, 0xFFB0E8FF);
-                    graphics.drawCenteredString(mc.font, Component.translatable("hud.latexdrones.standby_wake").getString(), w / 2, by + 30, 0xFF707884);
+                    graphics.drawCenteredString(mc.font, Component.translatable("hud.latexdrones.standby", e.energy).getString(), w / 2, by - 18, 0xFF5FD8FF);
+                    graphics.drawCenteredString(mc.font, Component.translatable("hud.latexdrones.standby_hint").getString(), w / 2, by + 30, 0xFF707884);
                 }
             } else if (e.infection > 0) {
                 float f = e.infection / (float) InfectionData.MAX;

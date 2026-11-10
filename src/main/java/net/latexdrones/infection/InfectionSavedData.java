@@ -31,8 +31,19 @@ public class InfectionSavedData extends SavedData {
             e.taskProgress = t.getInt("taskProgress");
             e.taskGoal = t.getInt("taskGoal");
             e.tasksDone = t.getInt("tasksDone");
-            e.guardX = t.getInt("guardX");
-            e.guardZ = t.getInt("guardZ");
+            if (t.contains("obedience")) {
+                e.energy = t.getInt("energy");
+                e.obedience = t.getInt("obedience");
+                e.taskTicks = t.getInt("taskTicks");
+                e.taskGiver = t.getString("taskGiver");
+                e.taskX = t.getInt("taskX");
+                e.taskY = t.getInt("taskY");
+                e.taskZ = t.getInt("taskZ");
+            } else {
+                e.task = 0; // orders from the older save format are dropped
+                e.taskProgress = 0;
+                e.taskGoal = 0;
+            }
             InfectionData.SERVER.put(t.getUUID("uuid"), e);
         }
         return data;
@@ -56,8 +67,13 @@ public class InfectionSavedData extends SavedData {
             t.putInt("taskProgress", e.taskProgress);
             t.putInt("taskGoal", e.taskGoal);
             t.putInt("tasksDone", e.tasksDone);
-            t.putInt("guardX", e.guardX);
-            t.putInt("guardZ", e.guardZ);
+            t.putInt("energy", e.energy);
+            t.putInt("obedience", e.obedience);
+            t.putInt("taskTicks", e.taskTicks);
+            t.putString("taskGiver", e.taskGiver);
+            t.putInt("taskX", e.taskX);
+            t.putInt("taskY", e.taskY);
+            t.putInt("taskZ", e.taskZ);
             list.add(t);
         }
         tag.put("players", list);

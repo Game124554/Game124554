@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/outer_stairs",
+  "textures": {
+    "bottom": "latexdrones:block/infected_planks",
+    "top": "latexdrones:block/infected_planks",
+    "side": "latexdrones:block/infected_planks"
+  }
+}

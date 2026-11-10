@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "latexdrones:block/lab_steel_slab"
+    },
+    "type=top": {
+      "model": "latexdrones:block/lab_steel_slab_top"
+    },
+    "type=double": {
+      "model": "latexdrones:block/lab_steel_plate"
+    }
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/orientable",
+  "textures": {
+    "top": "latexdrones:block/drone_terminal_top",
+    "front": "latexdrones:block/drone_terminal_front",
+    "side": "latexdrones:block/drone_terminal_side"
+  }
+}

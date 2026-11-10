@@ -20,9 +20,11 @@ jobs:
           java-version: 17
       - uses: gradle/actions/setup-gradle@v4
       - name: Build
+        shell: bash
         run: |
           chmod +x ./gradlew
-          ./gradlew build --stacktrace
+          set -o pipefail
+          ./gradlew build --stacktrace 2>&1 | tee build.log
       - uses: actions/upload-artifact@v4
         with:
           name: latexdrones-jar
@@ -31,11 +33,23 @@ jobs:
         if: github.event_name != 'pull_request'
         run: |
           mkdir -p dist
-          rm -f dist/*.jar
+          rm -f dist/*.jar dist/build-errors.txt
           cp $(ls build/libs/*.jar | grep -v -- '-sources') dist/
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add dist
           git commit -m "Built jar [skip ci]" || exit 0
+          git pull --rebase origin "${GITHUB_REF_NAME}"
+          git push origin "HEAD:${GITHUB_REF_NAME}"
+      - name: Save the build errors to dist/ (so they can be read and fixed)
+        if: failure() && github.event_name != 'pull_request'
+        shell: bash
+        run: |
+          mkdir -p dist
+          { grep -E -A4 "error:|What went wrong|Exception" build.log | head -400; echo "------ tail ------"; tail -120 build.log; } > dist/build-errors.txt || true
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add dist/build-errors.txt
+          git commit -m "Build errors [skip ci]" || exit 0
           git pull --rebase origin "${GITHUB_REF_NAME}"
           git push origin "HEAD:${GITHUB_REF_NAME}"

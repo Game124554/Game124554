@@ -13,6 +13,7 @@ import net.fabricmc.fabric.api.event.player.AttackEntityCallback;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
 import net.latexdrones.content.Archetype;
 import net.latexdrones.content.MobDef;
+import net.latexdrones.drone.DroneLife;
 import net.latexdrones.entity.LatexDroneEntity;
 import net.latexdrones.registry.ModBlocks;
 import net.latexdrones.registry.ModEffects;
@@ -71,7 +72,7 @@ public final class InfectionManager {
                 tickPlayer(player);
             }
             if (server.getTickCount() % 20 == 0) {
-                DroneTasks.tickWorlds(server);
+                DroneLife.tickWorlds(server);
             }
         });
         ServerPlayConnectionEvents.JOIN.register((handler, sender, server) -> onJoin(handler.player, server));
@@ -86,10 +87,6 @@ public final class InfectionManager {
         AttackEntityCallback.EVENT.register((player, level, hand, entity, hitResult) -> {
             if (!level.isClientSide && entity instanceof ServerPlayer victim && InfectionData.isTransformed(player)) {
                 addInfection(victim, 100, InfectionData.server(player.getUUID()).form);
-            }
-            if (!level.isClientSide && player instanceof ServerPlayer drone && entity instanceof LatexDroneEntity scientist
-                    && scientist.def().scientist && InfectionData.isTransformed(drone)) {
-                DroneTasks.disobey(drone, scientist);
             }
             return InteractionResult.PASS;
         });
@@ -190,7 +187,7 @@ public final class InfectionManager {
         e.transformTicks = 0;
         e.infection = 0;
         e.form = "";
-        DroneTasks.reset(e);
+        DroneLife.clear(e);
         removeFormModifiers(player);
         if (player.getHealth() > player.getMaxHealth()) {
             player.setHealth(player.getMaxHealth());
@@ -288,6 +285,7 @@ public final class InfectionManager {
         if (e.unit <= 0) {
             e.unit = 1000 + player.getRandom().nextInt(9000);
         }
+        DroneLife.resetDrone(e);
         player.removeEffect(ModEffects.LATEX_INFECTION);
         player.removeEffect(ModEffects.HYPNOSIS);
         player.removeEffect(MobEffects.MOVEMENT_SLOWDOWN);
@@ -303,13 +301,13 @@ public final class InfectionManager {
     }
 
     /** Keeps the perks of the latex form applied (stronger, faster, tougher, sees in the dark). */
-    static void upkeepForm(ServerPlayer player) {
+    public static void upkeepForm(ServerPlayer player) {
         ensureModifier(player, Attributes.MAX_HEALTH, FORM_HEALTH, 8.0D, AttributeModifier.Operation.ADDITION);
         ensureModifier(player, Attributes.ATTACK_DAMAGE, FORM_DAMAGE, 2.0D, AttributeModifier.Operation.ADDITION);
         ensureModifier(player, Attributes.MOVEMENT_SPEED, FORM_SPEED, 0.12D, AttributeModifier.Operation.MULTIPLY_TOTAL);
         // higher drone ranks get one more heart each
         AttributeInstance health = player.getAttribute(Attributes.MAX_HEALTH);
-        double rankBonus = 2.0D * DroneTasks.rank(InfectionData.server(player.getUUID()).tasksDone);
+        double rankBonus = 2.0D * DroneLife.rank(InfectionData.server(player.getUUID()).tasksDone);
         if (health != null) {
             AttributeModifier current = health.getModifier(FORM_RANK);
             if (current == null || current.getAmount() != rankBonus) {
@@ -360,7 +358,7 @@ public final class InfectionManager {
             if (player.tickCount % 40 == 0) {
                 upkeepForm(player);
             }
-            DroneTasks.tick(player, level, e);
+            DroneLife.tick(player, level, e);
             return;
         }
         if (player.tickCount % 20 != 0 || player.isCreative() || player.isSpectator()) {
@@ -407,7 +405,7 @@ public final class InfectionManager {
         int vents = 0;
         for (BlockPos pos : BlockPos.betweenClosed(center.offset(-5, -2, -5), center.offset(5, 3, 5))) {
             BlockState state = level.getBlockState(pos);
-            if (state.is(ModBlocks.HYPNO_SCREEN)) {
+            if (state.is(ModBlocks.HYPNO_SCREEN) || state.is(ModBlocks.HYPNO_PYLON)) {
                 screen = true;
             } else if (state.is(ModBlocks.LATEX_GAS_VENT) && pos.distSqr(center) <= 12.0D) {
                 vents++;
@@ -457,6 +455,7 @@ public final class InfectionManager {
         InfectionData.Entry e = InfectionData.server(player.getUUID());
         e.standby = false;
         if (e.transformed) {
+            e.energy = Math.max(e.energy, 50);
             return; // once a drone, always a drone (until cured)
         }
         Entity killer = source.getEntity();
@@ -470,6 +469,7 @@ public final class InfectionManager {
             if (e.unit <= 0) {
                 e.unit = 1000 + player.getRandom().nextInt(9000);
             }
+            DroneLife.resetDrone(e);
             ASSIMILATED.add(player.getUUID());
         } else {
             e.infection = 0;
@@ -480,7 +480,7 @@ public final class InfectionManager {
 
     private static void onKill(ServerLevel level, Entity killer, LivingEntity victim) {
         if (killer instanceof ServerPlayer drone && InfectionData.isTransformed(drone)) {
-            DroneTasks.onKill(drone, level, victim);
+            DroneLife.onKill(drone, level, victim);
             return;
         }
         if (victim instanceof Player || !isConvertible(victim)) {
@@ -498,7 +498,7 @@ public final class InfectionManager {
         ModNetworking.send(player, player.getUUID(), InfectionData.server(player.getUUID()));
     }
 
-    static void syncToAll(ServerPlayer player) {
+    public static void syncToAll(ServerPlayer player) {
         InfectionData.Entry e = InfectionData.server(player.getUUID());
         for (ServerPlayer other : player.server.getPlayerList().getPlayers()) {
             ModNetworking.send(other, player.getUUID(), e);

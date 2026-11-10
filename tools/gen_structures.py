@@ -648,6 +648,191 @@ def latex_cave_nest():
     return s
 
 
+
+# ------------------------------------------------------------------ drone life update structures
+DWALL, STEEL, GRATE, BRICK = L("lab_dark_wall"), L("lab_steel_plate"), L("lab_floor_grate"), L("latex_bricks")
+
+
+def drone_barracks():
+    s = S(15, 6, 11, 201)
+    s.shell(0, 0, 0, 14, 5, 10, DWALL, STEEL, CEIL)
+    s.box(0, 2, 0, 14, 2, 10, WS)
+    s.box(1, 2, 1, 13, 2, 9, AIR)
+    door(s, 7, 1, 0)
+    for x in (2, 5, 9, 12):                       # two rows of sleep pods
+        for z in (2, 8):
+            s.set(x, 1, z, L("drone_pod")); s.set(x, 2, z, L("drone_pod"))
+    for x in (3, 4, 10, 11):
+        s.set(x, 0, 5, L("drone_charging_pad"))
+    s.set(7, 1, 9, L("drone_terminal[facing=north]"))
+    s.set(13, 1, 5, L("drone_locker[facing=west]")); s.set(13, 1, 4, L("drone_locker[facing=west]"))
+    s.set(1, 1, 5, L("drone_locker[facing=east]"))
+    for x in (3, 7, 11):
+        s.set(x, 5, 5, L("drone_beacon"))
+    s.chest(13, 1, 6, "lab_common", "west")
+    s.mob(4, 1, 5, "drone_unit"); s.mob(10, 1, 5, "drone_worker"); s.mob(7, 1, 7, "scientist_wolf")
+    return s
+
+
+def processing_center():
+    s = S(19, 7, 13, 202)
+    lab_room(s, 0, 0, 0, 18, 6, 12, TC)
+    door(s, 9, 1, 0)
+    for x in (3, 6, 9, 12, 15):                   # conversion line behind glass
+        s.set(x, 1, 10, L("conversion_chamber"))
+        s.box(x - 1, 1, 9, x + 1, 3, 9, RGLASS)
+        s.set(x, 4, 10, L("hypno_screen[facing=north]"))
+    for x in (3, 6, 9, 12, 15):
+        s.set(x, 1, 9, AIR); s.set(x, 2, 9, AIR)
+    for x in (2, 16):
+        s.set(x, 1, 2, L("drone_terminal[facing=south]"))
+    for x in range(4, 15):
+        s.set(x, 0, 5, HAZ)
+    s.set(1, 1, 6, L("research_desk[facing=east]")); s.set(17, 1, 6, L("lab_monitor[facing=west]"))
+    s.set(17, 1, 4, L("specimen_freezer[facing=west]")); s.set(1, 1, 4, L("lab_cabinet[facing=east]"))
+    s.set(9, 6, 6, ELIGHT)
+    s.chest(17, 1, 2, "lab_rare", "west")
+    s.mob(5, 1, 4, "scientist_fox"); s.mob(13, 1, 4, "scientist_lizard")
+    s.mob(9, 1, 7, "drone_overseer"); s.mob(7, 1, 3, "drone_guard"); s.mob(11, 1, 3, "drone_guard")
+    return s
+
+
+def contaminated_storage():
+    s = S(13, 6, 11, 203)
+    s.shell(0, 0, 0, 12, 5, 10, STEEL, TD, VENT)
+    door(s, 6, 1, 0)
+    for x in (2, 4, 8, 10):                       # crate stacks
+        for z in (2, 8):
+            for y in range(1, 1 + s.rnd.randint(1, 3)):
+                s.set(x, y, z, L("lab_crate"))
+    s.set(6, 1, 9, L("toxic_tank")); s.set(6, 2, 9, L("toxic_tank"))
+    s.set(1, 1, 5, L("drone_terminal[facing=east]"))
+    s.scatter([L("black_latex_puddle"), L("green_latex_puddle"), L("purple_latex_puddle")], 18, 1, 1, 11, 9, (1,))
+    s.set(11, 1, 5, L("green_latex_goo")); s.set(11, 1, 6, L("green_latex_goo"))
+    s.chest(11, 1, 2, "lab_common", "west")
+    s.mob(6, 1, 5, "drone_worker"); s.mob(3, 1, 5, "goo_blob_green"); s.mob(9, 1, 5, "drone_collector")
+    return s
+
+
+def directors_office():
+    s = S(17, 10, 15, 204)
+    s.box(0, 0, 0, 16, 0, 14, TC)
+    s.shell(1, 0, 1, 15, 5, 13, W, TC, CEIL)
+    s.shell(3, 5, 3, 13, 9, 11, GLASS, L("polished_latex"), CEIL)    # glass office on top
+    for (x, z) in ((1, 1), (15, 1), (1, 13), (15, 13), (3, 3), (13, 3), (3, 11), (13, 11)):
+        s.box(x, 1 if x in (1, 15) else 6, z, x, 5 if x in (1, 15) else 9, z, PIL)
+    door(s, 8, 1, 1)
+    for y in range(1, 6):
+        s.set(14, y, 7, "ladder[facing=west,waterlogged=false]")
+    s.set(14, 5, 7, AIR); s.set(13, 5, 7, AIR); s.set(12, 5, 7, AIR)
+    s.set(8, 6, 9, L("research_desk[facing=south]")); s.set(7, 6, 9, L("lab_monitor[facing=south]"))
+    s.set(9, 6, 9, L("lab_monitor[facing=south]")); s.set(8, 6, 10, L("drone_terminal[facing=south]"))
+    s.set(4, 6, 4, L("lab_shelf[facing=south]")); s.set(12, 6, 4, L("specimen_freezer[facing=south]"))
+    s.chest(4, 6, 10, "lab_rare", "east")
+    for x in (3, 6, 10, 13):                    # ground floor: guarded lobby
+        s.set(x, 1, 12, L("lab_cabinet[facing=north]"))
+    s.set(8, 1, 12, L("drone_terminal[facing=north]")); s.set(2, 1, 7, L("alarm_block"))
+    s.set(8, 5, 7, LIGHT); s.set(8, 9, 7, LIGHT)
+    s.mob(8, 6, 7, "scientist_raven"); s.mob(6, 6, 6, "scientist_cat")
+    s.mob(5, 1, 6, "drone_commander"); s.mob(11, 1, 6, "drone_sentinel"); s.mob(8, 1, 4, "drone_guard")
+    return s
+
+
+def drone_factory():
+    s = S(19, 8, 13, 205)
+    s.shell(0, 0, 0, 18, 7, 12, STEEL, GRATE, VENT)
+    s.box(0, 0, 0, 18, 0, 12, TD)
+    door(s, 9, 1, 0); door(s, 0, 1, 6)
+    for x in range(2, 17):                        # assembly line
+        s.set(x, 1, 6, L("lab_steel_slab[type=bottom,waterlogged=false]"))
+    for x in (4, 9, 14):
+        s.set(x, 1, 4, L("drone_fabricator[facing=south]")); s.set(x, 1, 8, L("drone_fabricator[facing=north]"))
+        s.box(x, 2, 4, x, 6, 4, L("lab_pipe[axis=y]"))
+    for x in (2, 16):
+        s.set(x, 1, 11, L("lab_generator[facing=north]")); s.set(x, 2, 11, L("lab_server_rack[facing=north]"))
+    s.set(9, 1, 11, L("drone_terminal[facing=north]"))
+    for x in (4, 9, 14):
+        s.set(x, 7, 6, L("drone_beacon"))
+    s.box(1, 6, 1, 17, 6, 1, L("lab_pipe[axis=x]"))
+    s.chest(17, 1, 1, "lab_rare", "west")
+    s.mob(6, 1, 7, "drone_technician"); s.mob(12, 1, 5, "drone_prototype"); s.mob(9, 1, 9, "scientist_rabbit")
+    s.mob(15, 1, 9, "hover_drone_carrier")
+    return s
+
+
+def hypno_garden():
+    s = S(15, 6, 15, 206)
+    for x in range(15):
+        for z in range(15):
+            if (x - 7) ** 2 + (z - 7) ** 2 <= 50:
+                s.set(x, 0, z, s.rnd.choice((L("infected_grass"), L("infected_grass"), L("purple_latex_block"))))
+    for (x, z) in ((7, 7), (3, 7), (11, 7), (7, 3), (7, 11)):
+        s.set(x, 1, z, L("hypno_pylon")); s.set(x, 2, z, L("hypno_pylon"))
+        if (x, z) == (7, 7):
+            s.set(x, 3, z, L("hypno_pylon")); s.set(x, 4, z, L("drone_beacon"))
+    s.scatter([L("glowing_latex_pod"), L("latex_crystal_black"), L("latex_sprout"), L("purple_latex_puddle")], 26, 1, 1, 13, 13, (1,))
+    s.mob(5, 1, 5, "latex_hypnotist"); s.mob(9, 1, 9, "latex_siren"); s.mob(9, 1, 5, "hover_drone_hypno")
+    s.chest(7, 1, 12, "hive", "north")
+    return s
+
+
+def latex_monolith():
+    s = S(9, 18, 9, 207)
+    s.box(0, 0, 0, 8, 0, 8, L("polished_latex"))
+    s.box(1, 1, 1, 7, 1, 7, BRICK)
+    for (x, z) in ((1, 4), (7, 4), (4, 1), (4, 7)):
+        s.set(x, 1, z, L("latex_brick_slab[type=bottom,waterlogged=false]"))
+    s.box(3, 2, 3, 5, 14, 5, BRICK)
+    for y in (4, 8, 12):
+        for (x, z) in ((4, 3), (4, 5), (3, 4), (5, 4)):
+            s.set(x, y, z, L("chiseled_latex"))
+    s.box(4, 15, 4, 4, 16, 4, L("polished_latex"))
+    s.set(4, 17, 4, L("latex_crystal_black"))
+    s.set(4, 2, 2, L("latex_core"))
+    s.scatter([L("latex_crystal_black"), L("glowing_latex_pod"), L("latex_tendrils")], 10, 0, 0, 8, 8, (1, 2))
+    s.mob(1, 2, 1, "latex_assimilator"); s.mob(7, 2, 7, "latex_queen_guard")
+    return s
+
+
+def assimilated_farm():
+    s = S(15, 7, 13, 208)
+    s.box(0, 0, 0, 14, 0, 12, L("infected_dirt"))
+    for x in range(1, 8):                         # infected crop field
+        for z in range(1, 12):
+            if z % 3 == 0:
+                s.set(x, 0, z, L("black_latex_goo"))
+            else:
+                s.set(x, 1, z, s.rnd.choice((L("latex_sprout"), L("latex_tendrils"), L("glowing_latex_pod"))))
+    P, LOG = L("infected_planks"), L("infected_log[axis=y]")
+    s.shell(9, 0, 3, 14, 4, 9, P, L("infected_planks"), P)
+    for (x, z) in ((9, 3), (14, 3), (9, 9), (14, 9)):
+        s.box(x, 0, z, x, 4, z, LOG)
+    for i in range(3):
+        s.box(9 + i, 5 + i, 3, 14 - i, 5 + i, 9, L("infected_planks_slab[type=bottom,waterlogged=false]"))
+    door(s, 9, 1, 6)
+    s.set(13, 1, 4, "barrel[facing=up,open=false]"); s.set(13, 1, 8, L("drone_terminal[facing=north]"))
+    s.chest(10, 1, 8, "hive", "east")
+    s.mob(4, 1, 6, "drone_worker"); s.mob(11, 1, 6, "latex_mimic"); s.mob(5, 1, 2, "drone_collector")
+    return s
+
+
+def observation_dome():
+    s = S(15, 9, 15, 209)
+    s.box(0, 0, 0, 14, 0, 14, STEEL)
+    s.sphere(7, 0, 7, 7.0, RGLASS, hollow=True, ry=8.0, ymin=1)
+    s.box(6, 1, 0, 8, 3, 1, AIR)
+    for (x, z) in ((6, 1), (8, 1)):
+        s.box(x, 1, z, x, 3, z, PIL)
+    s.set(7, 4, 1, PIL)
+    s.set(7, 1, 7, L("research_desk[facing=south]")); s.set(6, 1, 7, L("lab_monitor[facing=south]"))
+    s.set(8, 1, 7, L("lab_monitor[facing=south]")); s.set(7, 1, 11, L("drone_terminal[facing=north]"))
+    s.set(3, 1, 7, L("lab_generator[facing=east]")); s.set(11, 1, 7, L("specimen_freezer[facing=west]"))
+    s.set(7, 7, 7, LIGHT)
+    s.chest(10, 1, 10, "lab_rare", "west")
+    s.mob(7, 1, 9, "scientist_cat"); s.mob(4, 1, 4, "drone_sentinel"); s.mob(10, 1, 4, "hover_drone_scout")
+    return s
+
+
 BUILDERS = {
     "abandoned_lab": abandoned_lab, "research_lab": research_lab, "containment_facility": containment_facility,
     "latex_pit": latex_pit,
@@ -660,6 +845,10 @@ BUILDERS = {
     "scientist_camp": scientist_camp, "charging_station": charging_station,
     "quarantine_checkpoint": quarantine_checkpoint, "vent_field": vent_field, "signal_tower": signal_tower,
     "underground_bunker": underground_bunker, "latex_cave_nest": latex_cave_nest,
+    "drone_barracks": drone_barracks, "processing_center": processing_center,
+    "contaminated_storage": contaminated_storage, "directors_office": directors_office,
+    "drone_factory": drone_factory, "hypno_garden": hypno_garden, "latex_monolith": latex_monolith,
+    "assimilated_farm": assimilated_farm, "observation_dome": observation_dome,
 }
 
 

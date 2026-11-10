@@ -2,6 +2,10 @@
   "replace": false,
   "values": [
     "latexdrones:lab_wall_stairs",
-    "latexdrones:lab_tile_stairs"
+    "latexdrones:lab_tile_stairs",
+    "latexdrones:latex_brick_stairs",
+    "latexdrones:infected_planks_stairs",
+    "latexdrones:lab_steel_stairs",
+    "latexdrones:lab_dark_wall_stairs"
   ]
 }

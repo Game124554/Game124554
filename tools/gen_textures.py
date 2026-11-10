@@ -1490,9 +1490,281 @@ def sheet(images, cols, scale, name, bg=(40, 44, 52, 255)):
     out.save(os.path.join(PREVIEW, name))
 
 
+
+# ------------------------------------------------------------------ expansion blocks (drone life update)
+def _panel(base, seed, bevel=True, rivets=True):
+    img = noise(base, 3, seed)
+    if bevel:
+        for i in range(16):
+            put(img, i, 0, shade(base, 1.25)); put(img, 0, i, shade(base, 1.25))
+            put(img, i, 15, shade(base, 0.78)); put(img, 15, i, shade(base, 0.78))
+    if rivets:
+        for (x, y) in ((2, 2), (13, 2), (2, 13), (13, 13)):
+            put(img, x, y, shade(base, 0.62))
+    return img
+
+
+def _screen(img, x0, y0, x1, y1, bg, lines, seed):
+    d = ImageDraw.Draw(img)
+    d.rectangle([x0, y0, x1, y1], fill=bg + (255,), outline=(60, 64, 72, 255))
+    rnd = random.Random(seed)
+    for y in range(y0 + 2, y1 - 0, 2):
+        ln = rnd.randint(2, x1 - x0 - 3)
+        col = rnd.choice(lines)
+        for x in range(x0 + 2, x0 + 2 + ln):
+            put(img, x, y, col)
+
+
+def gen_blocks_extra():
+    out = {}
+    # masonry
+    bricks = new()
+    for y in range(16):
+        for x in range(16):
+            row = y // 4
+            off = 4 if row % 2 else 0
+            col = (30, 30, 38)
+            if y % 4 == 3 or (x + off) % 8 == 7:
+                col = (12, 12, 16)
+            elif y % 4 == 0:
+                col = (58, 60, 78)
+            put(bricks, x, y, col)
+    for (x, y) in ((2, 1), (11, 5), (5, 9), (13, 13)):
+        put(bricks, x, y, (110, 114, 140))
+    out["latex_bricks"] = bricks
+    pol = latex_block((30, 30, 38), 401)
+    ImageDraw.Draw(pol).rectangle([1, 1, 14, 14], outline=(70, 72, 92, 255))
+    out["polished_latex"] = pol
+    ch = latex_block((30, 30, 38), 402)
+    d = ImageDraw.Draw(ch)
+    d.rectangle([1, 1, 14, 14], outline=(70, 72, 92, 255))
+    d.rectangle([4, 6, 11, 9], fill=(20, 20, 26, 255))
+    d.rectangle([5, 7, 10, 8], fill=(53, 224, 255, 255))
+    for (x, y) in ((7, 2), (8, 2), (7, 3), (8, 3), (7, 12), (8, 12), (7, 13), (8, 13)):
+        put(ch, x, y, (122, 53, 201))
+    out["chiseled_latex"] = ch
+
+    out["purple_latex_goo"] = goo_tex((96, 40, 168), 403, 225)
+    out["green_latex_goo"] = goo_tex((54, 178, 70), 404, 225)
+    out["purple_latex_puddle"] = goo_tex((90, 36, 160), 405)
+    out["green_latex_puddle"] = goo_tex((50, 170, 66), 406)
+
+    grav = new()
+    rnd = random.Random(407)
+    for y in range(16):
+        for x in range(16):
+            v = rnd.choice((96, 112, 128, 140, 150))
+            put(grav, x, y, (v, v - 4, v - 6))
+    out["infected_gravel"] = latex_veins(grav, 408, blobs=4)
+    deep = noise((72, 72, 78), 7, 409)
+    for y in range(0, 16, 4):
+        for x in range(16):
+            put(deep, x, y, shade(deep.getpixel((x, y))[:3], 0.78))
+    out["infected_deepslate"] = latex_veins(deep, 410, blobs=5)
+    pod = new()
+    d = ImageDraw.Draw(pod)
+    d.line([(8, 15), (8, 9)], fill=(24, 24, 30, 255))
+    d.line([(8, 12), (5, 10)], fill=(24, 24, 30, 255))
+    d.line([(8, 11), (11, 9)], fill=(24, 24, 30, 255))
+    for (cx, cy, r) in ((8, 6, 3), (4, 8, 2), (12, 7, 2)):
+        d.ellipse([cx - r, cy - r, cx + r, cy + r], fill=(150, 60, 220, 255), outline=(70, 20, 120, 255))
+        put(pod, cx - 1, cy - 1, (240, 190, 255))
+    out["glowing_latex_pod"] = pod
+
+    # lab set
+    STEEL = (150, 156, 168)
+    steel = _panel(STEEL, 411)
+    for y in (5, 10):
+        for x in range(1, 15):
+            put(steel, x, y, shade(STEEL, 0.8))
+    for (x, y) in ((4, 3), (11, 3), (4, 8), (11, 8), (4, 13), (11, 13)):
+        put(steel, x, y, shade(STEEL, 1.25) if STEEL[0] < 200 else STEEL)
+    out["lab_steel_plate"] = steel
+    DW = (52, 56, 66)
+    dw = _panel(DW, 412)
+    for x in range(16):
+        put(dw, x, 7, (36, 86, 200)); put(dw, x, 8, (24, 60, 150))
+    out["lab_dark_wall"] = dw
+    grate = new()
+    for y in range(16):
+        for x in range(16):
+            if x in (0, 15) or y in (0, 15):
+                put(grate, x, y, (110, 116, 128))
+            elif x % 3 == 0 or y % 3 == 0:
+                put(grate, x, y, (80, 86, 96))
+    out["lab_floor_grate"] = grate
+
+    CASE = (150, 155, 165)
+    DARK = (44, 46, 54)
+
+    def orient(name, base, seed, front_fn):
+        f = _panel(base, seed)
+        front_fn(f)
+        out[name + "_front"] = f
+        out[name + "_side"] = _panel(base, seed + 1)
+        out[name + "_top"] = _panel(base, seed + 2, rivets=False)
+
+    orient("lab_monitor", DARK, 420, lambda im: _screen(im, 2, 2, 13, 11, (8, 18, 30), [(80, 200, 255), (60, 240, 140), (255, 200, 60)], 421))
+    orient("research_desk", (200, 204, 210), 430, lambda im: (_screen(im, 3, 2, 12, 7, (10, 22, 16), [(64, 240, 120)], 431),
+                                                            ImageDraw.Draw(im).rectangle([1, 9, 14, 10], fill=(120, 84, 50, 255)),
+                                                            ImageDraw.Draw(im).rectangle([2, 11, 3, 14], fill=(90, 94, 104, 255)),
+                                                            ImageDraw.Draw(im).rectangle([12, 11, 13, 14], fill=(90, 94, 104, 255))))
+
+    def cabinet(im):
+        d = ImageDraw.Draw(im)
+        d.rectangle([2, 2, 13, 7], outline=(100, 104, 114, 255))
+        d.rectangle([2, 8, 13, 13], outline=(100, 104, 114, 255))
+        for y in (4, 10):
+            d.rectangle([6, y, 9, y + 1], fill=(200, 204, 214, 255))
+    orient("lab_cabinet", CASE, 440, cabinet)
+
+    def freezer(im):
+        d = ImageDraw.Draw(im)
+        d.rectangle([2, 2, 13, 13], fill=(200, 230, 240, 255), outline=(100, 110, 120, 255))
+        d.rectangle([3, 3, 12, 12], fill=(150, 200, 225, 255))
+        for (x, y) in ((4, 4), (5, 5), (9, 4), (10, 9), (5, 10)):
+            put(im, x, y, (240, 252, 255))
+        d.rectangle([12, 6, 12, 9], fill=(60, 64, 72, 255))
+        put(im, 3, 14, (60, 230, 255))
+    orient("specimen_freezer", (220, 224, 230), 450, freezer)
+
+    def generator(im):
+        d = ImageDraw.Draw(im)
+        d.ellipse([3, 3, 12, 12], fill=(30, 32, 38, 255), outline=(110, 116, 126, 255))
+        d.ellipse([6, 6, 9, 9], fill=(255, 200, 60, 255))
+        for y in range(2, 14, 2):
+            put(im, 14, y, (255, 200, 60))
+    orient("lab_generator", (90, 94, 104), 460, generator)
+
+    def terminal(im):
+        _screen(im, 2, 2, 13, 10, (6, 16, 24), [(53, 224, 255), (53, 224, 255), (255, 80, 200)], 471)
+        d = ImageDraw.Draw(im)
+        d.rectangle([3, 3, 12, 3], fill=(53, 224, 255, 255))
+        d.rectangle([3, 12, 12, 13], fill=(30, 32, 38, 255))
+        for x in (4, 6, 8, 10):
+            put(im, x, 12, (53, 224, 255) if x != 8 else (255, 80, 200))
+    orient("drone_terminal", DARK, 470, terminal)
+
+    def fabricator(im):
+        d = ImageDraw.Draw(im)
+        d.rectangle([2, 2, 13, 13], fill=(24, 26, 30, 255), outline=(232, 196, 46, 255))
+        d.rectangle([5, 4, 10, 11], fill=(26, 26, 32, 255), outline=(60, 64, 72, 255))
+        d.rectangle([6, 5, 9, 7], fill=(53, 224, 255, 255))
+        d.line([(2, 13), (13, 2)], fill=(232, 196, 46, 120))
+    orient("drone_fabricator", (110, 116, 128), 480, fabricator)
+
+    def locker(im):
+        d = ImageDraw.Draw(im)
+        for x0 in (1, 8):
+            d.rectangle([x0, 1, x0 + 6, 14], outline=(70, 74, 84, 255))
+            for y in (3, 5):
+                d.line([(x0 + 2, y), (x0 + 4, y)], fill=(70, 74, 84, 255))
+            put(im, x0 + 5, 9, (220, 224, 232))
+            put(im, x0 + 3, 12, (53, 224, 255))
+    orient("drone_locker", CASE, 490, locker)
+
+    pipe = new()
+    for y in range(16):
+        for x in range(16):
+            f = (0.7, 0.85, 1.0, 1.15, 1.2, 1.1, 1.0, 0.95, 0.9, 0.85, 0.8, 0.75, 0.72, 0.7, 0.68, 0.65)[x]
+            col = shade(STEEL, f) if f <= 1 else mix(STEEL, WHITE, f - 1)
+            if y in (0, 1, 14, 15):
+                col = shade(col, 0.7)
+            put(pipe, x, y, col)
+    out["lab_pipe"] = pipe
+    pt = _panel(STEEL, 500, rivets=False)
+    ImageDraw.Draw(pt).ellipse([3, 3, 12, 12], fill=(40, 42, 48, 255), outline=(110, 116, 126, 255))
+    out["lab_pipe_top"] = pt
+
+    tank = new()
+    for y in range(16):
+        for x in range(16):
+            if x in (0, 1, 14, 15) or y in (0, 15):
+                col = (120, 126, 136) if x in (0, 14) or y == 0 else (86, 90, 100)
+            else:
+                level = 4 + int(1.2 * math.sin(x * 1.1))
+                col = (60, 200, 70) if y >= level else (66, 104, 112)
+                if y == level:
+                    col = (170, 255, 140)
+            put(tank, x, y, col)
+    for (x, y) in ((4, 8), (9, 10), (11, 6), (6, 12)):
+        put(tank, x, y, (200, 255, 170))
+    out["toxic_tank"] = tank
+    tt = _panel((120, 126, 136), 501)
+    ImageDraw.Draw(tt).ellipse([3, 3, 12, 12], outline=(60, 64, 72, 255), fill=(60, 200, 70, 255))
+    out["toxic_tank_top"] = tt
+
+    podside = new()
+    for y in range(16):
+        for x in range(16):
+            if x in (0, 1, 14, 15) or y in (0, 15):
+                put(podside, x, y, (150, 156, 168) if x in (0, 15) or y in (0, 15) else (110, 116, 128), 255)
+            else:
+                put(podside, x, y, (120, 220, 255), 70)
+    for y in range(2, 14):
+        put(podside, 4, y, (200, 245, 255), 140)
+    for y in (6, 7):
+        for x in range(2, 14):
+            put(podside, x, y, (53, 224, 255), 170)
+    out["drone_pod"] = podside
+    podtop = _panel(DARK, 502)
+    ImageDraw.Draw(podtop).ellipse([3, 3, 12, 12], outline=(53, 224, 255, 255))
+    put(podtop, 7, 7, (53, 224, 255)); put(podtop, 8, 8, (53, 224, 255))
+    out["drone_pod_top"] = podtop
+
+    beacon = new(16, 64)
+    for fr in range(4):
+        p = (0.4, 0.7, 1.0, 0.7)[fr]
+        for y in range(16):
+            for x in range(16):
+                if x in (0, 15) or y in (0, 15):
+                    col = (60, 64, 72)
+                elif x in (1, 14) or y in (1, 14):
+                    col = (40, 42, 48)
+                else:
+                    dd = math.hypot(x - 7.5, y - 7.5) / 7.0
+                    col = mix(mix((20, 90, 120), (230, 252, 255), p), (20, 60, 80), min(1, dd))
+                put(beacon, x, fr * 16 + y, col)
+    out["drone_beacon"] = beacon
+
+    frames = 8
+    py = new(16, 16 * frames)
+    for fr in range(frames):
+        for y in range(16):
+            for x in range(16):
+                if x in (0, 1, 14, 15):
+                    col = (44, 46, 54) if x in (0, 15) else (70, 74, 84)
+                else:
+                    v = math.sin((y + fr * 2) * 0.8 + x * 0.3)
+                    col = (255, 80, 220) if v > 0.4 else ((120, 30, 160) if v > -0.3 else (24, 10, 34))
+                put(py, x, fr * 16 + y, col)
+    out["hypno_pylon"] = py
+    pyt = _panel((44, 46, 54), 503)
+    ImageDraw.Draw(pyt).ellipse([4, 4, 11, 11], fill=(255, 80, 220, 255))
+    out["hypno_pylon_top"] = pyt
+
+    for name, img in out.items():
+        save(img, "block", name + ".png")
+    for name, ft in (("drone_beacon", 6), ("hypno_pylon", 2)):
+        with open(os.path.join(TEX, "block", name + ".png.mcmeta"), "w") as f:
+            json.dump({"animation": {"frametime": ft}}, f)
+
+    mop = new()
+    for i in range(0, 10):
+        put(mop, 3 + i, 12 - i, (150, 110, 70)); put(mop, 4 + i, 12 - i, (110, 76, 46))
+    for (x, y) in ((1, 13), (2, 12), (2, 14), (3, 13), (1, 15), (3, 15), (0, 14), (2, 15), (4, 14), (1, 12)):
+        put(mop, x, y, (53, 224, 255))
+    for (x, y) in ((2, 13), (1, 14), (3, 14)):
+        put(mop, x, y, (200, 245, 255))
+    put(mop, 13, 2, (232, 196, 46)); put(mop, 14, 1, (232, 196, 46))
+    save(mop, "item", "drone_mop.png")
+    return out
+
+
 def main():
     dolls = gen_entities()
     blocks = gen_blocks()
+    blocks.update(gen_blocks_extra())
     items = gen_items()
     gen_gui()
     sheet(dolls, 20, 5, "mobs.png")

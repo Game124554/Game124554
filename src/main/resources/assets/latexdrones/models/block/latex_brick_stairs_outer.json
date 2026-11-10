@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/outer_stairs",
+  "textures": {
+    "bottom": "latexdrones:block/latex_bricks",
+    "top": "latexdrones:block/latex_bricks",
+    "side": "latexdrones:block/latex_bricks"
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column",
+  "textures": {
+    "end": "latexdrones:block/lab_pipe_top",
+    "side": "latexdrones:block/lab_pipe"
+  }
+}

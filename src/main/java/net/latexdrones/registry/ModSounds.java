@@ -31,6 +31,10 @@ public final class ModSounds {
     public static final SoundEvent ALARM = register("alarm");
     public static final SoundEvent HEARTBEAT = register("heartbeat");
     public static final SoundEvent CURE = register("cure");
+    public static final SoundEvent TERMINAL_BEEP = register("terminal_beep");
+    public static final SoundEvent TASK_COMPLETE = register("task_complete");
+    public static final SoundEvent STANDBY = register("standby");
+    public static final SoundEvent CORRECTION = register("correction");
 
     private static SoundEvent register(String name) {
         ResourceLocation id = LatexDrones.id(name);

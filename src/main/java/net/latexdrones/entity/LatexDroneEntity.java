@@ -4,7 +4,7 @@ import net.latexdrones.LatexDrones;
 import net.latexdrones.content.Archetype;
 import net.latexdrones.content.MobDef;
 import net.latexdrones.content.MobDefs;
-import net.latexdrones.infection.DroneTasks;
+import net.latexdrones.drone.DroneLife;
 import net.latexdrones.infection.InfectionData;
 import net.latexdrones.infection.InfectionManager;
 import net.latexdrones.registry.ModEffects;
@@ -114,16 +114,31 @@ public class LatexDroneEntity extends Monster implements RangedAttackMob {
         this.targetSelector.addGoal(4, new NearestAttackableTargetGoal<>(this, IronGolem.class, true));
     }
 
-    /** Transformed players are part of the hive: drones leave them alone and scientists give them orders instead. */
+    /**
+     * Humans are always prey. Transformed players are part of the hive: drones only attack rogue units
+     * (obedience below 25%), scientists also attack disobedient units for a while.
+     */
     private boolean wantsToAttack(LivingEntity target) {
-        return target instanceof Player player && !InfectionData.isTransformed(player);
+        return target instanceof Player player && this.isHostileTo(player);
     }
 
+    public boolean isHostileTo(Player player) {
+        if (!InfectionData.isTransformed(player)) {
+            return true;
+        }
+        if (!(player instanceof ServerPlayer sp)) {
+            return false;
+        }
+        return this.def().scientist ? DroneLife.scientistsHostileTo(sp) : DroneLife.dronesHostileTo(sp);
+    }
+
+    /** A drone player right-clicking a scientist asks for orders / reports back. */
     @Override
     protected InteractionResult mobInteract(Player player, InteractionHand hand) {
         if (this.def().scientist && hand == InteractionHand.MAIN_HAND && InfectionData.isTransformed(player)) {
-            if (player instanceof ServerPlayer drone) {
-                DroneTasks.talk(drone, this);
+            if (player instanceof ServerPlayer drone && !this.isHostileTo(drone)) {
+                this.getLookControl().setLookAt(drone, 30.0F, 30.0F);
+                DroneLife.talkToScientist(drone, this);
             }
             return InteractionResult.sidedSuccess(this.level().isClientSide);
         }
@@ -135,7 +150,7 @@ public class LatexDroneEntity extends Monster implements RangedAttackMob {
         MobDef d = this.def();
         LivingEntity target = this.getTarget();
         if (this.tickCount % 20 == 0 && target instanceof Player player
-                && InfectionData.isTransformed(player) && this.getLastHurtByMob() != player) {
+                && !this.isHostileTo(player) && this.getLastHurtByMob() != player) {
             this.setTarget(null);
             target = null;
         }

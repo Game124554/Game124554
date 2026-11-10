@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column",
+  "textures": {
+    "end": "latexdrones:block/drone_pod_top",
+    "side": "latexdrones:block/drone_pod"
+  }
+}

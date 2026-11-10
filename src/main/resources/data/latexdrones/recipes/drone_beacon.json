@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "GGG",
+    "GCG",
+    "III"
+  ],
+  "key": {
+    "G": {
+      "item": "latexdrones:lab_glass"
+    },
+    "C": {
+      "item": "latexdrones:drone_core"
+    },
+    "I": {
+      "item": "minecraft:iron_ingot"
+    }
+  },
+  "result": {
+    "item": "latexdrones:drone_beacon"
+  }
+}

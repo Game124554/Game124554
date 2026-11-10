@@ -37,6 +37,10 @@ SPECIAL_TEX = {
     "infected_log": dict(end="infected_log_top", side="infected_log"),
     "lab_pillar": dict(end="lab_pillar_top", side="lab_pillar"),
     "containment_tank": dict(end="containment_tank_top", side="containment_tank"),
+    "lab_pipe": dict(end="lab_pipe_top", side="lab_pipe"),
+    "toxic_tank": dict(end="toxic_tank_top", side="toxic_tank"),
+    "drone_pod": dict(end="drone_pod_top", side="drone_pod"),
+    "hypno_pylon": dict(end="hypno_pylon_top", side="hypno_pylon"),
 }
 USED_TEX = set()
 
@@ -174,6 +178,7 @@ TIPS = {
     "antidote_dart": "Syringe Gun ammo - cures players, melts drones",
     "goo_canister": "Ammo for the Goo Launcher",
     "raw_latex": "Still twitching",
+    "drone_mop": "Use on the ground: cleans latex spills around you (counts for cleaning tasks)",
     "drone_core": "The control unit of a drone",
 }
 
@@ -220,6 +225,55 @@ def gen_lang():
         f"commands.{M}.transform": "Transformed %s into %s",
         f"commands.{M}.cure": "Cured %s",
         f"commands.{M}.unknown_form": "Unknown form: %s",
+        f"commands.{M}.obedience": "Set obedience of %s to %s",
+        # ---- drone life
+        f"task.{M}.clean": "Clean %s latex spills",
+        f"task.{M}.collect": "Bring %s Raw Latex",
+        f"task.{M}.deliver": "Deliver %s Iron Ingots",
+        f"task.{M}.patrol": "Patrol to %s",
+        f"task.{M}.guard": "Guard this area for %s seconds",
+        f"task.{M}.hunt": "Eliminate %s intruders (hostile mobs)",
+        f"task.{M}.convert": "Convert %s villager(s) for the hive",
+        f"task.{M}.none": "No task assigned",
+        f"giver.{M}.hive": "Hive Directive",
+        f"message.{M}.order": "[%s] Unit #%s: %s. You have %s.",
+        f"message.{M}.task_progress": "Task progress: %s / %s",
+        f"message.{M}.task_done": "[%s] Task complete. Good unit. (+obedience)",
+        f"message.{M}.task_failed": "[%s] You failed your task, unit #%s.",
+        f"message.{M}.task_refused": "[%s] Refusal logged. Disobedience is not tolerated.",
+        f"message.{M}.task_missing_items": "You do not carry enough items yet (%s / %s).",
+        f"message.{M}.task_busy": "Finish your current task first.",
+        f"message.{M}.no_task": "You have no task to report.",
+        f"message.{M}.correction": "DISOBEDIENCE DETECTED - CORRECTING UNIT #%s",
+        f"message.{M}.rogue": "You are now a ROGUE UNIT. The hive is hunting you.",
+        f"message.{M}.loyal": "Loyal unit. The hive protects you.",
+        f"message.{M}.access_denied": "ACCESS DENIED - drone units only.",
+        f"message.{M}.standby_start": "Entering standby... recharging.",
+        f"message.{M}.standby_end": "Standby complete. Unit ready.",
+        f"message.{M}.standby_need_pad": "Standby needs a Drone Sleep Pod or Charging Pad close by.",
+        f"message.{M}.low_power": "LOW POWER - find a charging pad or sleep pod and enter standby.",
+        f"message.{M}.attack_scientist": "You attacked your creator!",
+        f"gui.{M}.terminal": "HIVE TERMINAL",
+        f"gui.{M}.unit": "UNIT #%s - %s",
+        f"gui.{M}.energy": "Energy",
+        f"gui.{M}.obedience": "Obedience",
+        f"gui.{M}.status_rogue": "STATUS: ROGUE",
+        f"gui.{M}.status_loyal": "STATUS: LOYAL",
+        f"gui.{M}.status_normal": "STATUS: OBEDIENT",
+        f"gui.{M}.task": "Current task",
+        f"gui.{M}.given_by": "Ordered by: %s",
+        f"gui.{M}.progress": "Progress: %s / %s",
+        f"gui.{M}.time_left": "Time left: %s",
+        f"gui.{M}.request": "Request Task",
+        f"gui.{M}.report": "Report",
+        f"gui.{M}.refuse": "Refuse Task",
+        f"gui.{M}.standby": "Enter Standby",
+        f"gui.{M}.close": "Close",
+        f"hud.{M}.energy": "PWR %s%%",
+        f"hud.{M}.obedience": "OBD %s%%",
+        f"hud.{M}.standby": "STANDBY - RECHARGING %s%%",
+        f"hud.{M}.standby_hint": "sneak to wake up",
+        f"hud.{M}.task": "TASK: %s  [%s/%s]  %s",
     })
     with open(os.path.join(ROOT, "tools", "lang_extra.json")) as f:
         L.update(json.load(f))   # drone orders / standby texts
@@ -351,6 +405,40 @@ def gen_recipes():
     shaped("latex_gas_vent", ["IVI", "ILI", "III"], {"I": mc("iron_ingot"), "V": md("lab_vent"), "L": md("raw_latex_block")}, md("latex_gas_vent"))
     shaped("decontamination_block", ["IVI", "IAI", "III"], {"I": mc("iron_ingot"), "V": md("lab_vent"), "A": md("antidote_syringe")}, md("decontamination_block"))
     shaped("alarm_block", ["IRI", "RNR", "IRI"], {"I": mc("iron_ingot"), "R": mc("redstone"), "N": mc("note_block")}, md("alarm_block"))
+    shaped("latex_bricks", ["##", "##"], {"#": md("black_latex_block")}, md("latex_bricks"), 4, B)
+    cut("latex_bricks", "latex_brick_slab", 2)
+    cut("latex_bricks", "latex_brick_stairs")
+    cut("latex_bricks", "polished_latex")
+    cut("latex_bricks", "chiseled_latex")
+    shaped("infected_planks_slab", ["###"], {"#": md("infected_planks")}, md("infected_planks_slab"), 6, B)
+    shaped("infected_planks_stairs", ["#  ", "## ", "###"], {"#": md("infected_planks")}, md("infected_planks_stairs"), 4, B)
+    for c, dye in (("purple", "purple"), ("green", "green")):
+        shapeless(f"{c}_latex_goo", [md(f"{c}_latex_block"), mc("slime_ball")], md(f"{c}_latex_goo"), 2, B)
+        shaped(f"{c}_latex_puddle", ["##"], {"#": md(f"{c}_latex_goo")}, md(f"{c}_latex_puddle"), 3, B)
+    shapeless("infected_gravel", [mc("gravel"), md("raw_latex")], md("infected_gravel"), 1, B)
+    shapeless("infected_deepslate", [mc("deepslate"), md("raw_latex")], md("infected_deepslate"), 1, B)
+    shapeless("glowing_latex_pod", [md("latex_sprout"), mc("glowstone_dust")], md("glowing_latex_pod"), 1, B)
+    shaped("lab_steel_plate", ["II", "II"], {"I": mc("iron_ingot")}, md("lab_steel_plate"), 4, B)
+    cut("lab_steel_plate", "lab_steel_slab", 2)
+    cut("lab_steel_plate", "lab_steel_stairs")
+    cut("lab_steel_plate", "lab_floor_grate")
+    cut("lab_steel_plate", "lab_pipe")
+    shapeless("lab_dark_wall", [md("lab_wall"), mc("black_dye")], md("lab_dark_wall"), 1, B)
+    cut("lab_dark_wall", "lab_dark_wall_slab", 2)
+    cut("lab_dark_wall", "lab_dark_wall_stairs")
+    shaped("lab_monitor", ["III", "IGI", " R "], {"I": mc("iron_ingot"), "G": mc("glass_pane"), "R": mc("redstone")}, md("lab_monitor"))
+    shaped("lab_cabinet", ["III", "ICI", "III"], {"I": mc("iron_nugget"), "C": mc("chest")}, md("lab_cabinet"))
+    shaped("specimen_freezer", ["III", "IPI", "III"], {"I": mc("iron_ingot"), "P": mc("packed_ice")}, md("specimen_freezer"))
+    shaped("research_desk", ["CBC", "W W"], {"C": md("lab_computer"), "B": mc("book"), "W": md("lab_wall")}, md("research_desk"))
+    shaped("lab_generator", ["IRI", "RBR", "IRI"], {"I": mc("iron_ingot"), "R": mc("redstone"), "B": mc("blaze_powder")}, md("lab_generator"))
+    shaped("toxic_tank", ["IGI", "GSG", "IGI"], {"I": mc("iron_ingot"), "G": md("lab_glass"), "S": mc("slime_ball")}, md("toxic_tank"))
+    shaped("drone_terminal", ["IGI", "ICI", "IRI"], {"I": mc("iron_ingot"), "G": mc("glass_pane"), "C": md("drone_core"), "R": mc("redstone")}, md("drone_terminal"))
+    shaped("drone_pod", ["IGI", "GPG", "IGI"], {"I": mc("iron_ingot"), "G": md("lab_glass"), "P": md("drone_charging_pad")}, md("drone_pod"))
+    shaped("drone_fabricator", ["ICI", "IAI", "III"], {"I": mc("iron_ingot"), "C": md("drone_core"), "A": mc("anvil")}, md("drone_fabricator"))
+    shaped("drone_beacon", ["GGG", "GCG", "III"], {"G": md("lab_glass"), "C": md("drone_core"), "I": mc("iron_ingot")}, md("drone_beacon"))
+    shaped("hypno_pylon", ["IEI", "ISI", "IEI"], {"I": mc("iron_ingot"), "E": mc("ender_eye"), "S": md("hypno_screen")}, md("hypno_pylon"))
+    shaped("drone_locker", ["II", "II", "II"], {"I": mc("iron_ingot")}, md("drone_locker"))
+    shaped("drone_mop", ["  W", " S ", "S  "], {"W": mc("white_wool"), "S": mc("stick")}, md("drone_mop"), 1, "equipment")
     E = "equipment"
     shaped("stun_baton", ["  R", " I ", "S  "], {"R": mc("redstone_block"), "I": mc("iron_ingot"), "S": mc("stick")}, md("stun_baton"), 1, E)
     shaped("tesla_prod", ["  L", " I ", "S  "], {"L": mc("lightning_rod"), "I": mc("iron_ingot"), "S": mc("stick")}, md("tesla_prod"), 1, E)

@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column",
+  "textures": {
+    "end": "latexdrones:block/hypno_pylon_top",
+    "side": "latexdrones:block/hypno_pylon"
+  }
+}

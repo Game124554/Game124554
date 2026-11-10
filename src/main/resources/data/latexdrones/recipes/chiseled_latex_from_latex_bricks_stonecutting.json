@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "latexdrones:latex_bricks"
+  },
+  "result": "latexdrones:chiseled_latex",
+  "count": 1
+}

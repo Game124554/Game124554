@@ -8,6 +8,8 @@ import net.latexdrones.block.AlarmBlock;
 import net.latexdrones.block.ChamberBlock;
 import net.latexdrones.block.ChargingPadBlock;
 import net.latexdrones.block.DeconBlock;
+import net.latexdrones.block.DronePodBlock;
+import net.latexdrones.block.DroneTerminalBlock;
 import net.latexdrones.block.FacingBlock;
 import net.latexdrones.block.GasVentBlock;
 import net.latexdrones.block.GooBlock;

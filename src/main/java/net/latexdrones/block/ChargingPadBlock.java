@@ -1,7 +1,7 @@
 package net.latexdrones.block;
 
+import net.latexdrones.drone.DroneLife;
 import net.latexdrones.entity.LatexDroneEntity;
-import net.latexdrones.infection.DroneTasks;
 import net.latexdrones.infection.InfectionData;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
@@ -24,14 +24,14 @@ public class ChargingPadBlock extends Block {
         super(properties);
     }
 
-    /** A transformed player right-clicks the pad to sleep on it (standby mode). */
+    /** A transformed player right-clicks the pad to sleep on it (standby mode); sneaking on it works too. */
     @Override
     public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
         if (!InfectionData.isTransformed(player)) {
             return InteractionResult.PASS;
         }
         if (player instanceof ServerPlayer serverPlayer) {
-            DroneTasks.enterStandby(serverPlayer, pos);
+            DroneLife.enterStandbyAt(serverPlayer, pos);
         }
         return InteractionResult.sidedSuccess(level.isClientSide);
     }

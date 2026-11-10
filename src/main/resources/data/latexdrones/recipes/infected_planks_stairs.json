@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "pattern": [
+    "#  ",
+    "## ",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "latexdrones:infected_planks"
+    }
+  },
+  "result": {
+    "item": "latexdrones:infected_planks_stairs",
+    "count": 4
+  }
+}

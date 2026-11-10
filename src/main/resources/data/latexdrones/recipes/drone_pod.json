@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "IGI",
+    "GPG",
+    "IGI"
+  ],
+  "key": {
+    "I": {
+      "item": "minecraft:iron_ingot"
+    },
+    "G": {
+      "item": "latexdrones:lab_glass"
+    },
+    "P": {
+      "item": "latexdrones:drone_charging_pad"
+    }
+  },
+  "result": {
+    "item": "latexdrones:drone_pod"
+  }
+}

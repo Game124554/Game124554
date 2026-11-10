@@ -249,6 +249,31 @@ def main():
         place(x, b, 0.11 * i)
     write("cure", x, 0.7)
 
+    # --- drone life
+    x = np.zeros(int(SR * 0.32))
+    for i, f in enumerate((1318.5, 1760.0)):
+        b = (tone(0.09, f) + 0.25 * tone(0.09, f, "square")) * env(int(SR * 0.09), 0.003, 0.03)
+        place(x, b, 0.12 * i)
+    write("terminal_beep", x, 0.6)
+
+    x = np.zeros(int(SR * 0.9))
+    for i, f in enumerate((659.25, 830.61, 987.77, 1318.5)):
+        b = (0.6 * tone(0.22, f, "square") + tone(0.22, f)) * env(int(SR * 0.22), 0.004, 0.12)
+        place(x, b, 0.09 * i)
+    write("task_complete", filt(x, hi=7000), 0.65)
+
+    d = 1.4
+    s2 = sweep(d, 900, 70, "saw", True) * (0.8 + 0.2 * np.sin(2 * np.pi * 12 * T(d)))
+    x = filt(s2, hi=2500) * env(int(SR * d), 0.01, 0.6)
+    place(x, 0.5 * tone(0.08, 1760) * env(int(SR * 0.08), 0.002, 0.04), 0.0)
+    write("standby", x, 0.6)
+
+    d = 0.6
+    gate = (np.sign(np.sin(2 * np.pi * 40 * T(d))) + 1) / 2
+    x = filt(noise(d), 1500, 8000) * gate * decay(int(SR * d), 0.25)
+    x += 0.7 * (np.sign(tone(d, 220)) * 0.5 + 0.5 * tone(d, 110)) * decay(int(SR * d), 0.2)
+    write("correction", x)
+
     # --- sounds.json
     sj = {}
     for event, _sub, variants in C.SOUNDS:

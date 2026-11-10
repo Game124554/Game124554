@@ -73,6 +73,8 @@ public class LatexDronesClient implements ClientModInitializer {
 
         ClientPlayNetworking.registerGlobalReceiver(ModNetworking.SYNC,
                 (client, handler, buf, responseSender) -> ClientHooks.receiveSync(client, buf));
+        ClientPlayNetworking.registerGlobalReceiver(ModNetworking.OPEN_TERMINAL,
+                (client, handler, buf, responseSender) -> client.execute(() -> client.setScreen(new DroneTerminalScreen())));
         ClientPlayConnectionEvents.DISCONNECT.register((handler, client) -> {
             InfectionData.CLIENT.clear();
             ClientHooks.revealTicks = 0;

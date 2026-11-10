@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "latexdrones:block/infected_planks_slab"
+    },
+    "type=top": {
+      "model": "latexdrones:block/infected_planks_slab_top"
+    },
+    "type=double": {
+      "model": "latexdrones:block/infected_planks"
+    }
+  }
+}

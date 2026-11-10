@@ -3,6 +3,8 @@
   "values": [
     "latexdrones:infected_log",
     "latexdrones:infected_planks",
-    "latexdrones:lab_crate"
+    "latexdrones:lab_crate",
+    "latexdrones:infected_planks_slab",
+    "latexdrones:infected_planks_stairs"
   ]
 }

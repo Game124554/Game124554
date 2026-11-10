@@ -11,6 +11,7 @@ import net.latexdrones.item.FlamethrowerItem;
 import net.latexdrones.item.GunItem;
 import net.latexdrones.item.HypnoRayItem;
 import net.latexdrones.item.MeleeWeaponItem;
+import net.latexdrones.item.MopItem;
 import net.latexdrones.item.SyringeItem;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -52,6 +53,7 @@ public final class ModItems {
     // ---- ammo, syringes, materials -------------------------------------------------------
     public static final Item RAW_LATEX = gear("raw_latex", new Item(new Item.Properties()));
     public static final Item DRONE_CORE = gear("drone_core", new Item(new Item.Properties()));
+    public static final Item DRONE_MOP = gear("drone_mop", new MopItem(new Item.Properties().durability(250)));
     public static final Item LATEX_DART = gear("latex_dart", new Item(new Item.Properties()));
     public static final Item TRANQ_DART = gear("tranq_dart", new Item(new Item.Properties()));
     public static final Item ANTIDOTE_DART = gear("antidote_dart", new Item(new Item.Properties()));

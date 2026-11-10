@@ -1,0 +1,14 @@
+{
+  "structures": [
+    {
+      "structure": "latexdrones:drone_barracks",
+      "weight": 1
+    }
+  ],
+  "placement": {
+    "type": "minecraft:random_spread",
+    "spacing": 50,
+    "separation": 17,
+    "salt": 293461
+  }
+}

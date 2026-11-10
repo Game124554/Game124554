@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/orientable",
+  "textures": {
+    "top": "latexdrones:block/lab_generator_top",
+    "front": "latexdrones:block/lab_generator_front",
+    "side": "latexdrones:block/lab_generator_side"
+  }
+}

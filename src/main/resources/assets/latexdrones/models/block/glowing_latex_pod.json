@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cross",
+  "textures": {
+    "cross": "latexdrones:block/glowing_latex_pod"
+  }
+}
