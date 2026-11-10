@@ -27,11 +27,39 @@ jobs:
           chmod +x ./gradlew
           ./gradlew build --stacktrace
 
+      - name: Show mixin refmap
+        run: unzip -p build/libs/teardown_voxel-*.jar teardown_voxel-refmap.json
+
+      - name: Dedicated server smoke test
+        run: |
+          mkdir -p run
+          echo "eula=true" > run/eula.txt
+          printf 'online-mode=false\nlevel-type=minecraft\\:flat\nspawn-protection=0\ngenerate-structures=false\n' > run/server.properties
+          timeout 900 ./gradlew runServer -Pselftest --console=plain 2>&1 | tee server.log || true
+          grep -E "SELFTEST|Mixin|mixin|Exception|ERROR" server.log | grep -v "DEBUG" | head -80 || true
+          grep -q "SELFTEST PASS" server.log
+
       - name: Upload jar artifact
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: teardown_voxel-jar
-          path: build/libs/*.jar
+          path: |
+            build/libs/*.jar
+            server.log
+
+      - name: Commit jar to branch
+        if: github.event_name == 'push' && github.ref == 'refs/heads/teardown-voxel-physics'
+        run: |
+          mkdir -p dist
+          rm -f dist/*.jar
+          cp $(ls build/libs/*.jar | grep -v -- '-sources') dist/
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add dist
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m "Built jar for ${GITHUB_SHA::7} [skip ci]"
+          git push
 
       - name: Publish release
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'

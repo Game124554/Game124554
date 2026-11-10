@@ -13,6 +13,17 @@ base {
 repositories {
 }
 
+loom {
+    runs {
+        server {
+            // CI smoke test: ./gradlew runServer -Pselftest
+            if (project.hasProperty('selftest')) {
+                vmArg '-Dteardown_voxel.selftest=true'
+            }
+        }
+    }
+}
+
 dependencies {
     minecraft "com.mojang:minecraft:${project.minecraft_version}"
     mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"

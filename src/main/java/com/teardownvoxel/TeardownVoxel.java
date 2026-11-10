@@ -68,6 +68,7 @@ public class TeardownVoxel implements ModInitializer {
             }
         });
 
+        SelfTest.init();
         LOGGER.info("Teardown Voxel Physics loaded - things are about to get messy.");
     }
 }
