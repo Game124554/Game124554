@@ -1,0 +1,147 @@
+{
+  "parent": "minecraft:block/block",
+  "textures": {
+    "side": "teardown_voxel:block/nitro_charge_side",
+    "top": "teardown_voxel:block/nitro_charge_top",
+    "bottom": "teardown_voxel:block/nitro_charge_bottom",
+    "fuse": "teardown_voxel:block/nitro_charge_fuse",
+    "particle": "teardown_voxel:block/nitro_charge_side"
+  },
+  "elements": [
+    {
+      "from": [
+        3,
+        0,
+        3
+      ],
+      "to": [
+        13,
+        9,
+        13
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            2,
+            7,
+            14,
+            16
+          ],
+          "texture": "#side"
+        },
+        "south": {
+          "uv": [
+            2,
+            7,
+            14,
+            16
+          ],
+          "texture": "#side"
+        },
+        "east": {
+          "uv": [
+            2,
+            7,
+            14,
+            16
+          ],
+          "texture": "#side"
+        },
+        "west": {
+          "uv": [
+            2,
+            7,
+            14,
+            16
+          ],
+          "texture": "#side"
+        },
+        "up": {
+          "uv": [
+            3,
+            3,
+            13,
+            13
+          ],
+          "texture": "#top"
+        },
+        "down": {
+          "uv": [
+            3,
+            3,
+            13,
+            13
+          ],
+          "texture": "#bottom",
+          "cullface": "down"
+        }
+      }
+    },
+    {
+      "from": [
+        8,
+        9,
+        8
+      ],
+      "to": [
+        8,
+        13,
+        9
+      ],
+      "shade": false,
+      "faces": {
+        "east": {
+          "uv": [
+            7,
+            4,
+            8,
+            8
+          ],
+          "texture": "#fuse"
+        },
+        "west": {
+          "uv": [
+            7,
+            4,
+            8,
+            8
+          ],
+          "texture": "#fuse"
+        }
+      }
+    },
+    {
+      "from": [
+        7.5,
+        9,
+        8.5
+      ],
+      "to": [
+        8.5,
+        13,
+        8.5
+      ],
+      "shade": false,
+      "faces": {
+        "north": {
+          "uv": [
+            7,
+            4,
+            8,
+            8
+          ],
+          "texture": "#fuse"
+        },
+        "south": {
+          "uv": [
+            7,
+            4,
+            8,
+            8
+          ],
+          "texture": "#fuse"
+        }
+      }
+    }
+  ]
+}

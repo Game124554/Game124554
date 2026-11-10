@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "all": "teardown_voxel:block/charred_planks"
+  }
+}

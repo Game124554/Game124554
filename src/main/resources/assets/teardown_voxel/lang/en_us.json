@@ -1,0 +1,16 @@
+{
+  "itemGroup.teardown_voxel": "Teardown Voxel Physics",
+  "item.teardown_voxel.sledgehammer": "Sledgehammer",
+  "item.teardown_voxel.sledgehammer.tooltip": "Right-click a wall to smash a 3x3 hole",
+  "item.teardown_voxel.pipe_bomb": "Pipe Bomb",
+  "item.teardown_voxel.pipe_bomb.tooltip": "Right-click to throw, sneak + right-click to plant",
+  "item.teardown_voxel.blowtorch": "Blowtorch",
+  "item.teardown_voxel.blowtorch.tooltip": "Hold right-click to cut through metal, bars and doors",
+  "block.teardown_voxel.nitro_charge": "Nitro Charge",
+  "block.teardown_voxel.nitro_charge.tooltip": "Shock-sensitive! Redstone, fire, projectiles, impacts and explosions set it off",
+  "block.teardown_voxel.charred_planks": "Charred Planks",
+  "block.teardown_voxel.charred_log": "Charred Log",
+  "entity.teardown_voxel.voxel_debris": "Voxel Debris",
+  "entity.teardown_voxel.falling_structure": "Collapsing Block",
+  "entity.teardown_voxel.pipe_bomb": "Pipe Bomb"
+}

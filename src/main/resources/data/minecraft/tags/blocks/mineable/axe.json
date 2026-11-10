@@ -1,0 +1,7 @@
+{
+  "replace": false,
+  "values": [
+    "teardown_voxel:charred_planks",
+    "teardown_voxel:charred_log"
+  ]
+}

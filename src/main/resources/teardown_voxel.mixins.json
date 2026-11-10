@@ -1,0 +1,16 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "com.teardownvoxel.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "mixins": [
+    "ExplosionMixin",
+    "PersistentProjectileEntityMixin"
+  ],
+  "client": [
+    "CameraMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
