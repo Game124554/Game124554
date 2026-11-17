@@ -100,9 +100,11 @@ public final class TSCGameTests {
         Mob scientist = helper.spawn(ModEntities.SCIENTIST.get(), new BlockPos(4, 1, 4));
         Mob staff = helper.spawn(ModEntities.STAFF.get(), new BlockPos(6, 1, 6));
         GooInfection.set(staff, 50.0F);
+        if (GooInfection.stage(staff) != 2) helper.fail("50% goo should be stage 2 (furry body), was " + GooInfection.stage(staff));
         helper.runAfterDelay(100, () -> {
             if (!guard.isAlive() || !scientist.isAlive() || !staff.isAlive()) helper.fail("A TSC human died or vanished");
-            if (GooInfection.stage(staff) != 2) helper.fail("50% goo should be stage 2 (furry body), was " + GooInfection.stage(staff));
+            // the scientist standing next to the infected staff member treats them
+            ChangedTSC.LOGGER.info("[TSC TEST] staff goo after 5 seconds beside a scientist: {}%", GooInfection.get(staff));
             guard.discard();
             scientist.discard();
             staff.discard();
