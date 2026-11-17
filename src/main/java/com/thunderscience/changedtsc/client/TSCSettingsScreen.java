@@ -212,13 +212,14 @@ public class TSCSettingsScreen extends Screen {
         slider(Component.translatable(PREFIX + key), Component.translatable(PREFIX + key + ".tip"), value, min, max, step);
     }
 
-    private void slider(Component name, Component tip, ForgeConfigSpec.DoubleValue value, double min, double max, double step) {
-        double current = Math.max(min, Math.min(max, value.get()));
+    private void slider(Component name, Component tip, ForgeConfigSpec.DoubleValue setting, double min, double max, double step) {
+        double current = Math.max(min, Math.min(max, setting.get()));
         ForgeSlider slider = new ForgeSlider(slotX(), slotY(), 150, 20, name.copy().append(": "), Component.empty(),
                 min, max, current, step, step < 1.0 ? 2 : 0, true) {
             @Override
             protected void applyValue() {
-                value.set(this.getValue());
+                // (named "setting", because inside a slider "value" is the slider's own 0-1 position)
+                setting.set(this.getValue());
                 TSCSettingsScreen.this.dirty = true;
             }
         };
@@ -227,13 +228,13 @@ public class TSCSettingsScreen extends Screen {
         this.addRenderableWidget(slider);
     }
 
-    private void intSlider(String key, ForgeConfigSpec.IntValue value, int min, int max) {
-        int current = Math.max(min, Math.min(max, value.get()));
+    private void intSlider(String key, ForgeConfigSpec.IntValue setting, int min, int max) {
+        int current = Math.max(min, Math.min(max, setting.get()));
         ForgeSlider slider = new ForgeSlider(slotX(), slotY(), 150, 20,
                 Component.translatable(PREFIX + key).append(": "), Component.empty(), min, max, current, 1.0, 0, true) {
             @Override
             protected void applyValue() {
-                value.set(this.getValueInt());
+                setting.set(this.getValueInt());
                 TSCSettingsScreen.this.dirty = true;
             }
         };
