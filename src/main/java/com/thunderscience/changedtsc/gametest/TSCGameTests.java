@@ -51,6 +51,8 @@ import java.util.stream.Collectors;
 public final class TSCGameTests {
     private static final String FLOOR = "gametest_floor";
     private static final int STRUCTURES = 63;
+    /** In a game test the floor of the test area is at y=1, so things stand on it at y=2. */
+    private static final int ON_FLOOR = 2;
 
     private TSCGameTests() {}
 
@@ -140,9 +142,9 @@ public final class TSCGameTests {
     /** Guards, scientists and staff spawn, get their gear and live through a few seconds. */
     @GameTest(template = FLOOR, timeoutTicks = 200)
     public static void humansSpawn(GameTestHelper helper) {
-        Mob guard = helper.spawn(ModEntities.GUARD.get(), new BlockPos(2, 1, 2));
-        Mob scientist = helper.spawn(ModEntities.SCIENTIST.get(), new BlockPos(4, 1, 4));
-        Mob staff = helper.spawn(ModEntities.STAFF.get(), new BlockPos(6, 1, 6));
+        Mob guard = helper.spawn(ModEntities.GUARD.get(), new BlockPos(2, ON_FLOOR, 2));
+        Mob scientist = helper.spawn(ModEntities.SCIENTIST.get(), new BlockPos(4, ON_FLOOR, 4));
+        Mob staff = helper.spawn(ModEntities.STAFF.get(), new BlockPos(6, ON_FLOOR, 6));
         GooInfection.set(staff, 50.0F);
         if (GooInfection.stage(staff) != 2) helper.fail("50% goo should be stage 2 (furry body), was " + GooInfection.stage(staff));
         helper.runAfterDelay(100, () -> {
@@ -159,10 +161,10 @@ public final class TSCGameTests {
     /** A furniture marker turns into furniture: Changed's block if there is one, else the vanilla stand-in. */
     @GameTest(template = FLOOR, timeoutTicks = 200)
     public static void furnitureMarkers(GameTestHelper helper) {
-        BlockPos table = new BlockPos(1, 1, 1);
-        BlockPos tableBeside = new BlockPos(2, 1, 1);
+        BlockPos table = new BlockPos(1, ON_FLOOR, 1);
+        BlockPos tableBeside = new BlockPos(2, ON_FLOOR, 1);
         BlockPos onTable = table.above();
-        BlockPos chair = new BlockPos(1, 1, 3);
+        BlockPos chair = new BlockPos(1, ON_FLOOR, 3);
         marker(helper, table, "lab_table", "south", "minecraft:smooth_quartz_slab[type=top]");
         marker(helper, tableBeside, "lab_table", "south", "minecraft:smooth_quartz_slab[type=top]");
         marker(helper, onTable, "computer", "south", "minecraft:daylight_detector");
@@ -172,7 +174,7 @@ public final class TSCGameTests {
         List<String> others = List.of("petri_dish", "clipboard", "book_stack", "canned_peaches", "cardboard_box",
                 "box_pile", "iron_crate", "speaker", "iv_rack");
         for (int i = 0; i < others.size(); i++) {
-            marker(helper, new BlockPos(4 + (i % 3) * 2, 1, 1 + (i / 3) * 3), others.get(i), "south", "minecraft:barrel[facing=up]");
+            marker(helper, new BlockPos(4 + (i % 3) * 2, ON_FLOOR, 1 + (i / 3) * 3), others.get(i), "south", "minecraft:barrel[facing=up]");
         }
         Block marker = ModBlocks.SPAWN_MARKER.get();
         helper.runAfterDelay(100, () -> {
@@ -182,30 +184,10 @@ public final class TSCGameTests {
                 if (state.is(marker)) helper.fail("Marker was not replaced", pos);
             }
             for (int i = 0; i < others.size(); i++) {
-                BlockPos pos = new BlockPos(4 + (i % 3) * 2, 1, 1 + (i / 3) * 3);
+                BlockPos pos = new BlockPos(4 + (i % 3) * 2, ON_FLOOR, 1 + (i / 3) * 3);
                 BlockState state = helper.getBlockState(pos);
                 ChangedTSC.LOGGER.info("[TSC TEST] furniture {} -> {}", others.get(i), state);
                 if (state.is(marker) || state.isAir()) helper.fail("Nothing was placed for " + others.get(i), pos);
-            }
-            // step-by-step look at why a block is accepted or refused
-            for (String kind : List.of("lab_table", "petri_dish", "speaker")) {
-                FurniturePlacer.resolve(kind).ifPresent(block -> {
-                    ServerLevel level = helper.getLevel();
-                    BlockPos at = helper.absolutePos(new BlockPos(3, 1, 6));
-                    level.setBlock(at, Blocks.AIR.defaultBlockState(), 3);
-                    BlockState below = level.getBlockState(at.below());
-                    ChangedTSC.LOGGER.info("[TSC TEST] {}: below={} sturdyTop={} north={} canSurvive={} unobstructed={}", kind, below,
-                            below.isFaceSturdy(level, at.below(), Direction.UP), level.getBlockState(at.north()),
-                            block.defaultBlockState().canSurvive(level, at),
-                            level.isUnobstructed(block.defaultBlockState(), at, net.minecraft.world.phys.shapes.CollisionContext.empty()));
-                    if (block.asItem() instanceof net.minecraft.world.item.BlockItem item) {
-                        var context = new net.minecraft.world.item.context.DirectionalPlaceContext(level, at, Direction.NORTH,
-                                new net.minecraft.world.item.ItemStack(item), Direction.UP);
-                        ChangedTSC.LOGGER.info("[TSC TEST] {}: canPlace={} stateForPlacement={} place={} -> {}", kind, context.canPlace(),
-                                block.getStateForPlacement(context), item.place(context), level.getBlockState(at));
-                    }
-                    level.setBlock(at, Blocks.AIR.defaultBlockState(), 3);
-                });
             }
             if (helper.getBlockState(table).isAir()) helper.fail("No table was placed", table);
             if (helper.getBlockState(chair).isAir()) helper.fail("No chair was placed", chair);
@@ -241,7 +223,7 @@ public final class TSCGameTests {
     @GameTest(template = FLOOR, timeoutTicks = 400)
     public static void structuresPlace(GameTestHelper helper) {
         ServerLevel level = helper.getLevel();
-        BlockPos origin = helper.absolutePos(new BlockPos(4, 1, 4)).offset(64, 0, 64);
+        BlockPos origin = helper.absolutePos(new BlockPos(4, ON_FLOOR, 4)).offset(64, 0, 64);
         int chunkX = origin.getX() >> 4;
         int chunkZ = origin.getZ() >> 4;
         for (int dx = -3; dx <= 3; dx++) {
@@ -292,7 +274,7 @@ public final class TSCGameTests {
      */
     private static void bossFight(GameTestHelper helper, BossType type) {
         ServerLevel level = helper.getLevel();
-        Mob boss = BossManager.spawnBoss(level, helper.absolutePos(new BlockPos(2, 1, 2)), type);
+        Mob boss = BossManager.spawnBoss(level, helper.absolutePos(new BlockPos(2, ON_FLOOR, 2)), type);
         if (boss == null) {
             helper.fail("Boss " + type.id() + " did not spawn");
             return;
@@ -302,7 +284,7 @@ public final class TSCGameTests {
         // one, so with Changed installed the boss runs its script without a target.
         Player player = helper.makeMockSurvivalPlayer();
         if (!ChangedCompat.isLoaded()) {
-            BlockPos stand = helper.absolutePos(new BlockPos(6, 1, 6));
+            BlockPos stand = helper.absolutePos(new BlockPos(6, ON_FLOOR, 6));
             player.setPos(stand.getX() + 0.5, stand.getY(), stand.getZ() + 0.5);
             level.addFreshEntity(player);
             boss.setTarget(player);
@@ -315,7 +297,7 @@ public final class TSCGameTests {
             float taken = BossManager.damageTakenMultiplier(boss);
             ChangedTSC.LOGGER.info("[TSC TEST] boss {} after the fight: alive={} health={} damageTaken x{} playerHealth={}",
                     type.id(), boss.isAlive(), boss.getHealth(), taken, player.getHealth());
-            AABB area = new AABB(helper.absolutePos(new BlockPos(4, 1, 4))).inflate(48.0);
+            AABB area = new AABB(helper.absolutePos(new BlockPos(4, ON_FLOOR, 4))).inflate(48.0);
             for (Mob mob : level.getEntitiesOfClass(Mob.class, area, m -> m.getTags().contains(BossManager.MINION_TAG))) {
                 mob.discard();
             }
