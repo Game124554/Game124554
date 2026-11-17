@@ -138,7 +138,7 @@ public final class TSCConfig {
                 .defineList("friendlyLatex", List.of("auto:puro"), o -> o instanceof String);
         FRIENDLY_SPAWN_ENTITY = b.comment("Which entity is spawned as Puro (structures and /tsc puro). The one that is spawned is tagged",
                         "'changed_tsc_friendly' and named Puro, so it is friendly even if its entity type is a normal dark latex wolf.")
-                .define("friendlySpawnEntity", "auto:puro|minecraft:wolf");
+                .define("friendlySpawnEntity", "auto:puro|changed:dark_latex_wolf_male|auto:dark_latex_wolf|minecraft:wolf");
         FRIENDLY_RETALIATE = b.comment("If true, a friendly Puro you hit will fight back.")
                 .define("retaliateWhenHit", false);
         FRIENDLY_FOLLOW_PLAYERS = b.comment("Friendly Puro follow the nearest player.")

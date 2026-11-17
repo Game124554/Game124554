@@ -60,6 +60,13 @@ public final class ChangedCompat {
         return null;
     }
 
+    /** For the log: which of Changed's methods the paper doll is using. */
+    public static String describe() {
+        look();
+        return "isPlayerTransfurred=" + (isTransfurred != null) + ", getPlayerTransfurVariant=" + (getVariant != null)
+                + ", getPlayerTransfurProgress=" + (getProgress != null);
+    }
+
     /** True if Changed says this player is currently in a transfurred form. */
     public static boolean isTransfurred(Player player) {
         look();

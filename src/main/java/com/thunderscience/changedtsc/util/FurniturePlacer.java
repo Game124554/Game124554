@@ -8,6 +8,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -42,6 +43,7 @@ public final class FurniturePlacer {
 
     private static final Map<String, Optional<Block>> CACHE = new ConcurrentHashMap<>();
     private static volatile Map<String, String> specs;
+    private static final Set<Block> WARNED = ConcurrentHashMap.newKeySet();
 
     private FurniturePlacer() {}
 
@@ -113,14 +115,24 @@ public final class FurniturePlacer {
             if (item instanceof BlockItem blockItem) {
                 // Place it like a player looking the opposite way would, so the block's own placement
                 // code picks the facing and adds any extra parts (tall or wide furniture).
-                blockItem.place(new DirectionalPlaceContext(level, pos, facing.getOpposite(), new ItemStack(item), Direction.UP));
-                return !level.getBlockState(pos).isAir();
+                InteractionResult result = blockItem.place(
+                        new DirectionalPlaceContext(level, pos, facing.getOpposite(), new ItemStack(item), Direction.UP));
+                if (!level.getBlockState(pos).isAir()) return true;
+                warnOnce(block, "placing it returned " + result);
+                return false;
             }
             BlockState state = withFacing(block.defaultBlockState(), facing);
             return state.canSurvive(level, pos) && level.setBlock(pos, state, 3);
         } catch (Throwable t) {
-            ChangedTSC.LOGGER.debug("Could not place furniture {} at {}: {}", ForgeRegistries.BLOCKS.getKey(block), pos, t.toString());
+            warnOnce(block, t.toString());
             return !level.getBlockState(pos).isAir();
+        }
+    }
+
+    private static void warnOnce(Block block, String reason) {
+        if (WARNED.add(block)) {
+            ChangedTSC.LOGGER.warn("Furniture {} could not be placed ({}); using the vanilla stand-in for it",
+                    ForgeRegistries.BLOCKS.getKey(block), reason);
         }
     }
 

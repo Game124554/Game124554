@@ -90,6 +90,50 @@ public final class TSCGameTests {
             ChangedTSC.LOGGER.info("[TSC TEST] furniture {} -> {}", kind, FurniturePlacer.resolve(kind)
                     .map(b -> String.valueOf(ForgeRegistries.BLOCKS.getKey(b))).orElse("(vanilla stand-in)"));
         }
+        // details about Changed that the add-on depends on
+        if (ChangedCompat.isLoaded()) {
+            ChangedTSC.LOGGER.info("[TSC TEST] paper doll reads from Changed: {}", ChangedCompat.describe());
+            Player mock = helper.makeMockSurvivalPlayer();
+            ChangedTSC.LOGGER.info("[TSC TEST] stand-in player transfurred={} progress={}%",
+                    ChangedCompat.isTransfurred(mock), ChangedCompat.transfurPercent(mock));
+            for (String kind : FurniturePlacer.specs().keySet()) {
+                FurniturePlacer.resolve(kind).ifPresent(block -> ChangedTSC.LOGGER.info("[TSC TEST] {} is {} with {} item={}",
+                        kind, block.getClass().getSimpleName(), block.defaultBlockState(),
+                        ForgeRegistries.ITEMS.getKey(block.asItem())));
+            }
+            // which way does a chair face for each rotation value? (where its tall back is)
+            FurniturePlacer.resolve("office_chair").ifPresent(block -> {
+                for (BlockState state : block.getStateDefinition().getPossibleStates()) {
+                    String text = state.toString();
+                    if (!(text.contains("rotation=0,") || text.contains("rotation=4,") || text.contains("rotation=8,")
+                            || text.contains("rotation=12,")) || text.contains("waterlogged=true")) continue;
+                    ChangedTSC.LOGGER.info("[TSC TEST] chair {} shape {}", text.substring(text.indexOf('[')),
+                            state.getShape(helper.getLevel(), BlockPos.ZERO).toAabbs());
+                }
+            });
+            // the /transfur command: how it is written and which forms it accepts
+            var dispatcher = helper.getLevel().getServer().getCommands().getDispatcher();
+            var source = helper.getLevel().getServer().createCommandSourceStack();
+            var node = dispatcher.getRoot().getChild("transfur");
+            if (node == null) {
+                ChangedTSC.LOGGER.info("[TSC TEST] no /transfur command found");
+            } else {
+                ChangedTSC.LOGGER.info("[TSC TEST] /transfur usage: {}", dispatcher.getSmartUsage(node, source).values());
+                for (String form : List.of("changed:form_dark_latex_wolf_male", "changed:dark_latex_wolf_male",
+                        "changed:form_dark_latex_wolf/male", "changed:dark_latex_wolf/male")) {
+                    var parsed = dispatcher.parse("transfur @p " + form, source);
+                    ChangedTSC.LOGGER.info("[TSC TEST] 'transfur @p {}' parses: {}", form,
+                            parsed.getExceptions().isEmpty() && !parsed.getReader().canRead());
+                }
+                try {
+                    var suggestions = dispatcher.getCompletionSuggestions(dispatcher.parse("transfur @p changed:", source)).get();
+                    ChangedTSC.LOGGER.info("[TSC TEST] /transfur forms ({}): {}", suggestions.getList().size(),
+                            suggestions.getList().stream().limit(40).map(s -> s.getText()).collect(Collectors.toList()));
+                } catch (Exception e) {
+                    ChangedTSC.LOGGER.info("[TSC TEST] could not list /transfur forms: {}", e.toString());
+                }
+            }
+        }
         helper.succeed();
     }
 
@@ -217,11 +261,15 @@ public final class TSCGameTests {
             return;
         }
         ChangedTSC.LOGGER.info("[TSC TEST] boss {} spawned as {}", type.id(), EntityType.getKey(boss.getType()));
+        // The stand-in player is not a real connected player, and Changed's latex cannot transfur
+        // one, so with Changed installed the boss runs its script without a target.
         Player player = helper.makeMockSurvivalPlayer();
-        BlockPos stand = helper.absolutePos(new BlockPos(6, 1, 6));
-        player.setPos(stand.getX() + 0.5, stand.getY(), stand.getZ() + 0.5);
-        level.addFreshEntity(player);
-        boss.setTarget(player);
+        if (!ChangedCompat.isLoaded()) {
+            BlockPos stand = helper.absolutePos(new BlockPos(6, 1, 6));
+            player.setPos(stand.getX() + 0.5, stand.getY(), stand.getZ() + 0.5);
+            level.addFreshEntity(player);
+            boss.setTarget(player);
+        }
 
         helper.runAfterDelay(200, () -> {
             if (boss.isAlive()) boss.setHealth(boss.getMaxHealth() * 0.3F);
