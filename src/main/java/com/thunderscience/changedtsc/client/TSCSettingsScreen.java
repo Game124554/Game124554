@@ -164,6 +164,12 @@ public class TSCSettingsScreen extends Screen {
                 .bounds(this.width / 2 - 100, this.height - 27, 200, 20).build());
     }
 
+    /** Used by the automatic look test: the settings screen opened on page number {@code index}. */
+    static TSCSettingsScreen openPageForTest(int index) {
+        page = Page.values()[index % Page.values().length];
+        return new TSCSettingsScreen(null);
+    }
+
     private void openPage(Page target) {
         page = target;
         this.clearWidgets();

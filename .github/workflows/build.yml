@@ -90,6 +90,26 @@ jobs:
           echo "===== with Changed =====" >> "$GITHUB_WORKSPACE/build-log.txt"
           ./gradlew runGameTestServer -PwithChanged --no-daemon 2>&1 | tee -a "$GITHUB_WORKSPACE/build-log.txt"
 
+      # Starts the real game (on a virtual screen), opens the menus, builds a small scene in a
+      # test world and saves screenshots, so the menus, paper doll and 3D guns can be looked at.
+      - name: Client look test (screenshots)
+        continue-on-error: true
+        timeout-minutes: 20
+        working-directory: ${{ steps.project.outputs.dir }}
+        run: |
+          set -o pipefail
+          echo "===== client look test =====" >> "$GITHUB_WORKSPACE/build-log.txt"
+          xvfb-run -a -s "-screen 0 1280x720x24" ./gradlew runClient -PwithChanged -PlookTest --no-daemon 2>&1 | tee -a "$GITHUB_WORKSPACE/build-log.txt"
+
+      - name: Save the screenshots with this run
+        if: always()
+        continue-on-error: true
+        uses: actions/upload-artifact@v4
+        with:
+          name: look-test-screenshots
+          path: ${{ steps.project.outputs.dir }}/run/screenshots/*.png
+          if-no-files-found: warn
+
       # The jar (and the build log, so errors can be read without opening the run) go on the
       # Releases page under one fixed entry that is updated by every build.
       - name: Put the jar on the Releases page
@@ -107,3 +127,5 @@ jobs:
           if [ -f build-log.txt ]; then gh release upload "$tag" build-log.txt --clobber; fi
           jar=$(ls "${{ steps.project.outputs.dir }}"/build/libs/*.jar 2>/dev/null | head -n 1 || true)
           if [ -n "$jar" ]; then gh release upload "$tag" "$jar" --clobber; fi
+          shots=$(ls "${{ steps.project.outputs.dir }}"/run/screenshots/*.png 2>/dev/null || true)
+          if [ -n "$shots" ]; then gh release upload "$tag" $shots --clobber; fi

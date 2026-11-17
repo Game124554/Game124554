@@ -2,7 +2,7 @@
 
 An add-on for **Changed: Minecraft Mod** (ltxprogrammer) that adds the Thunder Science Company (TSC).
 
-- **Minecraft** 1.20.1, **Forge** 47.x
+- **Minecraft** 1.20.1, **Forge 47.4.0 or newer** (Changed itself requires 47.4.0)
 - **Requires** the Changed mod (1.20.1, v0.15+) for latex, Puro and the latex bosses
 - Mod id: `changed_tsc`
 
@@ -94,6 +94,18 @@ The structure files don't name Changed's blocks directly. Each piece is a marker
 Use `/locate structure changed_tsc:thunder_science_tower` (or any name in `STRUCTURES.txt`) to find them.
 Mobs inside structures appear when a player comes near, using invisible spawn markers.
 
+## What has been tested
+Every build on GitHub starts a real server twice, once with only this add-on and once with Changed v0.15.5 beside it, and runs the checks in `gametest/TSCGameTests.java`. Both runs pass. They cover:
+
+- the mod loads on a server, and all 63 structures, their building files and the chest loot are valid;
+- small and large structures (an outpost, a watchtower, the tower) can be placed in a world;
+- guards, scientists and staff spawn, and a scientist treats an infected staff member;
+- furniture markers become Changed's real blocks: lab tables (which join up), computer, microscope, office chair (facing the right way), petri dish, clipboard, book stack, canned peaches, cardboard box, box pile, iron crate, IV rack; a speaker needs a wall behind it;
+- the four bosses spawn as `changed:latex_squid_dog_male`, `changed:latex_tiger_shark`, `changed:pure_white_latex_wolf` and `changed:dark_latex_wolf_male`, and each fight script runs for 20 seconds, normal and enraged;
+- Puro spawns as a friendly `changed:dark_latex_wolf_male`; Changed's form names are `changed:form_<name>` and `changed:form_<name>/male` or `/female`.
+
+**Not covered by these tests:** anything on screen. The settings menu, the paper doll, the body screen, the 3D guns in your hand and the boss bars have been compiled but not looked at in a running game.
+
 ## Settings menu
 Three ways to open the **Thunder Science Company Settings** screen:
 - the **TSC Settings** button in the top-left corner of the title screen and the pause menu,
@@ -178,7 +190,7 @@ You need **JDK 17** (Temurin works) and an internet connection the first time.
 The mod jar is written to `build/libs/changed_tsc-1.0.0.jar`.
 
 ### Installing
-Put the jar in `.minecraft/mods` next to the Changed jar, with Forge 1.20.1 (47.x).
+Put the jar in `.minecraft/mods` next to the Changed jar, with Forge 1.20.1 version 47.4.0 or newer (Changed does not load on older Forge).
 
 To test in a dev client with Changed loaded, uncomment the `runtimeOnly ... curse.maven:changed-minecraft-mod-661527:<fileId>` line in `build.gradle` and run `./gradlew runClient`.
 

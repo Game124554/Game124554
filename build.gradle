@@ -34,7 +34,13 @@ minecraft {
                 }
             }
         }
-        client {}
+        client {
+            // "gradlew runClient -PlookTest": opens the menus, builds a test scene, saves screenshots, quits
+            if (project.hasProperty('lookTest')) {
+                property 'changed_tsc.lookTest', 'true'
+                property 'forge.logging.console.level', 'info'
+            }
+        }
         server {
             args '--nogui'
         }
