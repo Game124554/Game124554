@@ -342,8 +342,8 @@ public final class GooInfection {
         if (src == null || src.getPath().isEmpty()) return out;
         String ns = src.getNamespace();
         String path = src.getPath();
-        out.add(ns + ":form_" + path);
-        out.add(ns + ":" + path);
+        // Changed names its forms "form_<entity>", and "form_<entity>/male" or "/female" for
+        // entities whose id ends in _male or _female (checked against Changed v0.15.5).
         for (String gender : new String[]{"male", "female"}) {
             if (path.endsWith("_" + gender)) {
                 String base = path.substring(0, path.length() - gender.length() - 1);
@@ -351,6 +351,8 @@ public final class GooInfection {
                 out.add(ns + ":" + base + "/" + gender);
             }
         }
+        out.add(ns + ":form_" + path);
+        out.add(ns + ":" + path);
         return out;
     }
 

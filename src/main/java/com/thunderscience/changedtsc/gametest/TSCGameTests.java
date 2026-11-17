@@ -159,18 +159,33 @@ public final class TSCGameTests {
     /** A furniture marker turns into furniture: Changed's block if there is one, else the vanilla stand-in. */
     @GameTest(template = FLOOR, timeoutTicks = 200)
     public static void furnitureMarkers(GameTestHelper helper) {
-        BlockPos table = new BlockPos(2, 1, 2);
+        BlockPos table = new BlockPos(1, 1, 1);
+        BlockPos tableBeside = new BlockPos(2, 1, 1);
         BlockPos onTable = table.above();
-        BlockPos chair = new BlockPos(2, 1, 4);
+        BlockPos chair = new BlockPos(1, 1, 3);
         marker(helper, table, "lab_table", "south", "minecraft:smooth_quartz_slab[type=top]");
+        marker(helper, tableBeside, "lab_table", "south", "minecraft:smooth_quartz_slab[type=top]");
         marker(helper, onTable, "computer", "south", "minecraft:daylight_detector");
+        marker(helper, tableBeside.above(), "microscope", "south", "minecraft:brewing_stand");
         marker(helper, chair, "office_chair", "north", "minecraft:smooth_quartz_stairs[facing={opposite},half=bottom]");
+        // every other kind once, on the floor with room around it
+        List<String> others = List.of("petri_dish", "clipboard", "book_stack", "canned_peaches", "cardboard_box",
+                "box_pile", "iron_crate", "speaker", "iv_rack");
+        for (int i = 0; i < others.size(); i++) {
+            marker(helper, new BlockPos(4 + (i % 3) * 2, 1, 1 + (i / 3) * 3), others.get(i), "south", "minecraft:barrel[facing=up]");
+        }
         Block marker = ModBlocks.SPAWN_MARKER.get();
         helper.runAfterDelay(100, () -> {
-            for (BlockPos pos : List.of(table, onTable, chair)) {
+            for (BlockPos pos : List.of(table, tableBeside, onTable, tableBeside.above(), chair)) {
                 BlockState state = helper.getBlockState(pos);
                 ChangedTSC.LOGGER.info("[TSC TEST] furniture at {} -> {}", pos, state);
                 if (state.is(marker)) helper.fail("Marker was not replaced", pos);
+            }
+            for (int i = 0; i < others.size(); i++) {
+                BlockPos pos = new BlockPos(4 + (i % 3) * 2, 1, 1 + (i / 3) * 3);
+                BlockState state = helper.getBlockState(pos);
+                ChangedTSC.LOGGER.info("[TSC TEST] furniture {} -> {}", others.get(i), state);
+                if (state.is(marker) || state.isAir()) helper.fail("Nothing was placed for " + others.get(i), pos);
             }
             if (helper.getBlockState(table).isAir()) helper.fail("No table was placed", table);
             if (helper.getBlockState(chair).isAir()) helper.fail("No chair was placed", chair);
@@ -180,6 +195,8 @@ public final class TSCGameTests {
                 if (!state.is(Blocks.SMOOTH_QUARTZ_STAIRS) || state.getValue(StairBlock.FACING) != Direction.SOUTH) {
                     helper.fail("Chair stand-in is wrong: " + state, chair);
                 }
+            } else if (FurniturePlacer.resolve("lab_table").filter(b -> helper.getBlockState(table).is(b)).isEmpty()) {
+                helper.fail("Changed's lab table was not used", table);
             }
             helper.succeed();
         });

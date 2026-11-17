@@ -213,7 +213,7 @@ public final class TSCConfig {
                         "book_stack=book_stack|books",
                         "canned_peaches=canned_peaches|peaches|canned",
                         "cardboard_box=cardboard_box|cardboard",
-                        "box_pile=box_pile|cardboard_box",
+                        "box_pile=box_pile|cardboard_box|iron_crate",
                         "iron_crate=iron_crate|crate",
                         "speaker=speaker",
                         "iv_rack=bedside_iv_rack|iv_rack"), o -> o instanceof String);

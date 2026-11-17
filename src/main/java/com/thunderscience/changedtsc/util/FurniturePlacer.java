@@ -16,8 +16,10 @@ import net.minecraft.world.item.context.DirectionalPlaceContext;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.Property;
 import net.minecraftforge.registries.ForgeRegistries;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -41,7 +43,10 @@ public final class FurniturePlacer {
     /** Never picked by a name search: these are not furniture and could hurt the player. */
     private static final List<String> NEVER = List.of("latex", "gas", "laser", "crystal", "fluid");
 
-    private static final Map<String, Optional<Block>> CACHE = new ConcurrentHashMap<>();
+    /** Block state properties that mean "this block is one piece of a bigger thing". */
+    private static final Set<String> MULTI_PART = Set.of("half", "section", "part", "segment", "piece");
+
+    private static final Map<String, List<Block>> CACHE = new ConcurrentHashMap<>();
     private static volatile Map<String, String> specs;
     private static final Set<Block> WARNED = ConcurrentHashMap.newKeySet();
 
@@ -68,32 +73,41 @@ public final class FurniturePlacer {
 
     /** The Changed block used for this kind of furniture, if one was found. */
     public static Optional<Block> resolve(String kind) {
-        if (!TSCConfig.FURNITURE_USE_CHANGED.get()) return Optional.empty();
+        List<Block> found = candidates(kind);
+        return found.isEmpty() ? Optional.empty() : Optional.of(found.get(0));
+    }
+
+    /** Every Changed block that may stand in for this kind, best first (one per name in the config line). */
+    public static List<Block> candidates(String kind) {
+        if (!TSCConfig.FURNITURE_USE_CHANGED.get()) return List.of();
         return CACHE.computeIfAbsent(kind, FurniturePlacer::find);
     }
 
-    private static Optional<Block> find(String kind) {
+    private static List<Block> find(String kind) {
         String spec = specs().getOrDefault(kind, kind);
         Set<String> namespaces = EntityResolver.latexNamespaces();
+        List<Block> out = new ArrayList<>();
         for (String raw : spec.split("\\|")) {
             String option = raw.trim().toLowerCase(Locale.ROOT);
             if (option.isEmpty()) continue;
+            Block block = null;
             if (option.contains(":")) {
                 ResourceLocation id = ResourceLocation.tryParse(option);
-                if (id != null && ForgeRegistries.BLOCKS.containsKey(id)) return Optional.ofNullable(ForgeRegistries.BLOCKS.getValue(id));
-                continue;
+                if (id != null && ForgeRegistries.BLOCKS.containsKey(id)) block = ForgeRegistries.BLOCKS.getValue(id);
+            } else {
+                Optional<ResourceLocation> best = ForgeRegistries.BLOCKS.getKeys().stream()
+                        .filter(id -> namespaces.contains(id.getNamespace()))
+                        .filter(id -> id.getPath().contains(option))
+                        .filter(id -> NEVER.stream().noneMatch(id.getPath()::contains))
+                        // an exact name first, then the shortest name that contains the word
+                        .min(Comparator.comparingInt((ResourceLocation id) -> id.getPath().equals(option) ? 0 : 1)
+                                .thenComparingInt(id -> id.getPath().length())
+                                .thenComparing(ResourceLocation::toString));
+                if (best.isPresent()) block = ForgeRegistries.BLOCKS.getValue(best.get());
             }
-            Optional<ResourceLocation> best = ForgeRegistries.BLOCKS.getKeys().stream()
-                    .filter(id -> namespaces.contains(id.getNamespace()))
-                    .filter(id -> id.getPath().contains(option))
-                    .filter(id -> NEVER.stream().noneMatch(id.getPath()::contains))
-                    // an exact name first, then the shortest name that contains the word
-                    .min(Comparator.comparingInt((ResourceLocation id) -> id.getPath().equals(option) ? 0 : 1)
-                            .thenComparingInt(id -> id.getPath().length())
-                            .thenComparing(ResourceLocation::toString));
-            if (best.isPresent()) return Optional.ofNullable(ForgeRegistries.BLOCKS.getValue(best.get()));
+            if (block != null && !out.contains(block)) out.add(block);
         }
-        return Optional.empty();
+        return out;
     }
 
     /**
@@ -104,13 +118,15 @@ public final class FurniturePlacer {
      *                 "{facing}" and "{opposite}" are replaced by directions.
      */
     public static void place(ServerLevel level, BlockPos pos, String kind, Direction facing, String fallback) {
-        Optional<Block> block = resolve(kind);
-        if (block.isPresent() && tryPlace(level, pos, block.get(), facing)) return;
+        for (Block block : candidates(kind)) {
+            if (tryPlace(level, pos, block, facing)) return;
+        }
         placeFallback(level, pos, fallback, facing);
     }
 
     private static boolean tryPlace(ServerLevel level, BlockPos pos, Block block, Direction facing) {
         try {
+            String reason = "it has no item";
             Item item = block.asItem();
             if (item instanceof BlockItem blockItem) {
                 // Place it like a player looking the opposite way would, so the block's own placement
@@ -118,15 +134,28 @@ public final class FurniturePlacer {
                 InteractionResult result = blockItem.place(
                         new DirectionalPlaceContext(level, pos, facing.getOpposite(), new ItemStack(item), Direction.UP));
                 if (!level.getBlockState(pos).isAir()) return true;
-                warnOnce(block, "placing it returned " + result);
-                return false;
+                reason = "placing it returned " + result;
             }
-            BlockState state = withFacing(block.defaultBlockState(), facing);
-            return state.canSurvive(level, pos) && level.setBlock(pos, state, 3);
+            // Some blocks (Changed's lab table) only accept a real player. A block made of a single
+            // part can be set directly instead; it then links up with its neighbours by itself.
+            if (isSinglePart(block)) {
+                BlockState state = Block.updateFromNeighbourShapes(withFacing(block.defaultBlockState(), facing), level, pos);
+                if (!state.isAir() && state.canSurvive(level, pos) && level.setBlock(pos, state, 3)) return true;
+            }
+            warnOnce(block, reason);
+            return false;
         } catch (Throwable t) {
             warnOnce(block, t.toString());
             return !level.getBlockState(pos).isAir();
         }
+    }
+
+    /** False for furniture built from several blocks (two tall, 2x2...), which must not be set one block at a time. */
+    private static boolean isSinglePart(Block block) {
+        for (Property<?> property : block.defaultBlockState().getProperties()) {
+            if (MULTI_PART.contains(property.getName())) return false;
+        }
+        return true;
     }
 
     private static void warnOnce(Block block, String reason) {
