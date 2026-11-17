@@ -134,7 +134,11 @@ public final class FurniturePlacer {
                 InteractionResult result = blockItem.place(
                         new DirectionalPlaceContext(level, pos, facing.getOpposite(), new ItemStack(item), Direction.UP));
                 if (!level.getBlockState(pos).isAir()) return true;
-                reason = "placing it returned " + result;
+                // Wall-mounted pieces (Changed's speaker) are placed against the wall behind them instead.
+                InteractionResult onWall = blockItem.place(
+                        new DirectionalPlaceContext(level, pos, facing.getOpposite(), new ItemStack(item), facing));
+                if (!level.getBlockState(pos).isAir()) return true;
+                reason = "placing it returned " + result + " on the floor and " + onWall + " on a wall";
             }
             // Some blocks (Changed's lab table) only accept a real player. A block made of a single
             // part can be set directly instead; it then links up with its neighbours by itself.

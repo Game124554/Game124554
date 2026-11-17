@@ -7,6 +7,7 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
@@ -119,8 +120,14 @@ public class FirstAidKitItem extends Item {
         level.playSound(null, target.getX(), target.getY(), target.getZ(), SoundEvents.ARMOR_EQUIP_LEATHER,
                 SoundSource.PLAYERS, 1.0F, 1.2F);
         if (level instanceof ServerLevel server) {
-            server.sendParticles(ParticleTypes.HEART, target.getX(), target.getY() + target.getBbHeight() * 0.8,
-                    target.getZ(), bandage ? 2 : 5, 0.4, 0.3, 0.4, 0.0);
+            // Hearts for everyone watching, but not for a treated player: at their own head the hearts
+            // would sit right in front of the camera and cover the screen in first person.
+            double y = target.getY() + target.getBbHeight() * 0.8;
+            int count = bandage ? 2 : 5;
+            for (ServerPlayer viewer : server.players()) {
+                if (viewer == target) continue;
+                server.sendParticles(viewer, ParticleTypes.HEART, false, target.getX(), y, target.getZ(), count, 0.4, 0.3, 0.4, 0.0);
+            }
         }
     }
 

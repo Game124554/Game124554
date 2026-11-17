@@ -128,10 +128,13 @@ public final class ClientLookTest {
             next(20);
         } else if (step == world + 6) {
             shot(mc, "13_third_person_back");
+            // turn around first: the furniture right ahead would block the camera in front of the player
+            commands(mc, List.of("execute as @p at @s run tp @s ~ ~ ~ 180 8"));
             mc.options.setCameraType(CameraType.THIRD_PERSON_FRONT);
             next(20);
         } else if (step == world + 7) {
             shot(mc, "14_third_person_front");
+            commands(mc, List.of("execute as @p at @s run tp @s ~ ~ ~ 0 8"));
             mc.options.setCameraType(CameraType.FIRST_PERSON);
             mc.setScreen(new GooBodyScreen());
             next(20);
