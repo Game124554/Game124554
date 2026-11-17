@@ -1,0 +1,92 @@
+# Builds the mod .jar on GitHub, so you do not need Java on your own computer.
+#
+# Works in two layouts:
+#   1. the project files are in the repository (gradlew at the top), or
+#   2. only the project .zip was uploaded - it is unpacked first.
+#
+# After a run finishes, get the jar from either place:
+#   - Releases page  ->  "Changed: Thunder Science Expansion - latest build"  ->  changed_tsc-<version>.jar
+#   - Actions tab    ->  the run         ->  Artifacts -> changed_tsc-jar
+name: Build mod jar
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get the files
+        uses: actions/checkout@v4
+
+      - name: Find the project (unpack the zip if that is all there is)
+        id: project
+        run: |
+          if [ ! -f gradlew ]; then
+            zip=$(ls *.zip 2>/dev/null | head -n 1 || true)
+            if [ -n "$zip" ]; then
+              echo "Unpacking $zip"
+              unzip -q "$zip" -d _unpacked
+            fi
+          fi
+          wrapper=$(find . -name gradlew -not -path './.git/*' | head -n 1)
+          if [ -z "$wrapper" ]; then
+            echo "::error::No gradlew found. Upload the project files or the project zip."
+            exit 1
+          fi
+          dir=$(dirname "$wrapper")
+          chmod +x "$wrapper"
+          echo "dir=$dir" >> "$GITHUB_OUTPUT"
+          echo "Project folder: $dir"
+
+      - name: Set up Java 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+
+      - name: Remember downloaded build files between runs
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: gradle-${{ hashFiles('**/gradle.properties', '**/build.gradle', '**/gradle-wrapper.properties') }}
+          restore-keys: gradle-
+
+      - name: Build
+        working-directory: ${{ steps.project.outputs.dir }}
+        run: |
+          set -o pipefail
+          echo "commit $GITHUB_SHA" > "$GITHUB_WORKSPACE/build-log.txt"
+          ./gradlew build --no-daemon 2>&1 | tee -a "$GITHUB_WORKSPACE/build-log.txt"
+
+      - name: Save the jar with this run
+        uses: actions/upload-artifact@v4
+        with:
+          name: changed_tsc-jar
+          path: ${{ steps.project.outputs.dir }}/build/libs/*.jar
+          if-no-files-found: error
+
+      # The jar (and the build log, so errors can be read without opening the run) go on the
+      # Releases page under one fixed entry that is updated by every build.
+      - name: Put the jar on the Releases page
+        if: always() && github.event_name != 'pull_request'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          tag=changed-tsc-latest
+          if ! gh release view "$tag" >/dev/null 2>&1; then
+            gh release create "$tag" --prerelease --target "$GITHUB_SHA" \
+              --title "Changed: Thunder Science Expansion - latest build" \
+              --notes "Built automatically from the newest source. Put the changed_tsc .jar in your mods folder next to Changed (Forge 1.20.1). build-log.txt is the output of the last build."
+          fi
+          if [ -f build-log.txt ]; then gh release upload "$tag" build-log.txt --clobber; fi
+          jar=$(ls "${{ steps.project.outputs.dir }}"/build/libs/*.jar 2>/dev/null | head -n 1 || true)
+          if [ -n "$jar" ]; then gh release upload "$tag" "$jar" --clobber; fi

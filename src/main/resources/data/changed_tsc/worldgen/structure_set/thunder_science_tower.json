@@ -1,0 +1,14 @@
+{
+  "structures": [
+    {
+      "structure": "changed_tsc:thunder_science_tower",
+      "weight": 1
+    }
+  ],
+  "placement": {
+    "type": "minecraft:random_spread",
+    "spacing": 56,
+    "separation": 22,
+    "salt": 74585140
+  }
+}

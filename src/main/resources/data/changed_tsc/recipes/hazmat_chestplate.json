@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "pattern": [
+    "M M",
+    "MXM",
+    "MMM"
+  ],
+  "key": {
+    "M": {
+      "item": "minecraft:white_wool"
+    },
+    "X": {
+      "item": "minecraft:slime_ball"
+    }
+  },
+  "result": {
+    "item": "changed_tsc:hazmat_chestplate",
+    "count": 1
+  }
+}

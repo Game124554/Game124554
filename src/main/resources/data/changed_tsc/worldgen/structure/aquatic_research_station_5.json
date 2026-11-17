@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:jigsaw",
+  "start_pool": "changed_tsc:aquatic_research_station_5/start",
+  "size": 1,
+  "max_distance_from_center": 80,
+  "use_expansion_hack": false,
+  "spawn_overrides": {},
+  "biomes": "#changed_tsc:has_structure/ocean",
+  "step": "surface_structures",
+  "terrain_adaptation": "none",
+  "start_height": {
+    "absolute": 0
+  },
+  "project_start_to_heightmap": "OCEAN_FLOOR_WG"
+}

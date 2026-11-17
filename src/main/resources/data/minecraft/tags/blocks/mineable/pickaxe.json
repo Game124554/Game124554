@@ -1,0 +1,8 @@
+{
+  "replace": false,
+  "values": [
+    "changed_tsc:lab_tile_white",
+    "changed_tsc:lab_tile_black",
+    "changed_tsc:tsc_emblem_block"
+  ]
+}

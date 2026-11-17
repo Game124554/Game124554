@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    "#minecraft:is_jungle",
+    "#minecraft:is_beach",
+    "minecraft:savanna",
+    "minecraft:desert",
+    "minecraft:plains"
+  ]
+}

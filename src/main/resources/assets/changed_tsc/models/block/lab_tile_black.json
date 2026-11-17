@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "all": "changed_tsc:block/lab_tile_black"
+  }
+}

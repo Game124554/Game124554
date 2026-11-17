@@ -1,0 +1,14 @@
+{
+  "structures": [
+    {
+      "structure": "changed_tsc:kaiju_paradise",
+      "weight": 1
+    }
+  ],
+  "placement": {
+    "type": "minecraft:random_spread",
+    "spacing": 60,
+    "separation": 24,
+    "salt": 74593059
+  }
+}

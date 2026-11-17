@@ -1,0 +1,35 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "pattern": [
+    " C ",
+    " D ",
+    " S "
+  ],
+  "key": {
+    "C": [
+      {
+        "item": "changed_tsc:squid_dog_core"
+      },
+      {
+        "item": "changed_tsc:tiger_shark_core"
+      },
+      {
+        "item": "changed_tsc:elder_one_core"
+      },
+      {
+        "item": "changed_tsc:wolf_king_core"
+      }
+    ],
+    "D": {
+      "item": "minecraft:diamond_sword"
+    },
+    "S": {
+      "item": "minecraft:lightning_rod"
+    }
+  },
+  "result": {
+    "item": "changed_tsc:purifier_blade",
+    "count": 1
+  }
+}

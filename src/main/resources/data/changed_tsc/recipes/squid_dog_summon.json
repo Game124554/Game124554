@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "pattern": [
+    "KPK",
+    "PHP",
+    "KPK"
+  ],
+  "key": {
+    "K": {
+      "item": "minecraft:ink_sac"
+    },
+    "P": {
+      "item": "minecraft:prismarine_shard"
+    },
+    "H": {
+      "item": "minecraft:heart_of_the_sea"
+    }
+  },
+  "result": {
+    "item": "changed_tsc:squid_dog_summon",
+    "count": 1
+  }
+}

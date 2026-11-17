@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "pattern": [
+    "BGB",
+    "GLG",
+    "BGB"
+  ],
+  "key": {
+    "B": {
+      "item": "minecraft:black_concrete"
+    },
+    "G": {
+      "item": "minecraft:gold_ingot"
+    },
+    "L": {
+      "item": "minecraft:glowstone"
+    }
+  },
+  "result": {
+    "item": "changed_tsc:tsc_emblem_block",
+    "count": 4
+  }
+}

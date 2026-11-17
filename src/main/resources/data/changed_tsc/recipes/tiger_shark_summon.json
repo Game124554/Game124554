@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "pattern": [
+    "CPC",
+    "PNP",
+    "CPC"
+  ],
+  "key": {
+    "C": {
+      "item": "minecraft:tropical_fish"
+    },
+    "P": {
+      "item": "minecraft:prismarine_crystals"
+    },
+    "N": {
+      "item": "minecraft:nautilus_shell"
+    }
+  },
+  "result": {
+    "item": "changed_tsc:tiger_shark_summon",
+    "count": 1
+  }
+}

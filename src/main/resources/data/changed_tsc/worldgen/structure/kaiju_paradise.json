@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:jigsaw",
+  "start_pool": "changed_tsc:kaiju_paradise/start",
+  "size": 1,
+  "max_distance_from_center": 80,
+  "use_expansion_hack": false,
+  "spawn_overrides": {},
+  "biomes": "#changed_tsc:has_structure/tropical",
+  "step": "surface_structures",
+  "terrain_adaptation": "beard_box",
+  "start_height": {
+    "absolute": -8
+  },
+  "project_start_to_heightmap": "WORLD_SURFACE_WG"
+}

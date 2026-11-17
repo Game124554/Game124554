@@ -1,0 +1,14 @@
+{
+  "structures": [
+    {
+      "structure": "changed_tsc:aquatic_research_station_3",
+      "weight": 1
+    }
+  ],
+  "placement": {
+    "type": "minecraft:random_spread",
+    "spacing": 34,
+    "separation": 12,
+    "salt": 74458436
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "pattern": [
+    "CC",
+    "CQ"
+  ],
+  "key": {
+    "C": {
+      "item": "minecraft:white_concrete"
+    },
+    "Q": {
+      "item": "minecraft:quartz"
+    }
+  },
+  "result": {
+    "item": "changed_tsc:lab_tile_white",
+    "count": 4
+  }
+}

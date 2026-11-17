@@ -1,0 +1,14 @@
+{
+  "structures": [
+    {
+      "structure": "changed_tsc:laminax_underground",
+      "weight": 1
+    }
+  ],
+  "placement": {
+    "type": "minecraft:random_spread",
+    "spacing": 60,
+    "separation": 24,
+    "salt": 74600978
+  }
+}
