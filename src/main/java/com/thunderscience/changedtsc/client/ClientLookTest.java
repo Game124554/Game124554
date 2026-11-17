@@ -66,14 +66,12 @@ public final class ClientLookTest {
         if (step >= DONE) return;
         int world = 1 + PAGES * 2; // first step after the settings pages
         if (step == -1) {
-            // skip the first-start accessibility screen, then wait for the title screen
-            if (mc.screen != null && mc.screen.getClass().getSimpleName().contains("Accessibility")) {
-                mc.options.onboardAccessibility = false;
-                mc.setScreen(new TitleScreen());
-            }
-            if (mc.getOverlay() == null && mc.screen instanceof TitleScreen) next(40);
+            // Wait until the game has finished loading and shows its first screen. That is the title
+            // screen, or a first-start screen in front of it (accessibility, Changed's content warning);
+            // those are left alone, the test just carries on from there.
+            if (mc.getOverlay() == null && mc.screen != null) next(40);
         } else if (step == 0) {
-            shot(mc, "01_title_screen");
+            if (mc.screen instanceof TitleScreen) shot(mc, "01_title_screen");
             next(5);
         } else if (step < world) {
             // each settings page: open it, wait, photograph it
@@ -144,7 +142,11 @@ public final class ClientLookTest {
             next(60);
         } else if (step == world + 9) {
             shot(mc, "16_boss_bar");
+            mc.pauseGame(false);
             next(20);
+        } else if (step == world + 10) {
+            shot(mc, "17_pause_menu_button");
+            next(10);
         } else {
             ChangedTSC.LOGGER.info("[TSC LOOK] finished, all screenshots taken");
             step = DONE;
