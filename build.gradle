@@ -25,6 +25,9 @@ minecraft {
             workingDirectory project.file('run')
             property 'forge.logging.markers', 'REGISTRIES'
             property 'forge.logging.console.level', 'debug'
+            // lets other mods that use mixins (Changed does) run inside this development setup
+            property 'mixin.env.remapRefMap', 'true'
+            property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
             mods {
                 "${mod_id}" {
                     source sourceSets.main
@@ -34,6 +37,11 @@ minecraft {
         client {}
         server {
             args '--nogui'
+        }
+        // "gradlew runGameTestServer": starts a server, runs the checks in gametest/TSCGameTests, stops.
+        gameTestServer {
+            property 'forge.enabledGameTestNamespaces', mod_id
+            property 'forge.logging.console.level', 'info'
         }
     }
 }
@@ -52,6 +60,10 @@ dependencies {
     // OPTIONAL: run Changed inside ./gradlew runClient for testing.
     // Pick the file id of the Changed 1.20.1 jar you want from its CurseForge "Files" page:
     // runtimeOnly fg.deobf("curse.maven:changed-minecraft-mod-661527:8177714")
+    // The same thing from the command line, without editing this file:  gradlew runClient -PwithChanged
+    if (project.hasProperty('withChanged')) {
+        runtimeOnly fg.deobf("curse.maven:changed-minecraft-mod-661527:${project.findProperty('changedFile') ?: '8177714'}")
+    }
 }
 
 tasks.named('processResources', ProcessResources).configure {

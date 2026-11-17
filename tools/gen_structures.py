@@ -1215,6 +1215,11 @@ def main():
                         ("underground", ["#minecraft:is_overworld"])):
         wjson(f"tags/worldgen/biome/has_structure/{tag}.json", {"replace": False, "values": values})
 
+    # a bare stone floor used only by the automatic start-up tests (never generated in worlds)
+    floor = Template(9, 6, 9)
+    floor.fill(0, 0, 0, 8, 0, 8, "stone")
+    floor.save(os.path.join(DATA, "structures", "gametest_floor.nbt"))
+
     with open(os.path.join(ROOT, "structure_list.txt"), "w") as f:
         for s in stats:
             f.write("%-32s %3dx%3dx%3d  %6d blocks\n" % s)

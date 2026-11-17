@@ -73,6 +73,23 @@ jobs:
           path: ${{ steps.project.outputs.dir }}/build/libs/*.jar
           if-no-files-found: error
 
+      # Starts a real server with the mod and runs the checks in gametest/TSCGameTests:
+      # the mod loads, its data files are valid, structures place, furniture appears, bosses fight.
+      - name: Start-up test
+        working-directory: ${{ steps.project.outputs.dir }}
+        run: |
+          set -o pipefail
+          ./gradlew runGameTestServer --no-daemon 2>&1 | tee -a "$GITHUB_WORKSPACE/build-log.txt"
+
+      # The same checks again with the Changed mod installed beside it.
+      - name: Start-up test with Changed
+        continue-on-error: true
+        working-directory: ${{ steps.project.outputs.dir }}
+        run: |
+          set -o pipefail
+          echo "===== with Changed =====" >> "$GITHUB_WORKSPACE/build-log.txt"
+          ./gradlew runGameTestServer -PwithChanged --no-daemon 2>&1 | tee -a "$GITHUB_WORKSPACE/build-log.txt"
+
       # The jar (and the build log, so errors can be read without opening the run) go on the
       # Releases page under one fixed entry that is updated by every build.
       - name: Put the jar on the Releases page
