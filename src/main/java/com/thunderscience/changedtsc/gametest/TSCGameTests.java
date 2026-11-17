@@ -187,6 +187,26 @@ public final class TSCGameTests {
                 ChangedTSC.LOGGER.info("[TSC TEST] furniture {} -> {}", others.get(i), state);
                 if (state.is(marker) || state.isAir()) helper.fail("Nothing was placed for " + others.get(i), pos);
             }
+            // step-by-step look at why a block is accepted or refused
+            for (String kind : List.of("lab_table", "petri_dish", "speaker")) {
+                FurniturePlacer.resolve(kind).ifPresent(block -> {
+                    ServerLevel level = helper.getLevel();
+                    BlockPos at = helper.absolutePos(new BlockPos(3, 1, 6));
+                    level.setBlock(at, Blocks.AIR.defaultBlockState(), 3);
+                    BlockState below = level.getBlockState(at.below());
+                    ChangedTSC.LOGGER.info("[TSC TEST] {}: below={} sturdyTop={} north={} canSurvive={} unobstructed={}", kind, below,
+                            below.isFaceSturdy(level, at.below(), Direction.UP), level.getBlockState(at.north()),
+                            block.defaultBlockState().canSurvive(level, at),
+                            level.isUnobstructed(block.defaultBlockState(), at, net.minecraft.world.phys.shapes.CollisionContext.empty()));
+                    if (block.asItem() instanceof net.minecraft.world.item.BlockItem item) {
+                        var context = new net.minecraft.world.item.context.DirectionalPlaceContext(level, at, Direction.NORTH,
+                                new net.minecraft.world.item.ItemStack(item), Direction.UP);
+                        ChangedTSC.LOGGER.info("[TSC TEST] {}: canPlace={} stateForPlacement={} place={} -> {}", kind, context.canPlace(),
+                                block.getStateForPlacement(context), item.place(context), level.getBlockState(at));
+                    }
+                    level.setBlock(at, Blocks.AIR.defaultBlockState(), 3);
+                });
+            }
             if (helper.getBlockState(table).isAir()) helper.fail("No table was placed", table);
             if (helper.getBlockState(chair).isAir()) helper.fail("No chair was placed", chair);
             if (FurniturePlacer.resolve("office_chair").isEmpty()) {
