@@ -1,0 +1,16 @@
+{
+  "required": true,
+  "package": "dev.stumble.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "mixins": [
+    "LivingEntityMixin"
+  ],
+  "client": [
+    "ClientPacketListenerMixin",
+    "EntityRenderDispatcherMixin",
+    "HumanoidModelMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

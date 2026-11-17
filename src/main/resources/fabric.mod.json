@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "id": "stumble",
+  "version": "${version}",
+  "name": "Stumble",
+  "description": "GTA IV style active ragdolls. Push people over, fall off things and go limp, watch bodies float. Bodies stagger, try to catch their balance, brace for the fall, go limp and get back up.",
+  "authors": ["Stumble contributors"],
+  "license": "MIT",
+  "environment": "*",
+  "entrypoints": {
+    "main": ["dev.stumble.StumbleMod"],
+    "client": ["dev.stumble.StumbleClient"]
+  },
+  "mixins": ["stumble.mixins.json"],
+  "depends": {
+    "fabricloader": ">=0.14.21",
+    "minecraft": "1.20.1",
+    "java": ">=17",
+    "fabric-api": "*"
+  }
+}

@@ -1,0 +1,27 @@
+name: build
+on: [push, workflow_dispatch]
+permissions:
+  contents: write
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+      - name: Build
+        run: chmod +x ./gradlew && ./gradlew build --no-daemon
+      - uses: actions/upload-artifact@v4
+        with:
+          name: stumble-mod-jar
+          path: build/libs/stumble-1.2.0.jar
+      - name: Publish release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release view stumble-v1.2.0 >/dev/null 2>&1 || gh release create stumble-v1.2.0 --target "$GITHUB_SHA" \
+            --title "Stumble 1.2.0 - GTA IV style ragdolls (Fabric 1.20.1)" \
+            --notes "Put stumble-1.2.0.jar in .minecraft/mods together with Fabric API for 1.20.1. Push key: R. See README on the stumble-mod branch for settings."
+          gh release upload stumble-v1.2.0 build/libs/stumble-1.2.0.jar --clobber
