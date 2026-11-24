@@ -4,6 +4,9 @@ on:
   push:
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -36,3 +39,13 @@ jobs:
           name: mod-jar
           path: build/libs/*.jar
           if-no-files-found: error
+
+      - name: Publish download link (GitHub Release)
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          TAG="mod-${GITHUB_REF_NAME//\//-}"
+          gh release delete "$TAG" -y --cleanup-tag || true
+          gh release create "$TAG" build/libs/*.jar --target "$GITHUB_SHA" \
+            --title "Mandela Catalogue Horror - latest build ($GITHUB_REF_NAME)" \
+            --notes "Fabric 1.20.1. Needs Fabric API and GeckoLib (Fabric 1.20.1, 4.4.9+). Put the .jar in your mods folder."
