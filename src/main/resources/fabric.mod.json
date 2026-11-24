@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "id": "mandelahorror",
+  "version": "${version}",
+  "name": "Mandela Catalogue Horror",
+  "description": "A fan-made analog horror mod inspired by The Mandela Catalogue. Emergency broadcast on world start, fake players joining, mimics wearing random skins (or yours), the tall Alternate with white eyes and its voice, the M.A.D. signal bar, the self-stab, and Strange Paper you can draw and write on.",
+  "authors": ["You"],
+  "license": "MIT",
+  "icon": "assets/mandelahorror/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": ["com.mandelahorror.MandelaHorror"],
+    "client": ["com.mandelahorror.client.MandelaHorrorClient"]
+  },
+  "mixins": ["mandelahorror.mixins.json"],
+  "depends": {
+    "fabricloader": ">=0.14.21",
+    "minecraft": "~1.20.1",
+    "java": ">=17",
+    "fabric-api": "*",
+    "geckolib": ">=4.4"
+  }
+}

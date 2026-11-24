@@ -1,0 +1,69 @@
+{
+  "static": {
+    "subtitle": "subtitles.mandelahorror.static",
+    "sounds": [
+      {
+        "name": "mandelahorror:static"
+      }
+    ]
+  },
+  "eas_tone": {
+    "subtitle": "subtitles.mandelahorror.eas_tone",
+    "sounds": [
+      {
+        "name": "mandelahorror:eas_tone"
+      }
+    ]
+  },
+  "drone": {
+    "subtitle": "subtitles.mandelahorror.drone",
+    "sounds": [
+      {
+        "name": "mandelahorror:drone",
+        "attenuation_distance": 48
+      }
+    ]
+  },
+  "whisper": {
+    "subtitle": "subtitles.mandelahorror.whisper",
+    "sounds": [
+      {
+        "name": "mandelahorror:whisper",
+        "attenuation_distance": 24
+      }
+    ]
+  },
+  "beep": {
+    "subtitle": "subtitles.mandelahorror.beep",
+    "sounds": [
+      {
+        "name": "mandelahorror:beep"
+      }
+    ]
+  },
+  "stab": {
+    "subtitle": "subtitles.mandelahorror.stab",
+    "sounds": [
+      {
+        "name": "mandelahorror:stab"
+      }
+    ]
+  },
+  "heartbeat": {
+    "subtitle": "subtitles.mandelahorror.heartbeat",
+    "sounds": [
+      {
+        "name": "mandelahorror:heartbeat"
+      }
+    ]
+  },
+  "alternate_voice": {
+    "subtitle": "subtitles.mandelahorror.alternate_voice",
+    "sounds": [
+      {
+        "name": "mandelahorror:alternate_voice",
+        "attenuation_distance": 32
+      }
+    ]
+  }
+}
