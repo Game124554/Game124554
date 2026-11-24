@@ -26,5 +26,7 @@
   "gui.mandelahorror.paper.clear": "Clear",
   "gui.mandelahorror.paper.done": "Done",
   "gui.mandelahorror.paper.hint_draw": "Left click: draw   Right click: erase   Ctrl+Z: undo",
-  "gui.mandelahorror.paper.hint_text": "Click on the paper, then type. Enter = new line"
+  "gui.mandelahorror.paper.hint_text": "Click on the paper, then type. Enter = new line",
+  "key.mandelahorror.vhs": "Toggle VHS filter",
+  "key.categories.mandelahorror": "Mandela Catalogue Horror"
 }

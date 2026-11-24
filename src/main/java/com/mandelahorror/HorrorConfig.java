@@ -113,6 +113,16 @@ public final class HorrorConfig {
     public static final Value<Boolean> SKIN_GLITCH = bool("client.skinGlitch", true,
             "Player skins can randomly swap during haunting events.");
 
+    // ---------- VHS camera filter ----------
+    public static final Value<Boolean> VHS_FILTER = bool("vhs.enabled", true,
+            "Old VHS camera look: scanlines, noise, tracking lines, PLAY label and date stamp. Toggle in game with the V key.");
+    public static final Value<Boolean> VHS_BLACK_AND_WHITE = bool("vhs.blackAndWhite", true,
+            "true = black and white, false = faded VHS colors.");
+    public static final Value<Integer> VHS_YEAR = integer("vhs.year", 1998, 0, 9999,
+            "Year shown in the date stamp. 0 = the real current year.");
+    public static final Value<Boolean> VHS_REAL_TIME = bool("vhs.realTime", false,
+            "Clock in the date stamp: false = Minecraft world time, true = your real clock.");
+
     // ------------------------------------------------------------------ load / save
 
     public static void load() {

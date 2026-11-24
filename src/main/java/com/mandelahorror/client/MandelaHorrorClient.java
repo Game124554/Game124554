@@ -17,8 +17,15 @@ public class MandelaHorrorClient implements ClientModInitializer {
         EntityRendererRegistry.register(ModEntities.MIMIC, MimicRenderer::new);
 
         HudRenderCallback.EVENT.register(HorrorOverlay::render);
-        ClientTickEvents.END_CLIENT_TICK.register(client -> ClientHorror.clientTick());
-        ClientPlayConnectionEvents.DISCONNECT.register((handler, client) -> ClientHorror.reset());
+        VhsFilter.init();
+        ClientTickEvents.END_CLIENT_TICK.register(client -> {
+            ClientHorror.clientTick();
+            VhsFilter.tick();
+        });
+        ClientPlayConnectionEvents.DISCONNECT.register((handler, client) -> {
+            ClientHorror.reset();
+            VhsFilter.reset();
+        });
 
         ClientNetwork.registerReceivers();
         StrangePaperItem.clientOpener = ClientHorror::openPaper;

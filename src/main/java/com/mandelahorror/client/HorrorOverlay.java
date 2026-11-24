@@ -20,6 +20,8 @@ public final class HorrorOverlay {
         int width = mc.getWindow().getGuiScaledWidth();
         int height = mc.getWindow().getGuiScaledHeight();
 
+        VhsFilter.render(g, width, height, partialTick);
+
         float staticLevel = ClientHorror.proximityStatic * 0.35F;
         if (ClientHorror.staticBurst > 0) {
             staticLevel = Math.max(staticLevel, 0.25F + 0.6F * ClientHorror.staticBurst / (float) ClientHorror.staticBurstMax);

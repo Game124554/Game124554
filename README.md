@@ -16,6 +16,7 @@ A fan-made analog horror mod inspired by *The Mandela Catalogue*. Not affiliated
 | **Night broadcasts** | Every nightfall, a M.A.D. advisory appears at the top of the screen. |
 | **Alternate voice** | Your clip (`sounds/alternate_voice.ogg`) plays from the Alternate's position: when it first appears, every time you start looking at it, sometimes at random, when a mimic reveals itself, and right before the self-stab. Heard up to ~48 blocks. Turn off with `voice = false` in the common config. |
 | **Strange Paper** | Right-click to open a paper screen: draw with **Pencil**, **Red Pen** or **Eraser** (3 brush sizes, right-click erases), and **Write Text** anywhere (click the paper, type, Enter = new line, right-click a text to delete it). **Undo** (Ctrl+Z), **Clear**, **Done**. Saved inside the item, and the tooltip shows what you wrote. The world keeps running while you draw... and sometimes words appear that you didn't write. |
+| **VHS camera filter** | The whole game looks like an old tape: **black and white** (or faded color), slight horizontal smear, scanlines, noise, a rolling tracking line, random tracking glitches, dark edges, **PLAY ▶** and **SP** labels, a blinking dot, and a **date stamp with the year** (e.g. `NOV. 24 1998`) plus a clock that follows the Minecraft day. Press **V** to turn it on/off. |
 | **Alternate's note** | Killing an Alternate drops a Strange Paper with two staring eyes, a red grin and a message with your name. |
 
 ## Build the .jar
@@ -66,7 +67,8 @@ There are also spawn eggs in the Spawn Eggs creative tab, and Strange Paper in T
 `config/mandelahorror.properties` is created the first time you start the game. Every option has a comment:
 grace time, how often fake players join, chance they use your name, TAB list on/off, Alternate night-only,
 Alternate voice, M.A.D. bar, influence speed, self-stab on/off, damage multiplier, `canKill`,
-text-to-speech, static overlay, skip intro with ESC, skin glitch. Edit it, save, restart.
+text-to-speech, static overlay, skip intro with ESC, skin glitch,
+VHS filter on/off, black & white or faded color, the year in the date stamp (0 = real year), world clock or real clock. Edit it, save, restart.
 
 Text-to-speech uses Minecraft's own narrator library, so it works even with the in-game Narrator option off. On Linux it needs `flite` installed.
 
