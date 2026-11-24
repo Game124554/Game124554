@@ -26,7 +26,7 @@ jobs:
       - name: Show build errors
         if: failure()
         run: |
-          grep -n -E "error:|What went wrong|Could not|FAILURE|Exception|> " build.log | head -60 > errs.txt || true
+          { grep -A3 -E "error:" build.log | grep -v "^--$" | sed "s#.*/src/main/java/##" | head -80; grep -A6 "What went wrong" build.log | head -14; } > errs.txt || true
           msg=$(sed ':a;N;$!ba;s/%/%25/g;s/\r/%0D/g;s/\n/%0A/g' errs.txt)
           echo "::error title=Build errors::$msg"
 

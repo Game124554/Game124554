@@ -31,6 +31,9 @@ dependencies {
     // GeckoLib 4 for Fabric 1.20.1
     modImplementation "software.bernie.geckolib:geckolib-fabric-${project.minecraft_version}:${project.geckolib_version}"
     implementation "com.eliotlash.mclib:mclib:20"
+
+    // @Nullable annotations
+    compileOnly "com.google.code.findbugs:jsr305:3.0.2"
 }
 
 processResources {
